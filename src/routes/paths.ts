@@ -24,6 +24,7 @@ export const PATH_APP = {
     admin: {
         analytics: paths(ROOTS_ADMIN, '/analytics'),
         userManagement: paths(ROOTS_ADMIN, '/users'),
+        // userManagement: paths(ROOTS_APP, ''),
         role: paths(ROOTS_ADMIN, '/role'),
         /* PLOP_INJECT_TYPE_PATHS_ADMIN_ITEMS */
     },

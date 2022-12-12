@@ -40,7 +40,7 @@ const navConfig = [
         // ----------------------------------------------------------------------
         {
             subheader: 'app',
-            roles: ["user", "visitor"],
+            roles: ["user"],
             items: [
                 {
                     title: 'dashboard', path: PATH_APP.general.dashboard, icon: ICONS.dashboard
@@ -68,7 +68,7 @@ const navConfig = [
         },
         {
             subheader: 'admin',
-            roles: ["admin", "visitor"],
+            roles: ["admin"],
             items: [
                 // {
                 //     title: 'analytics', path: PATH_APP.admin.analytics, icon: ICONS.analytics, info: (
@@ -91,7 +91,7 @@ const navConfig = [
         },
         {
             subheader: 'contributor',
-            roles: ["contributor", "admin", "visitor"],
+            roles: ["contributor", "admin"],
             items: [
                 // {
                 //     title: 'tickets', path: PATH_APP.support.tickets, icon: ICONS.tickets, info: (

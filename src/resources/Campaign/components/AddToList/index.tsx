@@ -1,0 +1,112 @@
+import {
+    Scrollbar,
+    TableContainer,
+    Table,
+    TableHead,
+    TableBody,
+    TableCell,
+    TableRow,
+    IconButton, Icon, makeStyles, fShortenNumber,
+    useTheme
+} from "my-lib"
+import React, {FC, useEffect, useState} from "react";
+import {useMutation, useQuery} from "@apollo/client";
+import {GET_CAMPAIGNS, UPDATE_CAMPAIGN} from "@schemas/campaigns";
+
+const useStyles = makeStyles(theme => ({
+    tableRow: {
+        '&:hover': {
+            background: theme.palette.background.neutral,
+        },
+        m: 2
+    },
+    stickyColumn: {
+        position: "sticky",
+        background: theme.palette.background.neutral,
+        borderLeft: `solid 1px ${theme.palette.divider}`,
+        right: 0
+    },
+    tableCell: {
+        boxShadow: "none !important"
+    }
+}));
+
+export const AddToList: FC<any> = ({ addToObjects, height='512px' }) => {
+
+
+    const classes = useStyles();
+    const theme = useTheme();
+
+    const [campaigns, setCampaigns] = useState([]);
+
+    const {loading: isLoading, error, data: campaignData, status, refetch} = useQuery(GET_CAMPAIGNS, {
+        variables: {meta : { page: 0, direction: 1, sortBy: "title", limit: 10, filters: []}}}
+    );
+
+    const [editCampaignMutation, { error: updateCampaignError }] = useMutation(UPDATE_CAMPAIGN, {
+        refetchQueries: [
+            { query: GET_CAMPAIGNS,
+                variables: {
+                    meta: {page: 0, direction: 1, sortBy: "title", limit: 10, filters: []}
+                } }
+        ]
+    });
+
+    useEffect(() => {
+        if (campaignData) {
+            setCampaigns(campaignData.getCampaigns?.items);
+        }
+    }, [campaignData]);
+
+    const hasAlreadyElements = (row) => {
+        let hasAddToAlready = false
+        Object.keys(addToObjects).forEach(resourceKey => {
+            hasAddToAlready = false;
+            addToObjects[resourceKey].forEach(resourceItemId => {
+                if (!row[resourceKey].find(rowResourceItem => rowResourceItem.id === resourceItemId)) hasAddToAlready = true
+            })
+        })
+        return hasAddToAlready;
+    }
+
+    const getGraphqlUpdateObjects = () => {
+        let updateRelationshipObject : any = {}
+        Object.keys(addToObjects).forEach(key => {
+            updateRelationshipObject[key] = { add: addToObjects[key] }
+        });
+        return updateRelationshipObject;
+    }
+
+    const addTo = (item) => { editCampaignMutation({ variables: { id: item.id, ...getGraphqlUpdateObjects() } }) }
+
+    return <Scrollbar>
+        <TableContainer sx={{ mt: 3, height }}>
+            <Table stickyHeader>
+                <TableHead>
+                    <TableRow className={classes.tableRow}>
+                        <TableCell align={"center"} className={classes.tableCell}>Title</TableCell>
+                        <TableCell align={"center"} className={classes.tableCell}>Tools</TableCell>
+                        <TableCell align={"center"} className={classes.tableCell}>Products</TableCell>
+                        <TableCell align={"center"} className={classes.tableCell}>Elearning Resources</TableCell>
+                        <TableCell align={"center"} className={classes.tableCell}> actions </TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {campaigns.map((row, index) => (
+                        <TableRow className={classes.tableRow} key={index + row.title}>
+                            <TableCell align={"center"} className={classes.tableCell} component="th" scope="row">{row.title}</TableCell>
+                            <TableCell align={"center"} className={classes.tableCell}>{fShortenNumber(row?.tools.length)}</TableCell>
+                            <TableCell align={"center"} className={classes.tableCell}>{fShortenNumber(row?.partnerPrograms.length)}</TableCell>
+                            <TableCell align={"center"} className={classes.tableCell}>{fShortenNumber(row?.eLearningResources.length)}</TableCell>
+                            <TableCell align={"center"} align={"center"} className={classes.tableCell}>
+                                {hasAlreadyElements(row) ? <IconButton onClick={() => addTo(row)}>
+                                    <Icon icon={'carbon:add-alt'} />
+                                </IconButton> : <Icon color={theme.palette.success.light} icon={'akar-icons:check'} />}
+                            </TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+        </TableContainer>
+    </Scrollbar>
+}

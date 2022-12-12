@@ -1,39 +1,20 @@
-import { combineReducers } from 'redux';
-import storage from 'redux-persist/lib/storage';
-import {createAction, createReducer} from "@reduxjs/toolkit";
+import {combineReducers} from 'redux';
+import auth from "./slices/auth";
+import noticedPartnerProgramsReducer from "./slices/noticedPartnerPrograms";
+import payment from "./slices/payment";
+import {persistReducer} from "redux-persist";
+import profileSetup from "@slices/profileSetup";
+import storage from "redux-persist/lib/storage";
 
-const rootPersistConfig = {
-    key: 'root',
+const noticedPartnerProgramsPersistConfig = {
+    key: 'noticedPartnerPrograms',
     storage,
-    keyPrefix: 'redux-',
-    whitelist: [],
+    keyPrefix: 'redux-'
 };
 
-interface CounterState {
-    value: number
-}
-
-const increment = createAction('counter/increment');
-const decrement = createAction('counter/decrement');
-const incrementByAmount = createAction<number>('counter/incrementByAmount');
-
-const initialState = { value: 0 } as CounterState;
-
-const counterReducer = createReducer(initialState, (builder) => {
-    builder
-        .addCase(increment, (state, action) => {
-            state.value++
-        })
-        .addCase(decrement, (state, action) => {
-            state.value--
-        })
-        .addCase(incrementByAmount, (state, action) => {
-            state.value += action.payload
-        })
-})
-
-const rootReducer = combineReducers({
-    counterReducer
+export const rootReducer = combineReducers({
+    noticedPartnerPrograms: persistReducer(noticedPartnerProgramsPersistConfig, noticedPartnerProgramsReducer),
+    auth,
+    profileSetup,
+    payment
 });
-
-export { rootPersistConfig, rootReducer };
