@@ -52,7 +52,7 @@ const cellTypeMapperObject = {
 export const SavedFiltersTable: FC<any> = ({embedded = false, applyFilter}) => {
 
     /* table states TODO: outsource to another */
-    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [rowsPerPage, setRowsPerPage] = useState(25);
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('title');
     const [currentItem, setCurrentItem] = useState(null);

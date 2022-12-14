@@ -324,7 +324,7 @@ export const Item: FC<any> = ({
                             <Typography color="textPrimary" variant="subtitle1" align={"left"}>
                                 {title}
                             </Typography>
-                            <Typography color="textinfo" variant="caption" align={"left"}>
+                            <Typography mb={2} color="textinfo" variant="caption" align={"left"}>
                                 {fDate(created)}
                             </Typography>
                             <Box>
@@ -348,7 +348,7 @@ export const Item: FC<any> = ({
                                 <Scrollbar
                                     sx={(theme: any) => ({
                                         // maxHeight: "256px",
-                                        bgcolor: theme.palette.mode === "dark" ? theme.palette.grey[500_48] : theme.palette.background.neutral,
+                                        bgcolor: theme.palette.background.neutral,
                                         minHeight: "286px",
                                         height: "286px",
                                         "ul": {
@@ -365,9 +365,7 @@ export const Item: FC<any> = ({
                                             borderRadius: "2px"
                                         })}
                                     >
-                                        <Typography variant={"body2"} component="span" sx={(theme: any) => ({
-                                            bgcolor: theme.palette.mode === "dark" ? theme.palette.grey[500_48] : theme.palette.background.neutral
-                                        })}>
+                                        <Typography variant={"body2"} component="span">
                                             {fRenderedHTML(toStylelessDocument(description))}
                                         </Typography>
                                     </Box>

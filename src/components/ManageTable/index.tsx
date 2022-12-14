@@ -10,6 +10,7 @@ export const ManageTable: FC<any> = ({resourceName = "item", resourceSchema = []
     const {
         items,
         deleteItems,
+        emptyData,
         page,
         setPage,
         loading,
@@ -157,6 +158,7 @@ export const ManageTable: FC<any> = ({resourceName = "item", resourceSchema = []
             height={"100%"}
             rows={loading ? [] : items}
             columns={columns}
+            emptyData={emptyData}
             page={page}
             rowsPerPage={rowsPerPage}
             moreMenuOnlyItems

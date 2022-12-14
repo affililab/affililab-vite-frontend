@@ -8,7 +8,7 @@ import {
     Tooltip,
     Typography,
     useAuth,
-    fRenderedHTML, IconButton
+    fRenderedHTML, IconButton, fDate
 } from "my-lib";
 
 import {InformationTabs} from "./InformationTabs";
@@ -75,14 +75,16 @@ export const Content: FC<any> = ({
 
     const GeneralContainer = styled(Box)(({theme}) => ({
         display: "flex",
+        flex: 1,
         justifyContent: "flex-start",
-        height: "284px",
         gap: theme.spacing(2),
         paddingRight: theme.spacing(12),
         paddingLeft: theme.spacing(12),
     }));
 
     const ProductImageContainer = styled(Box)(({theme}) => ({
+        flex: 1,
+        alignSelf: "center",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -165,9 +167,9 @@ export const Content: FC<any> = ({
                 {/*</Tooltip>*/}
             </Box>
         </ActionButtonsContainer>
-        <Box sx={{ display: "flex", flexDirection: "column", gap: (theme) => theme.spacing(2) }}>
+        <Box sx={{ display: "flex", justifyContent: "space-between", flexDirection: "column", gap: (theme) => theme.spacing(2) }}>
             <GeneralContainer>
-                <Box sx={{height: "100%"}}>
+                <Box sx={{alignSelf: "center"}}>
                     {/* TODO: image box */}
                     <ProductImageContainer>
                         <Box sx={{ background: "rgb(255, 255, 255)", p: 2 }}>
@@ -180,7 +182,9 @@ export const Content: FC<any> = ({
                     <Typography color="textPrimary" variant="subtitle1" align={"left"}>
                         {title}
                     </Typography>
-                    {/* TODO: description box */}
+                    <Typography color="textinfo" variant="caption" align={"left"}>
+                        {fDate(created)}
+                    </Typography>
                     <Box sx={(theme) => ({
                         width: "100%",
                         minHeight: "256px",
@@ -204,12 +208,10 @@ export const Content: FC<any> = ({
                                     minHeight: "256px",
                                     height: "100%",
                                     borderRadius: "2px",
-                                    bgcolor: theme.palette.mode === "dark" ? theme.palette.grey[500_48] : theme.palette.background.neutral
+                                    bgcolor: theme.palette.background.neutral,
                                 })}
                             >
-                                <Typography variant={"body2"} component="span" sx={(theme) => ({
-                                    bgcolor: theme.palette.mode === "dark" ? theme.palette.grey[500_48] : theme.palette.background.neutral
-                                })}>
+                                <Typography variant={"body2"} component="span">
                                     {fRenderedHTML(description)}
                                 </Typography>
                             </Box>
@@ -219,14 +221,14 @@ export const Content: FC<any> = ({
             </GeneralContainer>
 
             {/* TODO: information tabs */}
-            <Box sx={{height: "512px", px: 12}}>
+            <Box sx={{ minHeight: "512px", flex: 1, display: "flex", flexDirection: "column", px: 12}}>
             {/*<Box sx={{height: "286px", px: 12}}>*/}
                 <InformationTabs item={item}/>
             </Box>
 
             {/* TODO: similar products - implement when functionality is ready*/}
             {/*<Box sx={{width: "100%", px: 12}}>*/}
-            {/*    <Typography color="textPrimary" my={2} variant="subtitle1" align={"left"}>*/}
+            {/*    <Typography color="textPrimary" my={2} variant="subtitle2" align={"left"}>*/}
             {/*        Diese Produkte könnten Sie auch interessieren*/}
             {/*    </Typography>*/}
             {/*    <Grid justifyContent={"center"} alignItems={"center"} container spacing={6}>*/}

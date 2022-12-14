@@ -74,7 +74,7 @@ export const ProductsList: FC<any> = () => {
     const [selected, setSelected] = useState([]);
     const [orderBy, setOrderBy] = useState('name');
     const [filterName, setFilterName] = useState('');
-    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [rowsPerPage, setRowsPerPage] = useState(25);
 
     const [productList, setProductList] = useState([]);
     const [total, setTotal] = useState(0);

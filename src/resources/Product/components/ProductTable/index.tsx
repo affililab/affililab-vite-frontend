@@ -55,7 +55,7 @@ const getComparator = (order, orderBy) => {
 }
 
 export const ProductTable: FC<any> = ({items}) => {
-    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [rowsPerPage, setRowsPerPage] = useState(25);
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('title');
     const [page, setPage] = useState(0);

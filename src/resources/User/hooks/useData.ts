@@ -15,6 +15,7 @@ export const useData = (meta = {direction: 1, sortBy: "name", limit: 25, filters
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('title');
     const [rowsPerPage, setRowsPerPage] = useState(25);
+    const [loadingState, setLoadingState] = useState(true);
 
     const refetchingOptions = [{
         query: GET_USERS,
@@ -52,7 +53,7 @@ export const useData = (meta = {direction: 1, sortBy: "name", limit: 25, filters
                 page,
                 filters: [...meta?.filters, {searchParam: "title", searchQuery: searchValue}]
             }})
-    }
+    };
 
     useEffect(() => {
         // reset eLearningResources
@@ -82,6 +83,7 @@ export const useData = (meta = {direction: 1, sortBy: "name", limit: 25, filters
 
     return {
         items,
+        emptyData: !(!!data?.getUsers?.items?.length),
         page,
         setPage,
         loading,

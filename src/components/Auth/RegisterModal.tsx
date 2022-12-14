@@ -155,35 +155,35 @@ export const Content : FC<any> = ({
 
 export const RegisterModal : FC<any> = () => {
 
-    // const {isModalOpen, mode} = useSelector((state: any) => state.auth);
-    // // const [searchParams, setSearchParams] = useSearchParams();
-    //
-    // const {enqueueSnackbar} = useSnackbar();
-    // const [completeSubscription, { error: completeSubscriptionError }] = useMutation(COMPLETE_SUBSCRIPTION);
+    const {isModalOpen, mode} = useSelector((state: any) => state.auth);
+    const [searchParams, setSearchParams] = useSearchParams();
 
-    // useEffect(() => {
-    //     (async () => {
-    //         const success = searchParams.get("success");
-    //         const session_id = searchParams.get("session_id");
-    //         if (success && session_id) {
-    //             // send complete subscription_mutation
-    //             const completeSubscriptionResponse = await completeSubscription({ variables: { id: session_id}});
-    //
-    //             if (completeSubscriptionResponse?.data?.completeSubscription?.success) {
-    //                 enqueueSnackbar('Congratulations your Subscription was successfull');
-    //             }
-    //         }
-    //     })();
-    // }, [searchParams]);
+    const {enqueueSnackbar} = useSnackbar();
+    const [completeSubscription, { error: completeSubscriptionError }] = useMutation(COMPLETE_SUBSCRIPTION);
 
-    return <></>
+    useEffect(() => {
+        (async () => {
+            const success = searchParams.get("success");
+            const session_id = searchParams.get("session_id");
+            if (success && session_id) {
+                // send complete subscription_mutation
+                const completeSubscriptionResponse = await completeSubscription({ variables: { id: session_id}});
+
+                if (completeSubscriptionResponse?.data?.completeSubscription?.success) {
+                    enqueueSnackbar('Congratulations your Subscription was successfull');
+                }
+            }
+        })();
+    }, [searchParams]);
+
+    // return <></>
 
 
-    // return <DialogAnimate maxWidth={"xl"} open={isModalOpen && mode === "register"} onClose={() => {
-    //     closeModal()
-    // }}>
-    //     <Content handleCloseModal={() => {
-    //         closeModal()
-    //     }}/>
-    // </DialogAnimate>
+    return <DialogAnimate maxWidth={"xl"} open={isModalOpen && mode === "register"} onClose={() => {
+        closeModal()
+    }}>
+        <Content handleCloseModal={() => {
+            closeModal()
+        }}/>
+    </DialogAnimate>
 }

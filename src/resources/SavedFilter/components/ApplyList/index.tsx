@@ -219,7 +219,7 @@ export const ApplyList = ({
                                     key={index}
                                     align="center">{column.renderCell(row, rowValue) ?? rowValue}</TableCell>;
                             })}
-                            <TableCell className={[classes.stickyColumn, classes.tableCell]} align={"center"}
+                            <TableCell className={[classes.stickyColumn, classes.tableCell]}
                                        align={"center"}>
                                 <IconButton onClick={() => {
                                     applyFilter(getFilterArray(row))

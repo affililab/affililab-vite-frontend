@@ -92,7 +92,7 @@ export const TableCellMapper = (type, cellTypeParams, cellFunctions) => {
     }));
 
     const TextCellRenderer = (row, value) => <Typography sx={{ maxWidth: "256px" }} variant="body2" noWrap>
-        {fRenderedHTML(value) ?? "-"}
+        { !!value && (fRenderedHTML(value.toString()) ?? "-") }
     </Typography>
 
     const LinkCellRenderer = (row, value) => <Typography variant="subtitle2" noWrap>

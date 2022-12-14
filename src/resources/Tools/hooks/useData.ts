@@ -13,7 +13,7 @@ export const useData = (meta = {direction: 1, sortBy: "title", limit: 10, filter
     const [searchValue, setSearchValue] = useState("");
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('title');
-    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [rowsPerPage, setRowsPerPage] = useState(25);
 
     const refetchingOptions = [{
         query: GET_TOOLS,

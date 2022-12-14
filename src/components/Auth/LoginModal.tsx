@@ -109,7 +109,7 @@ export const LoginModal = () => {
 
     return <DialogAnimate maxWidth={"xl"} open={isModalOpen && mode === "login"} onClose={() => {
         closeModal()
-    }} key={'something'} sx={{}} variants={null}>
+    }}>
         <Content handleCloseModal={() => {
             closeModal()
         }}/>

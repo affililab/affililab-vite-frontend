@@ -26,7 +26,7 @@ export const InformationContent: FC<any> = ({ informationItems }) => {
         {informationItems.map(informationItem => <Grid xs={6} item>
             <ItemContainer>
                 <TitleContainer>
-                    <Typography color="white" variant="subtitle1" align={"left"}>
+                    <Typography color="white" variant="body2" align={"left"}>
                         {informationItem.title}
                     </Typography>
                 </TitleContainer>

@@ -474,7 +474,6 @@ export const resourceSchema = () => {
                     alignRight: false
                 }
             }
-        },
-
+        }
     ];
 }

@@ -18,7 +18,24 @@ import {openModal as openModalPayment} from "@slices/payment";
 import {LoginModal} from "@components/Auth/LoginModal";
 import {RegisterModal} from "@components/Auth/RegisterModal";
 import {PlanModal} from "@components/Payment/PlanModal";
-import {UserManagementModule} from "../modules/UserManagement";
+import {UserModule} from "../modules/User";
+import {RoleModule} from "../modules/Role";
+import {PlanModule} from "../modules/Plan";
+import {ELearningModule} from "../modules/ELearning";
+import {ELearningResourcesTypeModule} from "../modules/ELearningResourcesType";
+import {ToolsModule} from "../modules/Tools";
+import {AdvertisingTypeModule} from "../modules/AdvertisingType";
+import {CategoryModule} from "../modules/Category";
+import {CampaignSupportCategoryModule} from "../modules/CampaignSupportCategory";
+import {TargetGroupModule} from "../modules/TargetGroup";
+import {TargetGroupTypeModule} from "../modules/TargetGroupType";
+import {AdvertismentAssetModule} from "../modules/AdvertismentAsset";
+import {ProductsModule} from "../modules/Products";
+import {CategoryGroupModule} from "../modules/CategoryGroup";
+import {CrawlingSourceModule} from "../modules/CrawlingSource";
+import {SalaryModelModule} from "../modules/SalaryModel";
+import {SourceModule} from "../modules/Source";
+import {TrackingTypeModule} from "../modules/TrackingType";
 
 const MENU_OPTIONS = [
     {
@@ -152,7 +169,24 @@ export const routes = [
         </AuthGuard>,
         children: [
             <MyIndexComp />,
-            UserManagementModule
+            AdvertisingTypeModule,
+            AdvertismentAssetModule,
+            CampaignSupportCategoryModule,
+            CategoryModule,
+            CategoryGroupModule,
+            CrawlingSourceModule,
+            ELearningModule,
+            ELearningResourcesTypeModule,
+            PlanModule,
+            ProductsModule,
+            RoleModule,
+            SalaryModelModule,
+            SourceModule,
+            TargetGroupModule,
+            TargetGroupTypeModule,
+            ToolsModule,
+            TrackingTypeModule,
+            UserModule
         ]
     },
     {

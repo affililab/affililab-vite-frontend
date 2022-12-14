@@ -367,7 +367,7 @@ export const FormFieldMapper: FC<any> = (type, fieldConfig, formMethods) => {
         }, []);
 
         return <Box sx={{display: "flex", flexDirection: "column", gap: (theme) => theme.spacing(2)}}>
-            <Typography variant={"h4"}>{fieldConfig.label}</Typography>
+            <Typography variant={"subtitle1"}>{fieldConfig.label}</Typography>
             <Box sx={{display: "flex", flexDirection: "column", gap: (theme) => theme.spacing(2)}}>
                 <Controller
                     name={fieldConfig.name}

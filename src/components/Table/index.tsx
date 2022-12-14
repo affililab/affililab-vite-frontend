@@ -11,7 +11,7 @@ import {
     TableCell,
     TableContainer,
     TablePagination,
-    TableRow, useScrollSticky, useTheme
+    TableRow, Typography, useScrollSticky, useTheme
 } from "my-lib";
 import {TableComponentHead} from "./Head"
 import {TableComponentMoreMenu} from "./MoreMenu"
@@ -44,6 +44,7 @@ export const TableComponent: FC<any> = ({
                                             resource = "item",
                                             height = "100%",
                                             filterName = "",
+                                            emptyData = false,
                                             activeFilterCount = 0,
                                             showCheckbox = true,
                                             disableFilter = false,
@@ -78,7 +79,7 @@ export const TableComponent: FC<any> = ({
 
     const classes = useStyles();
 
-    const isNotFound = !!(rows.length === 0) && !loading;
+    const isNotFound : boolean = emptyData && !loading;
 
     const theme = useTheme();
 
@@ -106,7 +107,6 @@ export const TableComponent: FC<any> = ({
         setSelected(newSelected);
     };
 
-
     return <>
         <TableContainer sx={{flex: 1, flexDirection: "column", display: "flex"}}>
             <TableComponentToolbar
@@ -125,7 +125,7 @@ export const TableComponent: FC<any> = ({
                     }]
                 })}
             />
-            <Scrollbar autoHide={false} sx={{
+            <Scrollbar sx={{
                 display: "flex",
                 flex: 1,
                 flexDirection: "column",
@@ -135,20 +135,13 @@ export const TableComponent: FC<any> = ({
                     display: "flex",
                     flexDirection: "column",
 
-                    overflow: "auto",
-
-                    "&::-webkit-scrollbar": {
-                        display: "none"
-                    },
-
-                    "-ms-overflow-style": "none",  /* IE and Edge */
-                    "scrollbar-width": "none"  /* Firefox */
+                    overflow: "auto"
                 },
                 ".simplebar-content": {
                     // height: "100%",
                     flex: 1,
                 }
-            }} forceVisible="y" autoHide={false} style={{height: "100%"}}>
+            }} forceVisible="y" style={{height: "100%"}}>
 
 
             <Table  size="small" sx={{borderCollapse: "separate"}}>
@@ -165,39 +158,15 @@ export const TableComponent: FC<any> = ({
                 />
                 <TableBody>
                     {/* skeleton */}
-                    {!!(rows.length === 0 && loading) && Array(rowsPerPage).fill(
-                        <TableRow sx={{background: "none !important", height: 40}}>
-                            {Array(columns.length + 1).fill(
-                                <TableCell>
-                                    <Skeleton variant="text" sx={{height: 16}}/>
-                                </TableCell>
-                            )}
-                            {rows.map((row, index) => {
-                                const isItemSelected = selected.indexOf(row.id) !== -1;
-                                return (<TableRow key={row.id + ' ' + index}>
-                                    {/* select checkbox cell */}
-                                    {showCheckbox && <TableCell padding="checkbox">
-                                        <Checkbox checked={isItemSelected} onClick={() => handleClick(row.id)}/>
-                                    </TableCell>}
-                                    {/* render cell by rowvalue renderCell method of columns */}
-                                    {columns.map(({key}, index) => {
-                                        const rowValue = row[key];
-                                        const column = columns.find(({key: columnKey}) => columnKey === key);
-                                        return <TableCell
-                                            key={key + " " + index}>{column.renderCell(row, rowValue) ?? rowValue}</TableCell>;
-                                    })}
-                                    {/* menu */}
-                                    <TableCell className={classes.stickyColumn}>
-                                        <TableComponentMoreMenu
-                                            moreMenuOnlyItems={moreMenuOnlyItems} {...(menuItems.length && menuItems)}
-                                            row={row}
-                                            menuItems={menuItems}
-                                            onDelete={() => deleteHandler(row.id)}/>
-                                    </TableCell>
-                                </TableRow>)
-                            })}
-                        </TableRow>
-                    )}
+                    {/*{!!(rows.length === 0 && loading) && Array(rowsPerPage).fill(*/}
+                    {/*    <TableRow sx={{background: "none !important", height: 40}}>*/}
+                    {/*        {Array(columns.length + 1).fill(*/}
+                    {/*            <TableCell>*/}
+                    {/*                <Skeleton variant="text" sx={{height: 16}}/>*/}
+                    {/*            </TableCell>*/}
+                    {/*        )}*/}
+                    {/*    </TableRow>*/}
+                    {/*)}*/}
 
                     {rows.map((row, index) => {
                         const isItemSelected = selected.indexOf(row.id) !== -1;
@@ -213,7 +182,7 @@ export const TableComponent: FC<any> = ({
                                 return <TableCell align={'left'} key={key + " " + index}>{column.renderCell(row, rowValue) ?? rowValue}</TableCell>;
                             })}
                             {/* menu */}
-                            <TableCell align={'right'} className={classes.stickyColumn}>
+                            <TableCell className={classes.stickyColumn}>
                                 <TableComponentMoreMenu
                                     moreMenuOnlyItems={moreMenuOnlyItems} {...(menuItems.length && menuItems)}
                                     row={row}

@@ -174,7 +174,7 @@ export const InformationTabs = ({item}) => {
                     data: [value]
                 }]}
             />
-            <Typography color="textPrimary" variant="subtitle1">
+            <Typography color="textPrimary" variant="body2">
                 {value} %
             </Typography>
         </Box> : 'Keine angabe')
@@ -218,18 +218,18 @@ export const InformationTabs = ({item}) => {
                 },
                 {
                     title: "Provision",
-                    component:  <Typography color="textPrimary" variant="subtitle1" align={"left"}>
+                    component:  <Typography color="textPrimary" variant="body1" align={"left"}>
                             {(earningsPerSale || provisionFixed) ? earningsPerSale ? fCurrency(earningsPerSale) : fCurrency(provisionFixed) : "Keine Angabe"}
                         </Typography>
                 },
                 {
                     title: "Ø Verkaufspreis",
-                    component:  <Typography color="textPrimary" variant="subtitle1"
+                    component:  <Typography color="textPrimary" variant="body1"
                                             align={"left"}>{averageSalesPrice ? fCurrency(averageSalesPrice) : "Keine Angabe"}</Typography>
                 },
                 {
                     title: "Bearbeitungszeit",
-                    component: <Typography color="textPrimary" variant="subtitle1" align={"left"}>{processingTime ? processingTime + ' Tage' : 'Keine Angabe'}</Typography>
+                    component: <Typography color="textPrimary" variant="body1" align={"left"}>{processingTime ? processingTime + ' Tage' : 'Keine Angabe'}</Typography>
                 }
             ]}/>
         },
@@ -251,7 +251,7 @@ export const InformationTabs = ({item}) => {
                 },
                 {
                     title: "Tracking Lifetime",
-                    component: <Typography color="textPrimary" variant="subtitle1" align={"left"}>{trackingLifetime} Tage</Typography>
+                    component: <Typography color="textPrimary" variant="body2" align={"left"}>{trackingLifetime} Tage</Typography>
                 }
             ]}/>
         },
@@ -265,7 +265,7 @@ export const InformationTabs = ({item}) => {
                 },
                 {
                     title: "Ranking",
-                    component: <Typography color="textPrimary" variant="subtitle1" align={"left"}>{rank ?? 'Keine Angabe'}</Typography>
+                    component: <Typography color="textPrimary" variant="body2" align={"left"}>{rank ?? 'Keine Angabe'}</Typography>
                 },
                 {
                     title: "Conversionrate",
@@ -279,7 +279,7 @@ export const InformationTabs = ({item}) => {
         }
     ];
 
-    return <Box sx={(theme) => ({height: "100%"})}>
+    return <Box sx={(theme) => ({height: "100%", flex: 1, display: "flex", flexDirection: "column", justifyContent: "space-between"})}>
         <Tabs
             sx={{ height: "52px" }}
             value={currentTab}
@@ -292,6 +292,7 @@ export const InformationTabs = ({item}) => {
         </Tabs>
         <Box mt={2} sx={(theme) => ({
             // height: "calc(100% - 52px)",
+            flex: 1,
             p: theme.spacing(2),
             backgroundColor: theme.palette.background.neutral
         })}>
