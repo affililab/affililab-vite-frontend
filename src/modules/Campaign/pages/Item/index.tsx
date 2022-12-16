@@ -147,11 +147,11 @@ export default () => {
             icon: <Icon icon={'bx:movie-play'} width={20} height={20}/>,
             component: <ELearningContent campaignData={campaignData} remove={removeResource} ids={campaign?.eLearningResources?.map(item => item?.id)} />
         },
-        {
-            value: 'Tasks',
-            icon: <Icon icon={'tabler:layout-list'} width={20} height={20}/>,
-            component: <TasksContent />
-        }
+        // {
+        //     value: 'Tasks',
+        //     icon: <Icon icon={'tabler:layout-list'} width={20} height={20}/>,
+        //     component: <TasksContent />
+        // }
     ];
 
     const editCampaign = () => {
