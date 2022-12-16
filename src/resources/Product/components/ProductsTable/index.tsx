@@ -295,6 +295,7 @@ export const ProductsTable: FC<any> = ({
     const {
         refreshPartnerprograms,
         selectedPartnerPrograms,
+        emptyData,
         fetchNext,
         loadingSelected,
         partnerprograms,
@@ -377,6 +378,7 @@ export const ProductsTable: FC<any> = ({
             activeFilterCount={activeFilterCount}
             columns={TableColumns}
             rows={loading ? [] : partnerprograms}
+            emptyData={emptyData}
             page={page}
             openFilter={() => setShowFilterModal(true)}
             loading={loading}
@@ -405,14 +407,14 @@ export const ProductsTable: FC<any> = ({
                     title: "add to campaign", onAction: (selected) => {
                         setShowAddToCampaignModal(true)
                         setAddToCampaignProducts(selected)
-                    }, icon: 'carbon:add-alt'
+                    }, icon: 'codicon:add'
                 },
                 {
                     title: "compare", onAction: (selected) => {
                         setSelected(selected);
                         setAddToCampaignProducts(selected);
                         setShowNoticedPartnerPrograms(true);
-                    }, icon: 'tabler:arrows-maximize'
+                    }, icon: 'grommet-icons:compare'
                 }
             ]}
             menuItems={[
@@ -423,7 +425,7 @@ export const ProductsTable: FC<any> = ({
                         setAddToCampaignProducts([row.id])
                     },
                     // style: { color: 'error.main' },
-                    icon: 'carbon:add-alt'
+                    icon: 'codicon:add'
                 },
                 {
                     title: "show",
@@ -431,7 +433,7 @@ export const ProductsTable: FC<any> = ({
                         toggleDetailedPartnerProgramModal(row)
                     },
                     // style: { color: 'error.main' },
-                    icon: 'tabler:arrows-maximize'
+                    icon: 'akar-icons:eye-open'
                 }
             ]}
         />

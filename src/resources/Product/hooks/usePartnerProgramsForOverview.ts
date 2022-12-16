@@ -88,6 +88,7 @@ export const usePartnerPrograms = (resetScroll, filter, getGraphQlFilters, selec
         loading,
         loadingSelected,
         selectedPartnerPrograms,
+        emptyData: !(!!data?.getPartnerPrograms?.items?.length),
         partnerprograms,
         setPartnerprograms,
         total,

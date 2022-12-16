@@ -321,6 +321,7 @@ export const useSavedFilter = (meta = {direction: 1, sortBy: "name", limit: 10, 
     return {
         savedFilters,
         getSavedFilterById,
+        emptyData: !(!!data?.getSavedFilters?.items?.length),
         loading,
         page,
         setPage,

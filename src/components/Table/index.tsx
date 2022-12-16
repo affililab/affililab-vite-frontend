@@ -157,16 +157,15 @@ export const TableComponent: FC<any> = ({
                     stickyColumnClass={classes.stickyColumn}
                 />
                 <TableBody>
-                    {/* skeleton */}
-                    {/*{!!(rows.length === 0 && loading) && Array(rowsPerPage).fill(*/}
-                    {/*    <TableRow sx={{background: "none !important", height: 40}}>*/}
-                    {/*        {Array(columns.length + 1).fill(*/}
-                    {/*            <TableCell>*/}
-                    {/*                <Skeleton variant="text" sx={{height: 16}}/>*/}
-                    {/*            </TableCell>*/}
-                    {/*        )}*/}
-                    {/*    </TableRow>*/}
-                    {/*)}*/}
+                    {!!(rows.length === 0 && loading) && Array(rowsPerPage).fill(
+                        <TableRow sx={{background: "none !important", height: 40}}>
+                            {Array(columns.length + 1).fill(
+                                <TableCell>
+                                    <Skeleton variant="text" sx={{height: 16}}/>
+                                </TableCell>
+                            )}
+                        </TableRow>
+                    )}
 
                     {rows.map((row, index) => {
                         const isItemSelected = selected.indexOf(row.id) !== -1;
@@ -198,7 +197,7 @@ export const TableComponent: FC<any> = ({
                             <TableCell align="center" colSpan={12} sx={{py: 3}}>
                                 <EmptyContent
                                     title={"Keine " + resource + "s gefunden"}
-                                    description="Nach diesen Kriterien wurden keine Tools gefunden"
+                                    description={"Nach diesen Kriterien wurden keine " + resource + " gefunden"}
                                     img="/static/illustrations/illustration_empty.svg"
                                 />
                             </TableCell>

@@ -86,6 +86,7 @@ export const SavedFiltersTable: FC<any> = ({embedded = false, applyFilter}) => {
 
     const {
         savedFilters,
+        emptyData,
         loading,
         searchValue,
         setSearchValue,
@@ -257,6 +258,7 @@ export const SavedFiltersTable: FC<any> = ({embedded = false, applyFilter}) => {
             height={embedded ? "284px" : "70vh"}
             columns={TableColumns}
             rows={loading ? [] : savedFilters}
+            emptyData={emptyData}
             page={page}
             loading={loading}
             rowsPerPage={rowsPerPage}
