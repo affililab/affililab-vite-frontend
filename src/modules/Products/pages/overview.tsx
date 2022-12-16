@@ -4,7 +4,7 @@ import {ProductsTable} from "@resources/Product/components/ProductsTable"
 
 
 export default function () {
-    return <Page title="Dashboard">
+    return <Page title="Partnerprograms">
         <ProductsTable/>
     </Page>
 }

@@ -6,6 +6,6 @@ export type configType = {
 
 export const partnerProgramsBackend: configType = {
     apiURL: import.meta.env.VITE_APP_AFFILILAB_BACKEND_SERVICE,
-    filesEndpoint: process.env.VITE_APP_AFFILILAB_BACKEND_SERVICE_FILES,
-    previewFilesEndpoint: process.env.VITE_APP_AFFILILAB_BACKEND_SERVICE_FILES_PREVIEW
+    filesEndpoint: import.meta.env.VITE_APP_AFFILILAB_BACKEND_SERVICE_FILES,
+    previewFilesEndpoint: import.meta.env.VITE_APP_AFFILILAB_BACKEND_SERVICE_FILES_PREVIEW
 };

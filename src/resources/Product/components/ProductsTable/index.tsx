@@ -12,7 +12,7 @@ import {
 } from "my-lib";
 import {TableComponent} from "@components/Table";
 import {CATEGORIES_SALARYMODELS} from "@schemas/categoriesSalaryModels";
-import {usePartnerPrograms} from "../../hooks/usePartnerPrograms";
+import {usePartnerPrograms} from "../../hooks/usePartnerProgramsForOverview";
 import {useFilter} from "@resources/Product/hooks/useFilter";
 import {useSavedFilter} from "@resources/SavedFilter/hooks/useSavedFilter"
 import {useQuery} from "@apollo/client";
@@ -303,8 +303,7 @@ export const ProductsTable: FC<any> = ({
         total,
         setTotal,
         setPage
-    } = usePartnerPrograms(() => {
-    }, filter, getGraphQlFilters, selected, order === 'asc' ? 1 : -1, orderBy, rowsPerPage);
+    } = usePartnerPrograms(() => {}, filter, getGraphQlFilters,  selected, order === 'asc' ? 1 : -1, orderBy, rowsPerPage);
 
 
     useEffect(() => {
@@ -339,7 +338,6 @@ export const ProductsTable: FC<any> = ({
         setRowsPerPage(parseInt(e.target.value, 10));
         setPage(0);
     }
-
 
     return <>
         <PartnerProgramModal

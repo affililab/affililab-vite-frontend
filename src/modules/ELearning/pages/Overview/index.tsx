@@ -10,9 +10,7 @@ import { OverviewItems } from "@resources/ELearningResources/components/Overview
 export default function () {
     const {themeStretch} = useSettings();
 
-    return <Page title="Dashboard" sx={{p: 0, height: "100%"}}>
-        <Container maxWidth={themeStretch ? false : 'xl'}>
+    return <Page title="E Learning">
             <OverviewItems />
-        </Container>
     </Page>
 }

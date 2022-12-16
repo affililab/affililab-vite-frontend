@@ -4,7 +4,7 @@ import {FilterNavSectionVertical} from "@components/FilterNavSectionVertical";
 import {Search} from "@resources/ELearningResources/components/Search";
 import {useGetAllWithNumbers} from "@resources/CampaignSupportCategory/hooks/useGetAllWithNumbers";
 
-export const ElearningMenu: FC<any> = ({ searchValue, setSearchValue, updateSearch, activeCategories, setActiveCategories }) => {
+export const ElearningMenu: FC<any> = ({ searchValue, setSearchValue, updateSearch, activeCategories, setActiveCategories, sx }) => {
 
     const {items, loading} = useGetAllWithNumbers();
 
@@ -30,15 +30,15 @@ export const ElearningMenu: FC<any> = ({ searchValue, setSearchValue, updateSear
 
     return (
         <Box
-            sx={(theme) => ({
+            sx={{
                 py: 5,
                 borderRadius: 'shape.borderRadius',
-                maxWidth: 272,
-                minWidth: 272,
-                border: (theme) => `1px solid ${theme.palette.divider}`,
+                maxWidth: 312,
+                minWidth: 346,
                 bgcolor: 'background.paper',
                 boxShadow: 'customShadows.z24',
-            })}
+                ...sx
+            }}
         >
             <Box sx={(theme) => ({ ...theme.typography.overline, paddingLeft: (theme) => theme.spacing(4), display: "flex", alignItems: "center", gap: (theme) => theme.spacing(2) })}>
                 <Icon icon={'akar-icons:settings-horizontal'} width="32" height={"32"}/>

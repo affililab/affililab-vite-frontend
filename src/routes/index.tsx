@@ -36,6 +36,11 @@ import {CrawlingSourceModule} from "../modules/CrawlingSource";
 import {SalaryModelModule} from "../modules/SalaryModel";
 import {SourceModule} from "../modules/Source";
 import {TrackingTypeModule} from "../modules/TrackingType";
+import {RootModule} from "../modules/Root";
+import {DashboardModule} from "../modules/Dashboard";
+import {CampaignModule} from "../modules/Campaign";
+import {SavedFilterModule} from "../modules/SavedFilter";
+import {EventsModule} from "../modules/Events";
 
 const MENU_OPTIONS = [
     {
@@ -169,18 +174,23 @@ export const routes = [
         </AuthGuard>,
         children: [
             <MyIndexComp />,
+            RootModule,
+            DashboardModule,
             AdvertisingTypeModule,
             AdvertismentAssetModule,
+            CampaignModule,
             CampaignSupportCategoryModule,
             CategoryModule,
             CategoryGroupModule,
             CrawlingSourceModule,
+            EventsModule,
             ELearningModule,
             ELearningResourcesTypeModule,
             PlanModule,
             ProductsModule,
             RoleModule,
             SalaryModelModule,
+            SavedFilterModule,
             SourceModule,
             TargetGroupModule,
             TargetGroupTypeModule,

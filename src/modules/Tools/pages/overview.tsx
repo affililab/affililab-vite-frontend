@@ -12,9 +12,7 @@ export default function () {
 
     return <>
         <Page title="Dashboard">
-            <Container maxWidth={themeStretch ? false : 'xl'}>
-                <OverviewItems />
-            </Container>
+            <OverviewItems />
         </Page>
     </>
 }

@@ -1,4 +1,4 @@
-const ROOTS_APP = '/';
+const ROOTS_APP = '/app';
 const ROOTS_ADMIN = '/app/admin';
 const ROOTS_SUPPORT = '/app/support';
 
@@ -14,7 +14,7 @@ export const PATH_APP = {
     general: {
         dashboard: paths(ROOTS_APP, '/dashboard'),
         campaign: paths(ROOTS_APP, '/campaign'),
-        tools: paths(ROOTS_APP, '/'),
+        tools: paths(ROOTS_APP, '/tools'),
         products: paths(ROOTS_APP, '/products'),
         eLearning: paths(ROOTS_APP, '/e-learning'),
         savedFilter: paths(ROOTS_APP, '/saved-filter'),
