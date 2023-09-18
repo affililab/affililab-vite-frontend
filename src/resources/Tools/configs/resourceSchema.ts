@@ -1,5 +1,6 @@
 import {Yup} from "my-lib";
 import {GET_ALL_CAMPAIGNSUPPORTCATEGORIES} from "@schemas/campaignSupportCategory";
+import {GET_ALL_TOOLTYPES} from "@schemas/toolType";
 
 export const resourceSchema = () => {
     return [
@@ -104,6 +105,27 @@ export const resourceSchema = () => {
                 }
             }
         },
+        // {
+        //     key: "toolType",
+        //     formConfig: {
+        //         fieldConfig: {
+        //             label: "Type",
+        //             optionsQuery: GET_ALL_TOOLTYPES,
+        //             optionsQueryName: "getallToolTypes"
+        //         },
+        //         type: "relation",
+        //         defaultValue: [],
+        //         validation: Yup.array().of(Yup.string()),
+        //     },
+        //     showInTable: true,
+        //     tableConfig: {
+        //         type: "toolType",
+        //         label: "Type",
+        //         cellConfig: {
+        //             alignRight: false
+        //         }
+        //     }
+        // },
         {
             key: "categories",
             formConfig: {

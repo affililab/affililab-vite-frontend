@@ -80,8 +80,8 @@ export const SelectedProductsTable: FC<any> = ({items, addToCampaign, embedded, 
             </Typography>
         },
         {
-            key: "provisionInPercent",
-            label: "Provision %",
+            key: "commissionInPercent",
+            label: "Commission %",
             alignRight: false,
             renderCell: (row, value) => (value !== null ? <ReactApexChart
                 className={classes.chartColumn}
@@ -97,8 +97,8 @@ export const SelectedProductsTable: FC<any> = ({items, addToCampaign, embedded, 
             </Typography>)
         },
         {
-            key: "provisionFixed",
-            label: "Provision €",
+            key: "commissionFixed",
+            label: "Commission €",
             alignRight: false,
             renderCell: (row, value) => {
                 const val = value ?? row['earningsPerSale'];

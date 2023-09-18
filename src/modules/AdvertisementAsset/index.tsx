@@ -1,12 +1,12 @@
 import ManageTable from "./pages/ManageTable";
 
-export const AdvertismentAssetModule = {
+export const AdvertisementAssetModule = {
     path: "",
     children: [
         {
             path: "support",
             children: [{
-                path: "advertismentAsset",
+                path: "advertisementAsset",
                 element: <ManageTable/>,
             }]
         }

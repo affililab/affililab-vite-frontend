@@ -78,7 +78,7 @@ export const PartnerProgramsItem: FC<any> = ({
                                             (item: any, isAuthenticated: boolean) => isAuthenticated && <Box>
                                                 <Tooltip title={ "add to campaign" } arrow>
                                                     <ToggleButton value={isNoticed} onClick={() => addToCampaign(item.id)} color="primary" aria-label="add to campaign">
-                                                        <Icon sx={(theme) => ({height: 20, width: 20, color: theme.palette.primary.dark })} icon={"carbon:add-alt"}/>
+                                                        <Icon sx={(theme) => ({height: 20, width: 20, color: theme.palette.primary.dark })} icon={"codicon:add"}/>
                                                     </ToggleButton>
                                                 </Tooltip>
                                             </Box>,
@@ -149,8 +149,8 @@ export const PartnerProgramsItem: FC<any> = ({
         title,
         productImg,
         categories,
-        provisionInPercent,
-        provisionFixed,
+        commissionInPercent,
+        commissionFixed,
         earningsPerSale,
         earningsPerCartVisitor,
         performance,
@@ -173,7 +173,7 @@ export const PartnerProgramsItem: FC<any> = ({
         targetGroups,
         directActivation,
         affiliateSupportURL,
-        advertismentAssets,
+        advertisementAssets,
         sources,
         createdAt,
         updatedAt
@@ -252,11 +252,11 @@ export const PartnerProgramsItem: FC<any> = ({
                 {/* button container */}
                 <Grid sx={{height: "100%"}} direction={"column"} justifyContent={"space-between"} container>
                     <Grid sx={{alignSelf: "flex-end"}} item>
-                        {provisionInPercent !== null && <ReactApexChart
+                        {commissionInPercent !== null && <ReactApexChart
                             width={86}
                             height={86}
                             type="radialBar"
-                            series={[provisionInPercent]}
+                            series={[commissionInPercent]}
                             options={chartOptions}
                         />}
                     </Grid>

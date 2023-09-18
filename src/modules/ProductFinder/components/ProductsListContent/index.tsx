@@ -1,4 +1,4 @@
-import React, {FC, useContext, useRef, useState} from "react";
+import React, {FC, useRef, useState} from "react";
 import {Badge, Box, FabButtonAnimate, Icon, Router, Scrollbar, ToggleButton, Typography, useAuth} from "my-lib";
 import {SubNav} from "../SubNav"
 import {useQuery} from "@apollo/client";
@@ -12,7 +12,7 @@ import {ELearning} from "./Content/ELearning";
 import {Networks} from "./Content/Networks";
 import {SortBy} from "../SortBy";
 import {WizardModal} from "@resources/Product/components/WizardModal";
-import {StickySubNavContext, StickySubNavProvider} from "../../../../providers/StickyNavProvider";
+import {StickySubNavProvider} from "../../../../providers/StickyNavProvider";
 
 const { useParams } = Router;
 
@@ -143,7 +143,7 @@ export const ProductsListContent: FC<any> = ({ filterHook = {} }) => {
             content: <ProductsListInfinityScroll limit={10} resetAll={resetAll} scrollableNodeRef={scrollableNodeRef} searchValue={searchValue} direction={-1} sortBy={"created"} graphqlFilters={getGraphQlFilters} resetScroll={resetScroll}  />,
         },
         tools: {
-            content: <Tools />
+            content: <Tools scrollableNodeRef={scrollableNodeRef} />
         },
         eLearning: {
             content: <ELearning />
@@ -203,10 +203,10 @@ export const ProductsListContent: FC<any> = ({ filterHook = {} }) => {
             isModalOpen={showSaveFilterModal}
             handleCloseModal={handleCloseSaveFilterModal}
         />
-        <Box sx={{ position: "fixed", bottom: (theme) => theme.spacing(6), right: (theme) => theme.spacing(6), zIndex: 1002 }}>
-            <FabButtonAnimate onClick={() => setIsModalOpen(true)} variant="extended" size="medium" color="primary">
+        <Box sx={{ position: "fixed", bottom: (theme) => theme.spacing(12), right: (theme) => theme.spacing(6), zIndex: 1002 }}>
+            <FabButtonAnimate sx={{ py: 4, boxShadow: (theme) => theme.customShadows.z8 }} onClick={() => setIsModalOpen(true)} variant="extended" size="large" color="secondary">
                 <Icon icon="bxs:magic-wand" width={24} height={24} />
-                help finding product
+                find me a product
             </FabButtonAnimate>
         </Box>
     </Box>

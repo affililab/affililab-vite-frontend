@@ -4,7 +4,7 @@ import {
     FormProvider,
     LoadingButton,
     RHFSwitch,
-    RHFTextField,
+    RHFTextField, Scrollbar,
     Stack,
     useForm,
     useSnackbar,
@@ -97,22 +97,30 @@ export const SaveFilterForm: FC<any> = ({isEdit, item, searchValue, filterSettin
     };
 
     return (
-        <FormProvider methods={formMethods} onSubmit={handleSubmit(onSubmit)}>
-            <Box px={4}>
-                <Stack spacing={3} mb={2}>
-                    <RHFTextField name="title" label="title"/>
-                    <RHFTextField name="description" label="Description" multiline rows={3}/>
-                    <RHFTextField name="searchValue" label="Suchbegriff" />
-                    <RHFSwitch name="searchprofile" label="bei neuen Partnerprogrammen benachrichtigt werden"/>
-                    { !isEdit && <RHFSwitch name="include_search" label="Suchbegriff mit speichern"/> }
-                    {/* filter settings */}
-                    <Filter embedded height={"256px"} filtersList={filterSettings} filter={filterValues}
-                            setFilter={setFilterValues}/>
-                </Stack>
-                <LoadingButton sx={{ float: "right" }} type="submit" variant="contained" loading={isSubmitting}>
-                    Save Filter
-                </LoadingButton>
-            </Box>
-        </FormProvider>
+        <Box>
+            <FormProvider methods={formMethods} onSubmit={handleSubmit(onSubmit)}>
+                <Box sx={{height: "724px", background: (theme) => theme.palette.background.neutral}}>
+                    <Scrollbar>
+                        <Box sx={{ p: 4 }}>
+                            <Stack spacing={3} mb={2}>
+                                <RHFTextField name="title" label="title"/>
+                                <RHFTextField name="description" label="Description" multiline rows={3}/>
+                                <RHFTextField name="searchValue" label="Suchbegriff" />
+                                <RHFSwitch name="searchprofile" label="bei neuen Partnerprogrammen benachrichtigt werden"/>
+                                { !isEdit && <RHFSwitch name="include_search" label="Suchbegriff mit speichern"/> }
+                                {/* filter settings */}
+                                <Filter embedded height={"256px"} filtersList={filterSettings} filter={filterValues}
+                                        setFilter={setFilterValues}/>
+                            </Stack>
+                        </Box>
+                    </Scrollbar>
+                </Box>
+                <Box>
+                    <LoadingButton size={'large'} sx={{ float: "right", m: 2 }} type="submit" variant="contained" loading={isSubmitting}>
+                        Save Filter
+                    </LoadingButton>
+                </Box>
+            </FormProvider>
+        </Box>
     )
 };

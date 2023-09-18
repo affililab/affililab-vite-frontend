@@ -8,7 +8,7 @@ export const CATEGORIES_SALARYMODELS = gql`
             title
         }
         
-        getAllAdvertismentAssets {
+        getAllAdvertisementAssets {
             id
             title
         }

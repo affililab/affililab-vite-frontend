@@ -42,6 +42,25 @@ export const resourceSchema = () => {
             }
         },
         {
+            key: "icon",
+            formConfig: {
+                fieldConfig: {
+                    label: "Icon"
+                },
+                type: "textField",
+                defaultValue: '',
+                validation: Yup.string(),
+            },
+            showInTable: true,
+            tableConfig: {
+                type: "icon",
+                label: "Icon",
+                cellConfig: {
+                    alignRight: false
+                }
+            }
+        },
+        {
             key: "description",
             formConfig: {
                 fieldConfig: {

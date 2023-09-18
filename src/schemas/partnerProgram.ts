@@ -20,8 +20,8 @@ export const GET_PARTNERPROGRAMS = gql`
                     id
                     title
                 }
-                provisionInPercent
-                provisionFixed
+                commissionInPercent
+                commissionFixed
                 earningsPerSale
                 earningsPerCartVisitor
                 performance
@@ -55,7 +55,7 @@ export const GET_PARTNERPROGRAMS = gql`
                 }
                 directActivation
                 affiliateSupportURL
-                advertismentAssets {
+                advertisementAssets {
                     id
                     title
                 }
@@ -86,8 +86,8 @@ export const GET_PARTNERPROGRAMS_BY_IDS = gql`
                 id
                 title
             }
-            provisionInPercent
-            provisionFixed
+            commissionInPercent
+            commissionFixed
             earningsPerSale
             earningsPerCartVisitor
             rank
@@ -122,7 +122,7 @@ export const GET_PARTNERPROGRAMS_BY_IDS = gql`
             }
             directActivation
             affiliateSupportURL
-            advertismentAssets {
+            advertisementAssets {
                 title
             }
             sources {
@@ -151,8 +151,8 @@ export const GET_PARTNERPROGRAM = gql`
                 id
                 title
             }
-            provisionInPercent
-            provisionFixed
+            commissionInPercent
+            commissionFixed
             earningsPerSale
             earningsPerCartVisitor
             rank
@@ -183,7 +183,7 @@ export const GET_PARTNERPROGRAM = gql`
             }
             directActivation
             affiliateSupportURL
-            advertismentAssets {
+            advertisementAssets {
                 title
             }
             sources {
@@ -207,7 +207,7 @@ export const CREATE_PARTNERPROGRAM = gql`
         $programId: String,
         $productImg: Upload,
         $categories: [ID],
-        $provisionInPercent: Float,       
+        $commissionInPercent: Float,       
         $earningsPerSale: Float,
         $earningsPerCartVisitor: Float,
         $averageSalesPrice: Float,
@@ -229,7 +229,7 @@ export const CREATE_PARTNERPROGRAM = gql`
         $targetGroups: [ID],
         $directActivation: Boolean,
         $affiliateSupportURL: String,
-        $advertismentAssets: [ID],
+        $advertisementAssets: [ID],
         $source: String,
         $sources: [ID],
         $createdAt: Date,
@@ -242,7 +242,7 @@ export const CREATE_PARTNERPROGRAM = gql`
             description: $description,
             productImg: $productImg,
             categories: $categories,
-            provisionInPercent: $provisionInPercent,       
+            commissionInPercent: $commissionInPercent,       
             earningsPerSale: $earningsPerSale,
             earningsPerCartVisitor: $earningsPerCartVisitor,
             averageSalesPrice: $averageSalesPrice,
@@ -264,7 +264,7 @@ export const CREATE_PARTNERPROGRAM = gql`
             targetGroups: $targetGroups,
             directActivation: $directActivation,
             affiliateSupportURL: $affiliateSupportURL,
-            advertismentAssets: $advertismentAssets,
+            advertisementAssets: $advertisementAssets,
             source: $source,
             sources: $sources,
             createdAt: $createdAt,
@@ -282,8 +282,8 @@ export const CREATE_PARTNERPROGRAM = gql`
                 id
                 title
             }
-            provisionInPercent
-            provisionFixed
+            commissionInPercent
+            commissionFixed
             earningsPerSale
             earningsPerCartVisitor
             performance
@@ -312,7 +312,7 @@ export const CREATE_PARTNERPROGRAM = gql`
             }
             directActivation
             affiliateSupportURL
-            advertismentAssets {
+            advertisementAssets {
                 id
                 title
             }
@@ -338,7 +338,7 @@ export const UPDATE_PARTNERPROGRAM = gql`
         $programId: String,
         $productImg: Upload,
         $categories: [ID],
-        $provisionInPercent: Float,       
+        $commissionInPercent: Float,       
         $earningsPerSale: Float,
         $earningsPerCartVisitor: Float,
         $averageSalesPrice: Float,
@@ -360,7 +360,7 @@ export const UPDATE_PARTNERPROGRAM = gql`
         $targetGroups: [ID],
         $directActivation: Boolean,
         $affiliateSupportURL: String,
-        $advertismentAssets: [ID],
+        $advertisementAssets: [ID],
         $source: String,
         $sources: [ID],
         $createdAt: Date,
@@ -375,7 +375,7 @@ export const UPDATE_PARTNERPROGRAM = gql`
                 description: $description,
                 productImg: $productImg,
                 categories: $categories,
-                provisionInPercent: $provisionInPercent,       
+                commissionInPercent: $commissionInPercent,       
                 earningsPerSale: $earningsPerSale,
                 earningsPerCartVisitor: $earningsPerCartVisitor,
                 averageSalesPrice: $averageSalesPrice,
@@ -397,7 +397,7 @@ export const UPDATE_PARTNERPROGRAM = gql`
                 targetGroups: $targetGroups,
                 directActivation: $directActivation,
                 affiliateSupportURL: $affiliateSupportURL,
-                advertismentAssets: $advertismentAssets,
+                advertisementAssets: $advertisementAssets,
                 source: $source,
                 sources: $sources,
                 createdAt: $createdAt,
@@ -415,8 +415,8 @@ export const UPDATE_PARTNERPROGRAM = gql`
                 id
                 title
             }
-            provisionInPercent
-            provisionFixed
+            commissionInPercent
+            commissionFixed
             earningsPerSale
             earningsPerCartVisitor
             performance
@@ -445,7 +445,7 @@ export const UPDATE_PARTNERPROGRAM = gql`
             }
             directActivation
             affiliateSupportURL
-            advertismentAssets {
+            advertisementAssets {
                 id
                 title
             }
@@ -476,8 +476,8 @@ export const GET_RECOMMENDET_PARTNER_PROGRAMS = gql`
                     id
                     title
                 }
-                provisionInPercent
-                provisionFixed
+                commissionInPercent
+                commissionFixed
                 earningsPerSale
                 earningsPerCartVisitor
                 performance
@@ -511,7 +511,7 @@ export const GET_RECOMMENDET_PARTNER_PROGRAMS = gql`
                 }
                 directActivation
                 affiliateSupportURL
-                advertismentAssets {
+                advertisementAssets {
                     id
                     title
                 }
@@ -540,8 +540,8 @@ export const GET_RECOMMENDET_PARTNER_PROGRAMS_BY_CAMPAIGN = gql`
                     id
                     title
                 }
-                provisionInPercent
-                provisionFixed
+                commissionInPercent
+                commissionFixed
                 earningsPerSale
                 earningsPerCartVisitor
                 performance
@@ -575,7 +575,7 @@ export const GET_RECOMMENDET_PARTNER_PROGRAMS_BY_CAMPAIGN = gql`
                 }
                 directActivation
                 affiliateSupportURL
-                advertismentAssets {
+                advertisementAssets {
                     id
                     title
                 }

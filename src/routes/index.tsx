@@ -29,7 +29,7 @@ import {CategoryModule} from "../modules/Category";
 import {CampaignSupportCategoryModule} from "../modules/CampaignSupportCategory";
 import {TargetGroupModule} from "../modules/TargetGroup";
 import {TargetGroupTypeModule} from "../modules/TargetGroupType";
-import {AdvertismentAssetModule} from "../modules/AdvertismentAsset";
+import {AdvertisementAssetModule} from "../modules/AdvertisementAsset";
 import {ProductsModule} from "../modules/Products";
 import {CategoryGroupModule} from "../modules/CategoryGroup";
 import {CrawlingSourceModule} from "../modules/CrawlingSource";
@@ -41,6 +41,10 @@ import {DashboardModule} from "../modules/Dashboard";
 import {CampaignModule} from "../modules/Campaign";
 import {SavedFilterModule} from "../modules/SavedFilter";
 import {EventsModule} from "../modules/Events";
+import {AccountModule} from "../modules/Account";
+import {AdGeneratorTool} from "../modules/AdGeneratorTool";
+/* PLOP_INJECT_TYPE_MODULE_IMPORT */
+import {ToolTypeModule} from "../modules/ToolType";
 
 const MENU_OPTIONS = [
     {
@@ -170,14 +174,15 @@ export const routes = [
     {
         path: "/app",
         element: <AuthGuard>
-            <DashboardLayout centerElements={[<SearchInput key={1} />]} rightElements={[<RightElements key={2} />]} paths={PATH_APP} navConfig={navConfig} menuOptions={MENU_OPTIONS} />
+            <DashboardLayout rightElements={[<RightElements key={2} />]} paths={PATH_APP} navConfig={navConfig} menuOptions={MENU_OPTIONS} />
         </AuthGuard>,
         children: [
             <MyIndexComp />,
             RootModule,
             DashboardModule,
+            AccountModule,
             AdvertisingTypeModule,
-            AdvertismentAssetModule,
+            AdvertisementAssetModule,
             CampaignModule,
             CampaignSupportCategoryModule,
             CategoryModule,
@@ -196,7 +201,10 @@ export const routes = [
             TargetGroupTypeModule,
             ToolsModule,
             TrackingTypeModule,
-            UserModule
+            UserModule,
+            AdGeneratorTool,
+            /* PLOP_INJECT_TYPE_MODULE_REGISTER */
+            ToolTypeModule,
         ]
     },
     {

@@ -12,13 +12,12 @@ import {
     AccountPopover,
     Logo,
     makeStyles,
-    useTheme, Icon
+    useTheme, Icon, Button
 } from "my-lib";
 import clsx from 'clsx';
 
 const useStyles = makeStyles(theme => ({
     nav: {
-        height: "56px",
         padding: '.5rem 5rem',
         display: 'flex',
         alignItems: 'center',
@@ -65,7 +64,7 @@ export const NoticedBottomBar = ({noticedPartnerPrograms, openNoticedPartnerProg
                             {/*    onDelete={() => {*/}
                             {/*    }}*/}
                             {/*/>*/}
-                            <Chip sx={{ p: 2 }} icon={<Icon height={12} width={12} icon={"bi:bookmark-star"} />} label="gemerkte Partnerprogramme ansehen" onClick={() => { openNoticedPartnerProgramsModal() }} />
+                            <Button color={'inherit'} variant={'outlined'} size={'large'} onClick={() => { openNoticedPartnerProgramsModal() }}><Icon height={24} width={24} icon={"bi:bookmark-star"} sx={{ mr: 2 }} />gemerkte Partnerprogramme ansehen</Button>
                         </Badge>
                     </Box>
                 </Container>

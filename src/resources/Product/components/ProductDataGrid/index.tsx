@@ -6,8 +6,8 @@ const TABLE_HEAD = [
     // {field: 'id', label: 'ID', alignRight: false},
     {field: 'title', headerName: 'Name', alignRight: false, editable: true},
     {field: 'performance', headerName: 'Performance', alignRight: false, editable: true},
-    {field: 'provisionInPercent', headerName: 'Provision', alignRight: false, editable: true},
-    {field: 'provisionFixed', headerName: 'Provision', alignRight: false, editable: true},
+    {field: 'commissionInPercent', headerName: 'Commission', alignRight: false, editable: true},
+    {field: 'commissionFixed', headerName: 'Commission', alignRight: false, editable: true},
     {field: 'earningsPerSale', headerName: 'Verdienst', alignRight: false, editable: true},
     {field: 'averageSalesPrice', headerName: 'Verkaufspreis', alignRight: false, editable: true},
     {field: 'salesPrestige', headerName: 'Verkaufsrang', alignRight: false, editable: true},
@@ -45,7 +45,7 @@ const getComparator = (order, orderBy) => {
 export const ProductDataGrid: FC<any> = ({items}) => {
 
     return <DataGrid
-            rows={items.map(item => _.pick(item, ["id", "title", "performance", "provisionInPercent", "provisionFixed", "earningsPerSale", "averageSalesPrice", "salesPrestige", "cartConversionInPercent", "cancellationRateInPercent", "directActivation"]))}
+            rows={items.map(item => _.pick(item, ["id", "title", "performance", "commissionInPercent", "commissionFixed", "earningsPerSale", "averageSalesPrice", "salesPrestige", "cartConversionInPercent", "cancellationRateInPercent", "directActivation"]))}
             autoHeight={true}
             columns={TABLE_HEAD}
             pageSize={5}

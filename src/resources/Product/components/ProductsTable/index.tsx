@@ -1,4 +1,4 @@
-import React, {useState, useEffect, FC} from "react";
+import React, {useState, useEffect, FC, useContext} from "react";
 import {
     Router as ReactRouter,
     useTheme,
@@ -7,7 +7,7 @@ import {
     ReactApexChart,
     Typography,
     makeStyles, useSnackbar,
-    Badge, Tooltip, IconButton, Icon
+    Badge, Tooltip, IconButton, Icon, HeaderItemsContext, SearchInput
 
 } from "my-lib";
 import {TableComponent} from "@components/Table";
@@ -146,8 +146,8 @@ export const ProductsTable: FC<any> = ({
             </Typography>
         },
         {
-            key: "provisionInPercent",
-            label: "Provision %",
+            key: "commissionInPercent",
+            label: "Commission %",
             alignRight: false,
             renderCell: (row, value) => (value !== null ? <ReactApexChart
                 className={classes.chartColumn}
@@ -163,8 +163,8 @@ export const ProductsTable: FC<any> = ({
             </Typography>)
         },
         {
-            key: "provisionFixed",
-            label: "Provision €",
+            key: "commissionFixed",
+            label: "Commission €",
             alignRight: false,
             renderCell: (row, value) => {
                 const val = value ?? row['earningsPerSale'];
@@ -286,6 +286,12 @@ export const ProductsTable: FC<any> = ({
         activeFilterCount
     } = useFilter(categorySalaryModelsData);
 
+    const { setCenterItems } = useContext(HeaderItemsContext);
+
+    useEffect(() => {
+        setCenterItems([<SearchInput placeholder={"Suche aus über 12.000 Partnerprogrammen ..."} searchValue={searchValue} updateInput={setSearchValue} key={1} />]);
+    }, []);
+
     const {
         getSavedFilterById,
         dataAppliedSavedFilter,
@@ -374,7 +380,6 @@ export const ProductsTable: FC<any> = ({
 
         <TableComponent
             resource={"product"}
-            height={embedded ? "524px" : "70vh"}
             activeFilterCount={activeFilterCount}
             columns={TableColumns}
             rows={loading ? [] : partnerprograms}

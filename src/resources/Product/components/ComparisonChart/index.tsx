@@ -4,8 +4,8 @@ import {FC} from "react";
 export const ComparisonChart: FC<any> = ({items}) => {
     const categories = [
         {
-            key: "provisionFixed",
-            label: "Provision €"
+            key: "commissionFixed",
+            label: "Commission €"
         },
         {
             key: "rank",
@@ -16,8 +16,8 @@ export const ComparisonChart: FC<any> = ({items}) => {
             label: "Performance"
         },
         {
-            key: "provisionInPercent",
-            label: "Provision %"
+            key: "commissionInPercent",
+            label: "Commission %"
         },
         {
             key: "averageSalesPrice",
@@ -53,9 +53,14 @@ export const ComparisonChart: FC<any> = ({items}) => {
             categories: categories.map(categoryItem => categoryItem.label),
         },
         tooltip: {
-            // y: {
-            //     formatter: (val) => `$ ${val} thousands`,
-            // },
+            style: {
+                fontSize: '12px',
+                fontColor: "black",
+                color: "black"
+            },
+            y: {
+                formatter: (val) => `$ ${val} thousands`,
+            },
         },
         plotOptions: { bar: { columnWidth: '36%' } },
     });

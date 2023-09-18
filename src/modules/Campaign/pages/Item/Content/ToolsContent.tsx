@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react"
-import {Box, EmptyContent, Grid, IconButton, Icon, Tooltip} from "my-lib"
+import React, { useEffect, useState } from "react"
+import {Box, EmptyContent, Grid, IconButton, Icon, Tooltip, ToggleButton} from "my-lib"
 import {ToolItem} from "@resources/Tools/components/ToolItem";
 import {useLazyQuery} from "@apollo/client";
 import {GET_TOOLS_BY_IDS} from "@schemas";
@@ -41,11 +41,15 @@ export const ToolsContent = ({ campaignData, ids = [], remove = () => {} }) => {
                     <ToolItem
                         openModalHandler={() => openModalHandler(item)}
                         toolItem={item} actionItems={[
-                        <Tooltip title={"von Kampagne entfernen"} arrow>
-                            <IconButton onClick={() => remove("tools", item.id)}>
-                                <Icon color={"white"} sx={(theme) => ({height: 20, width: 20 })} icon={"carbon:subtract-alt"}/>
-                            </IconButton>
-                        </Tooltip>]} />
+                        <Box>
+                            <Tooltip title={ "von Kampagne entfernen" } arrow>
+                                <ToggleButton sx={(theme) => ({ background: theme.palette.grey[500_80] })} onClick={() => remove("tools", item.id)} aria-label="von Kampagne entfernen">
+                                    <Icon color={"white"} sx={(theme) => ({height: 20, width: 20 })} icon={"codicon:remove"}/>
+                                </ToggleButton>
+                            </Tooltip>
+                        </Box>
+                    ]}
+                    />
                 </Grid>
             )) : called && <Box sx={{ width: "100%", display: "flex", justifyContent: "center", alignItems: "center" }}><EmptyContent
                 title="Keine Tools gefunden"

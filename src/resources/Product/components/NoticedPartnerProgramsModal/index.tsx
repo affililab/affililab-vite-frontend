@@ -1,5 +1,5 @@
 import React, {FC, useEffect, useState} from "react";
-import {Box, Button, DialogAnimate, DialogTitle, useTheme} from "my-lib";
+import {Box, Button, DialogAnimate, DialogTitle, Icon, IconButton, useTheme} from "my-lib";
 import {Comparison} from "./Comparison"
 import {useTriggerHook} from "./hook"
 
@@ -22,31 +22,33 @@ const ModalContent: FC<any> = ({
         setItems(noticedPartnerPrograms);
     }, [handleCloseModal, isModalOpen]);
 
-    return <>
+    return <Box sx={{ overflow: "hidden" }}>
         <Comparison addToCampaign={addToCampaign} items={items} toggleDetailedModal={toggleDetailedModal} currentTab={currentTab}
                     setCurrentTab={setCurrentTab} noticedPartnerPrograms={noticedPartnerPrograms}
                     compareViewTrigger={compareViewTrigger} toggleNoticedPartnerProgram={toggleNoticedPartnerProgram}/>
         {/*<Box sx={{ background: theme.palette.background.neutral, height: "512px" }} px={4}>*/}
         <Box sx={{
             width: "100%",
-            height: "56px",
             display: "flex",
             justifyContent: "flex-end",
             alignItems: "center",
-            px: 4,
+            p: 2,
             boxShadow: theme.customShadows.z12,
         }}>
-            <Box sx={{justifySelf: "flex-end"}}>
-                <Button onClick={() => {
+            <Box  sx={{justifySelf: "flex-end", display : "flex", gap: (theme) => theme.spacing(2) }}>
+                <Button size={'large'} onClick={() => {
                     setCurrentTab("Graphen")
                 }} variant="text">
                     Vergleichen
                 </Button>
-                <Button onClick={() => { addToCampaign() }} variant="contained">
+                <Button size={'large'} onClick={() => { addToCampaign() }} variant="contained">
                     Zu Kampagne hinzufügen
+                    <Icon sx={{ ml: 2 }} width={24}
+                          height={24}
+                          icon={'codicon:add'}/>
                 </Button>
             </Box>
-        </Box></>
+        </Box></Box>
 }
 
 export const NoticedPartnerProgramsModal: FC<any> = ({
@@ -60,7 +62,14 @@ export const NoticedPartnerProgramsModal: FC<any> = ({
 
     return (
         <DialogAnimate maxWidth={"xl"} open={isModalOpen} onClose={handleCloseModal}>
-            <DialogTitle sx={{py: 2}}>Gemerkte Partnerprogramme ansehen</DialogTitle>
+            <Box sx={{ display: "flex", justifyContent: "space-between", p: 2 }}>
+                <DialogTitle variant={'subtitle1'}>Gemerkte Partnerprogramme ansehen</DialogTitle>
+                <IconButton aria-label="close" onClick={handleCloseModal}>
+                    <Icon width={42}
+                          height={42}
+                          icon={'ei:close'}/>
+                </IconButton>
+            </Box>
             <ModalContent
                 addToCampaign={addToCampaign}
                 toggleDetailedModal={toggleDetailedModal}

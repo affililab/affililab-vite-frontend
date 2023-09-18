@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from "react";
+import React, {FC, useContext, useEffect, useState} from "react";
 import {TableComponent} from "@components/Table";
 import {FilterModal} from "@components/FilterModal";
 import {
@@ -8,7 +8,7 @@ import {
     ReactApexChart,
     Router as ReactRouter,
     Typography,
-    makeStyles, Chip
+    makeStyles, Chip, HeaderItemsContext, SearchInput
 } from "my-lib";
 import {useSavedFilter} from "@resources/SavedFilter/hooks/useSavedFilter";
 import {SavedFilterDeleteModal} from "../SavedFilterDeleteModal";
@@ -98,6 +98,12 @@ export const SavedFiltersTable: FC<any> = ({embedded = false, applyFilter}) => {
         getFilterArray
     } = useSavedFilter({direction: order === 'asc' ? 1 : -1, sortBy: orderBy, limit: rowsPerPage, filters: []});
 
+    const { setCenterItems } = useContext(HeaderItemsContext);
+
+    useEffect(() => {
+        setCenterItems([<SearchInput placeholder={"Suche aus deinen Suchprofilen ..."} searchValue={searchValue} updateInput={setSearchValue} key={1} />]);
+    }, []);
+
     const handleSearch = (searchValue) => {
         setSearchValue(searchValue);
     }
@@ -110,8 +116,8 @@ export const SavedFiltersTable: FC<any> = ({embedded = false, applyFilter}) => {
             renderCell: cellTypeMapperObject["text"]
         },
         {
-            key: "provisionInPercent",
-            label: "Provision",
+            key: "commissionInPercent",
+            label: "Commission",
             alignRight: false,
             renderCell: cellTypeMapperObject["range"]
         },
@@ -158,8 +164,8 @@ export const SavedFiltersTable: FC<any> = ({embedded = false, applyFilter}) => {
             renderCell: cellTypeMapperObject["category"]
         },
         {
-            key: 'advertismentAssets',
-            label: 'Advertisment',
+            key: 'advertisementAssets',
+            label: 'Advertisement',
             alignRight: false,
             renderCell: cellTypeMapperObject["category"]
         },

@@ -1,5 +1,5 @@
-import {useEffect, useState} from "react";
-import {Box, EmptyContent, Grid, Icon, IconButton, Tooltip} from "my-lib"
+import React, {useEffect, useState} from "react";
+import {Box, EmptyContent, Grid, Icon, IconButton, ToggleButton, Tooltip} from "my-lib"
 import {ELearningItem} from "@resources/ELearningResources/components/ELearningItem";
 import {useLazyQuery} from "@apollo/client";
 import {GET_ELEARNINGRESOURCES_BY_IDS} from "@schemas";
@@ -45,12 +45,13 @@ export const ELearningContent = ({
                     <ELearningItem
                         openModalHandler={() => openModalHandler(item)}
                         eLearningResourcesItem={item}
-                        actionItems={[<Tooltip title={"von Kampagne entfernen"} arrow>
-                            <IconButton onClick={() => remove("eLearningResources", item.id)}>
-                                <Icon color={"white"} sx={(theme) => ({height: 20, width: 20})}
-                                         icon={"carbon:subtract-alt"}/>
-                            </IconButton>
-                        </Tooltip>]}/>
+                        actionItems={[   <Box>
+                            <Tooltip title={ "von Kampagne entfernen" } arrow>
+                                <ToggleButton sx={(theme) => ({ background: theme.palette.grey[500_80] })} onClick={() => remove("tools", item.id)} aria-label="von Kampagne entfernen">
+                                    <Icon color={"white"} sx={(theme) => ({height: 20, width: 20 })} icon={"codicon:remove"}/>
+                                </ToggleButton>
+                            </Tooltip>
+                        </Box>]}/>
                 </Grid>
             )) : called && <Box sx={{
                 width: "100%",

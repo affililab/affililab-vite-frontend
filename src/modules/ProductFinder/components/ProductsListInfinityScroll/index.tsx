@@ -1,14 +1,4 @@
-import {
-    Box,
-    Button,
-    CircularProgress,
-    Container,
-    EmptyContent,
-    InfiniteScroll,
-    m,
-    Typography,
-    varContainer
-} from "my-lib";
+import {Box, Button, CircularProgress, Container, EmptyContent, InfiniteScroll, m, varContainer} from "my-lib";
 import {PartnerProgramsList} from "@resources/Product/PartnerProgram";
 import React, {FC, useEffect, useState} from "react";
 import {usePartnerPrograms} from "@resources/Product/hooks/usePartnerPrograms";
@@ -72,6 +62,7 @@ export const ProductsListInfinityScroll: FC<any> = ({limit, resetAll, resetScrol
     } = useAddToCampaign();
 
     const nextPage = async () => {
+        console.log("fetchnext");
         if (!fetchAllowed) return;
         setFetchAllowed(false);
         await fetchNext();
