@@ -1,4 +1,4 @@
-const ROOTS_APP = '/';
+const ROOTS_APP = '/app';
 const ROOTS_ADMIN = '/app/admin';
 const ROOTS_SUPPORT = '/app/support';
 
@@ -14,7 +14,7 @@ export const PATH_APP = {
     general: {
         dashboard: paths(ROOTS_APP, '/dashboard'),
         campaign: paths(ROOTS_APP, '/campaign'),
-        tools: paths(ROOTS_APP, '/'),
+        tools: paths(ROOTS_APP, '/tools'),
         products: paths(ROOTS_APP, '/products'),
         eLearning: paths(ROOTS_APP, '/e-learning'),
         savedFilter: paths(ROOTS_APP, '/saved-filter'),
@@ -47,6 +47,7 @@ export const PATH_APP = {
         source: paths(ROOTS_SUPPORT, '/source'),
         eLearningResourcesType: paths(ROOTS_SUPPORT, '/elearningresourcestype'),
         crawlingSource: paths(ROOTS_SUPPORT, '/crawlingsource'),
-        advertismentAsset: paths(ROOTS_SUPPORT, '/advertismentAsset')
+        advertisementAsset: paths(ROOTS_SUPPORT, '/advertisementAsset'),
+        toolType: paths(ROOTS_SUPPORT, '/toolType'),
     }
 }

@@ -35,7 +35,7 @@ export const TargetGroupItem: FC<any> = ({ item, actionItems = [] }) => {
                     <Image sx={{ height: "186px" }} src={cover ? partnerProgramsBackend.filesEndpoint + cover : "/static/images/campaignbg.svg"} alt={cover ? partnerProgramsBackend.apiURL + cover : "/static/images/campaignbg.svg"}/>
                 </PrimaryColoredBox>
             </Box>
-        <Typography variant="subtitle1" sx={{mt: 6, mb: 2}}>
+        <Typography variant="subtitle2" sx={{mt: 6, mb: 2}}>
             {title}
         </Typography>
         </CardContent>

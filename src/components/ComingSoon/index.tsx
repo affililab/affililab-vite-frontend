@@ -9,4 +9,4 @@ export const ComingSoon = () => {
 
         <ComingSoonIllustration sx={{ my: 10, height: 240 }} />
     </Box>
-}
+};

@@ -1,6 +1,7 @@
 import {Yup} from "my-lib";
 import {GET_ALL_SALARYMODELS} from "@schemas/salaryModel";
 import {GET_ALL_CATEGORIES} from "@schemas/category";
+import {GET_ALL_TARGETGROUPS} from "@schemas";
 
 export const resourceSchema = () => {
     return [
@@ -139,6 +140,26 @@ export const resourceSchema = () => {
             }
         },
         {
+            key: "targetGroups",
+            formConfig: {
+                fieldConfig: {
+                    label: "Target Groups",
+                    optionsQuery: GET_ALL_TARGETGROUPS
+                },
+                type: "categories",
+                defaultValue: [],
+                validation: Yup.array().of(Yup.string()),
+            },
+            showInTable: true,
+            tableConfig: {
+                type: "category",
+                label: "Target Groups",
+                cellConfig: {
+                    alignRight: false
+                }
+            }
+        },
+        {
             key: "salaryModel",
             formConfig: {
                 fieldConfig: {
@@ -180,10 +201,10 @@ export const resourceSchema = () => {
             }
         },
         {
-            key: "provisionInPercent",
+            key: "commissionInPercent",
             formConfig: {
                 fieldConfig: {
-                    label: "Provision %"
+                    label: "Commission %"
                 },
                 type: "percentage",
                 defaultValue: '',
@@ -192,17 +213,17 @@ export const resourceSchema = () => {
             showInTable: true,
             tableConfig: {
                 type: "percentage",
-                label: "Provision %",
+                label: "Commission %",
                 cellConfig: {
                     alignRight: false
                 }
             }
         },
         {
-            key: "provisionFixed",
+            key: "commissionFixed",
             formConfig: {
                 fieldConfig: {
-                    label: "Provision €"
+                    label: "Commission €"
                 },
                 type: "currency",
                 defaultValue: '',
@@ -211,7 +232,7 @@ export const resourceSchema = () => {
             showInTable: true,
             tableConfig: {
                 type: "price",
-                label: "Provision €",
+                label: "Commission €",
                 cellConfig: {
                     alignRight: false
                 }
@@ -474,7 +495,6 @@ export const resourceSchema = () => {
                     alignRight: false
                 }
             }
-        },
-
+        }
     ];
 }

@@ -18,7 +18,33 @@ import {openModal as openModalPayment} from "@slices/payment";
 import {LoginModal} from "@components/Auth/LoginModal";
 import {RegisterModal} from "@components/Auth/RegisterModal";
 import {PlanModal} from "@components/Payment/PlanModal";
-import {UserManagementModule} from "../modules/UserManagement";
+import {UserModule} from "../modules/User";
+import {RoleModule} from "../modules/Role";
+import {PlanModule} from "../modules/Plan";
+import {ELearningModule} from "../modules/ELearning";
+import {ELearningResourcesTypeModule} from "../modules/ELearningResourcesType";
+import {ToolsModule} from "../modules/Tools";
+import {AdvertisingTypeModule} from "../modules/AdvertisingType";
+import {CategoryModule} from "../modules/Category";
+import {CampaignSupportCategoryModule} from "../modules/CampaignSupportCategory";
+import {TargetGroupModule} from "../modules/TargetGroup";
+import {TargetGroupTypeModule} from "../modules/TargetGroupType";
+import {AdvertisementAssetModule} from "../modules/AdvertisementAsset";
+import {ProductsModule} from "../modules/Products";
+import {CategoryGroupModule} from "../modules/CategoryGroup";
+import {CrawlingSourceModule} from "../modules/CrawlingSource";
+import {SalaryModelModule} from "../modules/SalaryModel";
+import {SourceModule} from "../modules/Source";
+import {TrackingTypeModule} from "../modules/TrackingType";
+import {RootModule} from "../modules/Root";
+import {DashboardModule} from "../modules/Dashboard";
+import {CampaignModule} from "../modules/Campaign";
+import {SavedFilterModule} from "../modules/SavedFilter";
+import {EventsModule} from "../modules/Events";
+import {AccountModule} from "../modules/Account";
+import {AdGeneratorTool} from "../modules/AdGeneratorTool";
+/* PLOP_INJECT_TYPE_MODULE_IMPORT */
+import {ToolTypeModule} from "../modules/ToolType";
 
 const MENU_OPTIONS = [
     {
@@ -148,11 +174,37 @@ export const routes = [
     {
         path: "/app",
         element: <AuthGuard>
-            <DashboardLayout centerElements={[<SearchInput key={1} />]} rightElements={[<RightElements key={2} />]} paths={PATH_APP} navConfig={navConfig} menuOptions={MENU_OPTIONS} />
+            <DashboardLayout rightElements={[<RightElements key={2} />]} paths={PATH_APP} navConfig={navConfig} menuOptions={MENU_OPTIONS} />
         </AuthGuard>,
         children: [
             <MyIndexComp />,
-            UserManagementModule
+            RootModule,
+            DashboardModule,
+            AccountModule,
+            AdvertisingTypeModule,
+            AdvertisementAssetModule,
+            CampaignModule,
+            CampaignSupportCategoryModule,
+            CategoryModule,
+            CategoryGroupModule,
+            CrawlingSourceModule,
+            EventsModule,
+            ELearningModule,
+            ELearningResourcesTypeModule,
+            PlanModule,
+            ProductsModule,
+            RoleModule,
+            SalaryModelModule,
+            SavedFilterModule,
+            SourceModule,
+            TargetGroupModule,
+            TargetGroupTypeModule,
+            ToolsModule,
+            TrackingTypeModule,
+            UserModule,
+            AdGeneratorTool,
+            /* PLOP_INJECT_TYPE_MODULE_REGISTER */
+            ToolTypeModule,
         ]
     },
     {

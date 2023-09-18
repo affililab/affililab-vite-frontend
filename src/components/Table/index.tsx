@@ -11,7 +11,7 @@ import {
     TableCell,
     TableContainer,
     TablePagination,
-    TableRow, useScrollSticky, useTheme
+    TableRow, Typography, useScrollSticky, useTheme
 } from "my-lib";
 import {TableComponentHead} from "./Head"
 import {TableComponentMoreMenu} from "./MoreMenu"
@@ -44,9 +44,14 @@ export const TableComponent: FC<any> = ({
                                             resource = "item",
                                             height = "100%",
                                             filterName = "",
+                                            emptyData = null,
+                                            embedded = false,
                                             activeFilterCount = 0,
+                                            disableToolbar = false,
                                             showCheckbox = true,
+                                            singleSelect = false,
                                             disableFilter = false,
+                                            disableMenu = false,
                                             loading = false,
                                             columns = [],
                                             page = 0,
@@ -76,13 +81,21 @@ export const TableComponent: FC<any> = ({
                                             setSelected
                                         }) => {
 
+    if (emptyData === null) emptyData = rows.length <= 0;
+
     const classes = useStyles();
 
-    const isNotFound = !!(rows.length === 0) && !loading;
+    const isNotFound : boolean = emptyData && !loading;
 
     const theme = useTheme();
 
     const handleSelectAllClick = (checked) => {
+
+        if (singleSelect) {
+            setSelected([]);
+            return;
+        }
+
         if (checked) {
             const newSelecteds = rows.map((n) => n.id);
             setSelected(newSelecteds);
@@ -92,6 +105,12 @@ export const TableComponent: FC<any> = ({
     };
 
     const handleClick = (id) => {
+
+        if (singleSelect) {
+            setSelected([id]);
+            return;
+        }
+
         const selectedIndex = selected.indexOf(id);
         let newSelected = [];
         if (selectedIndex === -1) {
@@ -106,10 +125,9 @@ export const TableComponent: FC<any> = ({
         setSelected(newSelected);
     };
 
-
     return <>
-        <TableContainer sx={{flex: 1, flexDirection: "column", display: "flex"}}>
-            <TableComponentToolbar
+        <TableContainer sx={{flex: 1, flexDirection: "column", display: "flex", p: embedded ? 0 : 0}}>
+            {!disableToolbar && <TableComponentToolbar
                 numSelected={selected.length}
                 onSearch={handleSearch}
                 activeFilterCount={activeFilterCount}
@@ -124,8 +142,8 @@ export const TableComponent: FC<any> = ({
                         icon: 'mdi:delete-off-outline'
                     }]
                 })}
-            />
-            <Scrollbar autoHide={false} sx={{
+            />}
+            {!isNotFound && <Scrollbar sx={{
                 display: "flex",
                 flex: 1,
                 flexDirection: "column",
@@ -135,24 +153,18 @@ export const TableComponent: FC<any> = ({
                     display: "flex",
                     flexDirection: "column",
 
-                    overflow: "auto",
-
-                    "&::-webkit-scrollbar": {
-                        display: "none"
-                    },
-
-                    "-ms-overflow-style": "none",  /* IE and Edge */
-                    "scrollbar-width": "none"  /* Firefox */
+                    overflow: "auto"
                 },
                 ".simplebar-content": {
                     // height: "100%",
                     flex: 1,
                 }
-            }} forceVisible="y" autoHide={false} style={{height: "100%"}}>
+            }} forceVisible="y" style={{height: "100%"}}>
 
 
             <Table  size="small" sx={{borderCollapse: "separate"}}>
                 <TableComponentHead
+                    disableMenu={disableMenu}
                     showCheckbox={showCheckbox}
                     order={order}
                     orderBy={orderBy}
@@ -164,7 +176,6 @@ export const TableComponent: FC<any> = ({
                     stickyColumnClass={classes.stickyColumn}
                 />
                 <TableBody>
-                    {/* skeleton */}
                     {!!(rows.length === 0 && loading) && Array(rowsPerPage).fill(
                         <TableRow sx={{background: "none !important", height: 40}}>
                             {Array(columns.length + 1).fill(
@@ -172,30 +183,6 @@ export const TableComponent: FC<any> = ({
                                     <Skeleton variant="text" sx={{height: 16}}/>
                                 </TableCell>
                             )}
-                            {rows.map((row, index) => {
-                                const isItemSelected = selected.indexOf(row.id) !== -1;
-                                return (<TableRow key={row.id + ' ' + index}>
-                                    {/* select checkbox cell */}
-                                    {showCheckbox && <TableCell padding="checkbox">
-                                        <Checkbox checked={isItemSelected} onClick={() => handleClick(row.id)}/>
-                                    </TableCell>}
-                                    {/* render cell by rowvalue renderCell method of columns */}
-                                    {columns.map(({key}, index) => {
-                                        const rowValue = row[key];
-                                        const column = columns.find(({key: columnKey}) => columnKey === key);
-                                        return <TableCell
-                                            key={key + " " + index}>{column.renderCell(row, rowValue) ?? rowValue}</TableCell>;
-                                    })}
-                                    {/* menu */}
-                                    <TableCell className={classes.stickyColumn}>
-                                        <TableComponentMoreMenu
-                                            moreMenuOnlyItems={moreMenuOnlyItems} {...(menuItems.length && menuItems)}
-                                            row={row}
-                                            menuItems={menuItems}
-                                            onDelete={() => deleteHandler(row.id)}/>
-                                    </TableCell>
-                                </TableRow>)
-                            })}
                         </TableRow>
                     )}
 
@@ -213,33 +200,27 @@ export const TableComponent: FC<any> = ({
                                 return <TableCell align={'left'} key={key + " " + index}>{column.renderCell(row, rowValue) ?? rowValue}</TableCell>;
                             })}
                             {/* menu */}
-                            <TableCell align={'right'} className={classes.stickyColumn}>
+                            {!disableMenu && <TableCell className={classes.stickyColumn}>
                                 <TableComponentMoreMenu
                                     moreMenuOnlyItems={moreMenuOnlyItems} {...(menuItems.length && menuItems)}
                                     row={row}
                                     menuItems={menuItems}
                                     onDelete={() => deleteHandler(row.id)}/>
-                            </TableCell>
+                            </TableCell>}
                         </TableRow>)
                     })}
                 </TableBody>
-                {isNotFound && (
-                    <TableBody>
-                        <TableRow>
-                            <TableCell align="center" colSpan={12} sx={{py: 3}}>
-                                <EmptyContent
-                                    title={"Keine " + resource + "s gefunden"}
-                                    description="Nach diesen Kriterien wurden keine Tools gefunden"
-                                    img="/static/illustrations/illustration_empty.svg"
-                                />
-                            </TableCell>
-                        </TableRow>
-                    </TableBody>
-                )}
             </Table>
-            </Scrollbar>
+            </Scrollbar>}
+            {isNotFound && <Box sx={{ display: "flex", flex: 1, justifyContent: "center", alignItems: "center" }}>
+                <EmptyContent
+                    title={"Keine " + resource + "s gefunden"}
+                    description={"Nach diesen Kriterien wurden keine " + resource + " gefunden"}
+                    img="/static/illustrations/illustration_empty.svg"
+                />
+            </Box>}
         </TableContainer>
-        <TablePagination
+        {!isNotFound && <TablePagination
             sx={(theme) => ({
                 position: "sticky",
                 zIndex: 999,
@@ -256,7 +237,6 @@ export const TableComponent: FC<any> = ({
             page={page}
             onPageChange={changePageHandler}
             onRowsPerPageChange={changeRowsPerPageHandler}
-        />
+        />}
     </>
-
 };

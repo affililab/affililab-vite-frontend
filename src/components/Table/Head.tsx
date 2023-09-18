@@ -5,6 +5,7 @@ import {TableComponentToolbar} from "@components/Table/Toolbar";
 
 export const TableComponentHead: FC<any> = ({
                                        showCheckbox,
+                                       disableMenu,
                                        order,
                                        orderBy,
                                        rowCount,
@@ -51,9 +52,9 @@ export const TableComponentHead: FC<any> = ({
                     </TableSortLabel>
                 </TableCell>
             ))}
-            <TableCell padding={"checkbox"} className={stickyColumnClass} sx={(theme: any) => ({  background: stuck ? theme.palette.background.paper + " !important" : theme.palette.background.neutral, boxShadow: !stuck ? theme.customShadows.z24 + " !important" : "none !important" })}  align={"center"}>
+            {!disableMenu && <TableCell padding={"checkbox"} className={stickyColumnClass} sx={(theme: any) => ({  background: stuck ? theme.palette.background.paper + " !important" : theme.palette.background.neutral, boxShadow: !stuck ? theme.customShadows.z24 + " !important" : "none !important" })}  align={"center"}>
                 Actions
-            </TableCell>
+            </TableCell>}
         </TableRow>
     </TableHead>
 };

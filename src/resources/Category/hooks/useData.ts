@@ -14,7 +14,7 @@ export const useData = (meta = {direction: 1, sortBy: "name", limit: 10, filters
     const [searchValue, setSearchValue] = useState("");
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('title');
-    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [rowsPerPage, setRowsPerPage] = useState(25);
 
     const refetchingOptions = [{
         query: GET_CATEGORIES,
@@ -89,6 +89,7 @@ export const useData = (meta = {direction: 1, sortBy: "name", limit: 10, filters
         total,
         searchValue,
         setSearchValue,
+        emptyData: !(!!data?.getCategories?.items?.length),
         order,
         orderBy,
         setOrderBy,

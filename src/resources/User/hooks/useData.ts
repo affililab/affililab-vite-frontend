@@ -13,8 +13,9 @@ export const useData = (meta = {direction: 1, sortBy: "name", limit: 25, filters
     const [total, setTotal] = useState(0);
     const [searchValue, setSearchValue] = useState("");
     const [order, setOrder] = useState('asc');
-    const [orderBy, setOrderBy] = useState('title');
+    const [orderBy, setOrderBy] = useState('name');
     const [rowsPerPage, setRowsPerPage] = useState(25);
+    const [loadingState, setLoadingState] = useState(true);
 
     const refetchingOptions = [{
         query: GET_USERS,
@@ -23,7 +24,7 @@ export const useData = (meta = {direction: 1, sortBy: "name", limit: 25, filters
                 ...meta,
                 ...{direction: order === "asc" ? 1 : -1, sortBy: orderBy, limit: rowsPerPage, filters: [] },
                 page,
-                filters: [...meta?.filters, {searchParam: "title", searchQuery: searchValue}]
+                filters: [...meta?.filters, {searchParam: "name", searchQuery: searchValue}]
             }
         }
     }];
@@ -34,7 +35,7 @@ export const useData = (meta = {direction: 1, sortBy: "name", limit: 25, filters
                 ...meta,
                 ...{direction: order === "asc" ? 1 : -1, sortBy: orderBy, limit: rowsPerPage, filters: [] },
                 page,
-                filters: [...meta?.filters, {searchParam: "title", searchQuery: searchValue}]
+                filters: [...meta?.filters, {searchParam: "name", searchQuery: searchValue}]
             }
         }
     });
@@ -50,9 +51,9 @@ export const useData = (meta = {direction: 1, sortBy: "name", limit: 25, filters
                 ...meta,
                 ...{direction: order === "asc" ? 1 : -1, sortBy: orderBy, limit: rowsPerPage, filters: [] },
                 page,
-                filters: [...meta?.filters, {searchParam: "title", searchQuery: searchValue}]
+                filters: [...meta?.filters, {searchParam: "name", searchQuery: searchValue}]
             }})
-    }
+    };
 
     useEffect(() => {
         // reset eLearningResources
@@ -82,6 +83,7 @@ export const useData = (meta = {direction: 1, sortBy: "name", limit: 25, filters
 
     return {
         items,
+        emptyData: !(!!data?.getUsers?.items?.length),
         page,
         setPage,
         loading,

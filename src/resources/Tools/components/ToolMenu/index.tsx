@@ -4,7 +4,7 @@ import {FilterNavSectionVertical} from "@components/FilterNavSectionVertical";
 import {Search} from "@resources/Tools/components/Search";
 import {useGetAllWithNumbers} from "@resources/CampaignSupportCategory/hooks/useGetAllWithNumbers";
 
-export const ToolMenu: FC<any> = ({ searchValue, setSearchValue, updateSearch, activeCategories, setActiveCategories }) => {
+export const ToolMenu: FC<any> = ({ searchValue, setSearchValue, updateSearch, activeCategories, setActiveCategories, sx }) => {
 
     const {items, loading} = useGetAllWithNumbers();
 
@@ -34,21 +34,21 @@ export const ToolMenu: FC<any> = ({ searchValue, setSearchValue, updateSearch, a
             sx={{
                 py: 5,
                 borderRadius: 'shape.borderRadius',
-                maxWidth: 272,
-                minWidth: 272,
-                border: (theme) => `1px solid ${theme.palette.divider}`,
+                maxWidth: 312,
+                minWidth: 346,
                 bgcolor: 'background.paper',
                 boxShadow: 'customShadows.z24',
+                ...sx
             }}
         >
-            <Box sx={(theme) => ({ ...theme.typography.overline, paddingLeft: (theme) => theme.spacing(4), display: "flex", alignItems: "center", gap: (theme) => theme.spacing(2) })}>
-                <Icon icon={'akar-icons:settings-horizontal'} width="32" height={"32"}/>
-                <Typography
-                    variant="body2">Filter</Typography>
-            </Box>
-            <Box sx={{ paddingTop: (theme) => theme.spacing(2), paddingX: (theme) => theme.spacing(2) }}>
-                <Search searchValue={searchValue} setSearchValue={setSearchValue} updateInput={updateSearch} />
-            </Box>
+            {/*<Box sx={(theme) => ({ ...theme.typography.overline, paddingLeft: (theme) => theme.spacing(4), display: "flex", alignItems: "center", gap: (theme) => theme.spacing(2) })}>*/}
+            {/*    <Icon icon={'akar-icons:settings-horizontal'} width="32" height={"32"}/>*/}
+            {/*    <Typography*/}
+            {/*        variant="body2">Filter</Typography>*/}
+            {/*</Box>*/}
+            {/*<Box sx={{ paddingTop: (theme) => theme.spacing(2), paddingX: (theme) => theme.spacing(2) }}>*/}
+            {/*    <Search searchValue={searchValue} setSearchValue={setSearchValue} updateInput={updateSearch} />*/}
+            {/*</Box>*/}
             {loading ?
                 <Box sx={{
                     height: "256px",

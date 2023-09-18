@@ -1,5 +1,5 @@
 import React, {FC, useState} from "react";
-import {Box, Button, DialogAnimate, Step, StepLabel, Stepper} from "my-lib";
+import {Box, Button, DialogAnimate, DialogTitle, Icon, IconButton, Step, StepLabel, Stepper} from "my-lib";
 import {Selection} from "@resources/CategoryGroup/components/Selection"
 import {OverviewItems as ToolsOverviewItems} from "@resources/Tools/components/OverviewItems"
 
@@ -82,12 +82,15 @@ const WizardContent: FC<any> = () => {
                 {steps[activeStep].component}
             </Box>
             <Box sx={{ display: 'flex' }}>
-                <Button color="inherit" disabled={activeStep === 0} onClick={handleBack} sx={{ mr: 1 }}>
+                <Button size={'large'} color="inherit" disabled={activeStep === 0} onClick={handleBack} sx={{ mr: 1 }}>
                     Back
                 </Button>
                 <Box sx={{ flexGrow: 1 }} />
-                <Button variant="contained" onClick={handleNext}>
+                <Button size={'large'} variant="contained" onClick={handleNext}>
                     {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                    <Icon sx={{ ml: 2 }} width={24}
+                          height={24}
+                          icon={'carbon:chevron-right'}/>
                 </Button>
             </Box>
         </>
@@ -97,6 +100,14 @@ const WizardContent: FC<any> = () => {
 export const WizardModal = ({ isModalOpen, handleCloseModal }) => {
     return (
         <DialogAnimate maxWidth={"xl"} open={isModalOpen} onClose={handleCloseModal}>
+            <Box sx={{ display: "flex", justifyContent: "space-between", p: 2 }}>
+                <DialogTitle variant={'subtitle1'}>Product Finding Wizard</DialogTitle>
+                <IconButton aria-label="close" onClick={handleCloseModal}>
+                    <Icon width={42}
+                          height={42}
+                          icon={'ei:close'}/>
+                </IconButton>
+            </Box>
             <WizardContent />
         </DialogAnimate>
     )

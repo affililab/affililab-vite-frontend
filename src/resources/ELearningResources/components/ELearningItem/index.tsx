@@ -12,7 +12,7 @@ import {
     Image,
     SVGIcon,
     fRenderedHTML,
-    Chip, alpha, IconButton, CardHeader, CardContent
+    Chip, alpha, IconButton, CardHeader, CardContent, Tooltip, ToggleButton
 } from "my-lib"
 
 const PrimaryColoredBox = styled(Box)(({theme}) => ({
@@ -35,11 +35,13 @@ const ElearningIconBox = styled(Box)(({theme}) => ({
 import { partnerProgramsBackend } from "@config"
 
 export const ELearningItem: FC<any> = ({eLearningResourcesItem, addToCampaign, openModalHandler, actionItems = [
-    <IconButton onClick={() => {
-        addToCampaign(eLearningResourcesItem)
-    }}>
-        <Icon color={"white"} icon={'carbon:add-alt'}/>
-    </IconButton>
+    <Box>
+        <Tooltip title={ "add to campaign" } arrow>
+            <ToggleButton sx={(theme) => ({ background: theme.palette.grey[500_80] })} onClick={() =>  addToCampaign(eLearningResourcesItem)} aria-label="add to campaign">
+                <Icon color={"white"} sx={(theme) => ({height: 20, width: 20, color: theme.palette.primary.dark })} icon={"codicon:add"}/>
+            </ToggleButton>
+        </Tooltip>
+    </Box>
 ]}) => {
     const {title, cover, description, shortDescription, categories} = eLearningResourcesItem;
 
@@ -53,12 +55,10 @@ export const ELearningItem: FC<any> = ({eLearningResourcesItem, addToCampaign, o
                     left: 0,
                     right: 0,
                     zIndex: 2,
-                    backdropFilter: "blur(1px)",
-                    backgroundColor: alpha("#0000", 0.4)
+                    backdropFilter: "blur(4px)",
+                    backgroundColor: theme.palette.grey[500_56]
                 })}
-                action={
-                    <>{actionItems.map(item => item)}</>
-                }/>
+                action={<Box sx={(theme) => ({ display: "flex", gap: theme.spacing(1) })}>{actionItems.map((item, index) => <Box key={index}>{item}</Box>)}</Box>} />
             <CardContent onClick={() => {
                 openModalHandler()
             }} sx={{p: 0}}>

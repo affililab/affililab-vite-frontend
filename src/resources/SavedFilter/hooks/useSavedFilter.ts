@@ -17,8 +17,8 @@ export const useSavedFilter = (meta = {direction: 1, sortBy: "name", limit: 10, 
     const [searchValue, setSearchValue] = useState("");
     const [filtersList, setFiltersList] = useState([
         {
-            title: "Provision",
-            key: "provisionInPercent",
+            title: "Commission",
+            key: "commissionInPercent",
             type: "range",
             showEmpty: true,
             settings: {
@@ -115,8 +115,8 @@ export const useSavedFilter = (meta = {direction: 1, sortBy: "name", limit: 10, 
             }
         },
         {
-            title: "Advertisment Types",
-            key: "advertismentAssets",
+            title: "Advertisement Types",
+            key: "advertisementAssets",
             type: "category",
             showEmpty: true,
             settings: {
@@ -228,9 +228,9 @@ export const useSavedFilter = (meta = {direction: 1, sortBy: "name", limit: 10, 
     useEffect(() => {
         if (!categorySalaryModelsData) return;
         setFiltersList(filtersList.map(filterItem => {
-            if (!["categories", "salaryModel", "advertismentAssets", "trackingTypes", "targetGroups", "directActivation"].includes(filterItem.key)) return filterItem;
+            if (!["categories", "salaryModel", "advertisementAssets", "trackingTypes", "targetGroups", "directActivation"].includes(filterItem.key)) return filterItem;
             if (filterItem.key === "categories") filterItem.settings.options = categorySalaryModelsData.getAllCategories;
-            if (filterItem.key === "advertismentAssets") filterItem.settings.options = categorySalaryModelsData.getAllAdvertismentAssets;
+            if (filterItem.key === "advertisementAssets") filterItem.settings.options = categorySalaryModelsData.getAllAdvertisementAssets;
             if (filterItem.key === "trackingTypes") filterItem.settings.options = categorySalaryModelsData.getAllTrackingTypes;
             if (filterItem.key === "targetGroups") filterItem.settings.options = categorySalaryModelsData.getAllTargetGroups;
             if (filterItem.key === "salaryModel") filterItem.settings.options = categorySalaryModelsData.getAllSalaryModels;
@@ -251,7 +251,7 @@ export const useSavedFilter = (meta = {direction: 1, sortBy: "name", limit: 10, 
     const getRelationships = (key, value) => {
         const queryMapper = {
             categories: "getCategories",
-            advertismentAssets: "getAdvertismentAssets",
+            advertisementAssets: "getAdvertisementAssets",
             trackingTypes: "getTrackingTypes",
             targetGroups: "getTargetGroups",
             salaryModel: "getSalaryModels",
@@ -265,7 +265,7 @@ export const useSavedFilter = (meta = {direction: 1, sortBy: "name", limit: 10, 
         title: "text",
         searchValue: "text",
         description: "string",
-        provisionInPercent: "range",
+        commissionInPercent: "range",
         earningsPerSale: "range",
         averageSalesPrice: "range",
         performance: "range",
@@ -274,7 +274,7 @@ export const useSavedFilter = (meta = {direction: 1, sortBy: "name", limit: 10, 
         cancellationRateInPercent: "range",
         categories: "category",
         processingTime: "range",
-        advertismentAssets: "category",
+        advertisementAssets: "category",
         targetGroups: "category",
         trackingTypes: "category",
         salaryModel: "category",
@@ -321,6 +321,7 @@ export const useSavedFilter = (meta = {direction: 1, sortBy: "name", limit: 10, 
     return {
         savedFilters,
         getSavedFilterById,
+        emptyData: !(!!data?.getSavedFilters?.items?.length),
         loading,
         page,
         setPage,

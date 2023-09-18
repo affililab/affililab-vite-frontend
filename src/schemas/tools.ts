@@ -17,6 +17,8 @@ export const GET_TOOLS = gql`
                 cover
                 logo              
                 approved
+                internal
+                internalKey
                 categories {
                     id
                     title
@@ -43,6 +45,8 @@ export const GET_TOOLS_BY_IDS = gql`
             cover
             logo
             approved
+            internal
+            internalKey
             categories {
                 id
                 title
@@ -66,6 +70,8 @@ export const GET_TOOL = gql`
             cover
             logo
             link
+            internal
+            internalKey
             features {
                 icon
                 title
@@ -89,8 +95,10 @@ export const CREATE_TOOL = gql`
     $features: [FeatureInput],
     $categories: [ID],
     $approved: Boolean,
+    $internal: Boolean,
+    $internalKey: String,
     $shortDescription: String) {
-        createTool(payload: { title: $title, approved: $approved, link: $link, description: $description, categories: $categories, images: $images, cover: $cover, logo: $logo, shortDescription: $shortDescription, features: $features }) {
+        createTool(payload: { title: $title, approved: $approved, internal: $internal, internalKey: $internalKey, link: $link, description: $description, categories: $categories, images: $images, cover: $cover, logo: $logo, shortDescription: $shortDescription, features: $features }) {
             id
             title
             cover
@@ -121,13 +129,17 @@ export const UPDATE_TOOL = gql`
         $features: [FeatureInput],
         $approved: Boolean,
         $description: String,
+        $internal: Boolean,
+        $internalKey: String,
         $shortDescription: String) {
-        updateTool(id: $id, payload: {images: $images, cover: $cover, logo: $logo, categories: $categories, approved: $approved, title: $title, link: $link, description: $description, shortDescription: $shortDescription, features: $features }) {
+        updateTool(id: $id, payload: {images: $images, cover: $cover, logo: $logo, categories: $categories, approved: $approved, internal: $internal, internalKey: $internalKey, title: $title, link: $link, description: $description, shortDescription: $shortDescription, features: $features }) {
             id
             title
             cover
             logo
             link
+            internal
+            internalKey
             features {
                 icon
                 title

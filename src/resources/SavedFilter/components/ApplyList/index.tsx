@@ -99,8 +99,8 @@ export const ApplyList = ({
             renderCell: cellTypeMapperObject["text"]
         },
         {
-            key: "provisionInPercent",
-            label: "Provision",
+            key: "commissionInPercent",
+            label: "Commission",
             alignRight: false,
             renderCell: cellTypeMapperObject["range"]
         },
@@ -147,8 +147,8 @@ export const ApplyList = ({
             renderCell: cellTypeMapperObject["category"]
         },
         {
-            key: 'advertismentAssets',
-            label: 'Advertisment',
+            key: 'advertisementAssets',
+            label: 'Advertisement',
             alignRight: false,
             renderCell: cellTypeMapperObject["category"]
         },
@@ -187,8 +187,24 @@ export const ApplyList = ({
 
     if (!isAuthenticated) return <></>;
 
-    return <Scrollbar>
-        <TableContainer sx={{my: 3, height}}>
+    return <TableContainer sx={{ flex: 1 }}>
+            <Scrollbar sx={{
+                display: "flex",
+                flex: 1,
+                flexDirection: "column",
+                ".simplebar-content-wrapper": {
+                    // height: "100%",
+                    flex: 1,
+                    display: "flex",
+                    flexDirection: "column",
+
+                    overflow: "auto"
+                },
+                ".simplebar-content": {
+                    // height: "100%",
+                    flex: 1,
+                }
+            }} forceVisible="y" style={{height: "100%"}}>
             <Table stickyHeader>
                 <TableHead>
                     <TableRow className={classes.tableRow}>
@@ -219,7 +235,7 @@ export const ApplyList = ({
                                     key={index}
                                     align="center">{column.renderCell(row, rowValue) ?? rowValue}</TableCell>;
                             })}
-                            <TableCell className={[classes.stickyColumn, classes.tableCell]} align={"center"}
+                            <TableCell className={[classes.stickyColumn, classes.tableCell]}
                                        align={"center"}>
                                 <IconButton onClick={() => {
                                     applyFilter(getFilterArray(row))
@@ -231,6 +247,6 @@ export const ApplyList = ({
                     ))}
                 </TableBody>
             </Table>
+            </Scrollbar>
         </TableContainer>
-    </Scrollbar>
 }

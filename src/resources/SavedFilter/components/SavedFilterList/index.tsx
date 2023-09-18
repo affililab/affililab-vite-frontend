@@ -26,7 +26,7 @@ const TABLE_HEAD = [
         id: 'title', label: 'Title', alignRight: false
     },
     {
-        id: 'provisionInPercent', label: 'Provision', alignRight: false
+        id: 'commissionInPercent', label: 'Commission', alignRight: false
     },
     {
         id: 'earningsPerSale', label: 'Earnings', alignRight: false
@@ -50,7 +50,7 @@ const TABLE_HEAD = [
         id: 'categories', label: 'Category', alignRight: false
     },
     {
-        id: 'advertismentAssets', label: 'Advertisment', alignRight: false
+        id: 'advertisementAssets', label: 'Advertisement', alignRight: false
     },
     {
         id: 'targetGroups', label: 'Target Groups', alignRight: false

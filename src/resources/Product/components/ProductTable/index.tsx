@@ -18,8 +18,8 @@ const TABLE_HEAD = [
     // {id: 'productImg', label: 'Image', alignRight: false},
     {id: 'title', label: 'Name', alignRight: false},
     {id: 'performance', label: 'Performance', alignRight: false},
-    {id: 'provisionInPercent', label: 'Provision', alignRight: false},
-    {id: 'provisionFixed', label: 'Provision', alignRight: false},
+    {id: 'commissionInPercent', label: 'Commission', alignRight: false},
+    {id: 'commissionFixed', label: 'Commission', alignRight: false},
     {id: 'earningsPerSale', label: 'Verdienst', alignRight: false},
     {id: 'averageSalesPrice', label: 'Verkaufspreis', alignRight: false},
     {id: 'salesPrestige', label: 'Verkaufsrang', alignRight: false},
@@ -55,7 +55,7 @@ const getComparator = (order, orderBy) => {
 }
 
 export const ProductTable: FC<any> = ({items}) => {
-    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [rowsPerPage, setRowsPerPage] = useState(25);
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('title');
     const [page, setPage] = useState(0);
@@ -120,8 +120,8 @@ export const ProductTable: FC<any> = ({items}) => {
                             id,
                             title,
                             productImg,
-                            provisionInPercent,
-                            provisionFixed,
+                            commissionInPercent,
+                            commissionFixed,
                             earningsPerSale,
                             performance,
                             averageSalesPrice,
@@ -164,12 +164,12 @@ export const ProductTable: FC<any> = ({items}) => {
                                 </TableCell>
                                 <TableCell>
                                     <Typography variant="subtitle2" noWrap>
-                                        {provisionInPercent ? provisionInPercent + '%' : '-'}
+                                        {commissionInPercent ? commissionInPercent + '%' : '-'}
                                     </Typography>
                                 </TableCell>
                                 <TableCell>
                                     <Typography variant="subtitle2" noWrap>
-                                        {provisionFixed ? provisionFixed + '%' : '-'}
+                                        {commissionFixed ? commissionFixed + '%' : '-'}
                                     </Typography>
                                 </TableCell>
                                 <TableCell>

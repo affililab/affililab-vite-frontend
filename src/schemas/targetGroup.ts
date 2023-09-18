@@ -2,6 +2,25 @@ import {
     gql
 } from "@apollo/client";
 
+export const GET_ALL_TARGETGROUPS = gql`
+    query GET_ALL_TARGETGROUPS {
+        getAllTargetGroups {
+            id
+            title
+            description
+            cover
+            targetGroupType {
+                id
+                cover
+                title
+                description
+                shortDescription
+            }
+            approved
+        }
+    }
+`;
+
 export const GET_TARGETGROUPS = gql`
     query GET_TARGETGROUPS ($meta: IndexMeta) {
         getTargetGroups(meta: $meta) {

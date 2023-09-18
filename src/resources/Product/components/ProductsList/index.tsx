@@ -23,8 +23,8 @@ const TABLE_HEAD = [
     {id: 'productImg', label: 'Image', alignRight: false},
     {id: 'title', label: 'Name', alignRight: false},
     {id: 'performance', label: 'Performance', alignRight: false},
-    {id: 'provisionInPercent', label: 'Provision', alignRight: false},
-    {id: 'provisionFixed', label: 'Provision', alignRight: false},
+    {id: 'commissionInPercent', label: 'Commission', alignRight: false},
+    {id: 'commissionFixed', label: 'Commission', alignRight: false},
     {id: 'earningsPerSale', label: 'Verdienst', alignRight: false},
     {id: 'averageSalesPrice', label: 'Verkaufspreis', alignRight: false},
     {id: 'salesPrestige', label: 'Verkaufsrang', alignRight: false},
@@ -74,7 +74,7 @@ export const ProductsList: FC<any> = () => {
     const [selected, setSelected] = useState([]);
     const [orderBy, setOrderBy] = useState('name');
     const [filterName, setFilterName] = useState('');
-    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [rowsPerPage, setRowsPerPage] = useState(25);
 
     const [productList, setProductList] = useState([]);
     const [total, setTotal] = useState(0);
@@ -83,8 +83,8 @@ export const ProductsList: FC<any> = () => {
     // filter
     const [filtersList, setFiltersList] = useState([
         {
-            title: "Provision",
-            key: "provisionInPercent",
+            title: "Commission",
+            key: "commissionInPercent",
             type: "range",
             showEmpty: true,
             settings: {
@@ -181,8 +181,8 @@ export const ProductsList: FC<any> = () => {
             }
         },
         {
-            title: "Advertisment Types",
-            key: "advertismentAssets",
+            title: "Advertisement Types",
+            key: "advertisementAssets",
             type: "category",
             showEmpty: true,
             settings: {
@@ -374,8 +374,8 @@ export const ProductsList: FC<any> = () => {
                             id,
                             title,
                             productImg,
-                            provisionInPercent,
-                            provisionFixed,
+                            commissionInPercent,
+                            commissionFixed,
                             earningsPerSale,
                             performance,
                             averageSalesPrice,
@@ -419,12 +419,12 @@ export const ProductsList: FC<any> = () => {
                                 </TableCell>
                                 <TableCell>
                                     <Typography variant="subtitle2" noWrap>
-                                        {provisionInPercent ? provisionInPercent + '%' : '-'}
+                                        {commissionInPercent ? commissionInPercent + '%' : '-'}
                                     </Typography>
                                 </TableCell>
                                 <TableCell>
                                     <Typography variant="subtitle2" noWrap>
-                                        {provisionFixed ? provisionFixed + '%' : '-'}
+                                        {commissionFixed ? commissionFixed + '%' : '-'}
                                     </Typography>
                                 </TableCell>
                                 <TableCell>

@@ -1,4 +1,4 @@
-import React, {useState, useEffect, FC} from "react";
+import React, {useState, useEffect, FC, useContext} from "react";
 import {
     Router as ReactRouter,
     useTheme,
@@ -7,12 +7,12 @@ import {
     ReactApexChart,
     Typography,
     makeStyles, useSnackbar,
-    Badge, Tooltip, IconButton, Icon
+    Badge, Tooltip, IconButton, Icon, HeaderItemsContext, SearchInput
 
 } from "my-lib";
 import {TableComponent} from "@components/Table";
 import {CATEGORIES_SALARYMODELS} from "@schemas/categoriesSalaryModels";
-import {usePartnerPrograms} from "../../hooks/usePartnerPrograms";
+import {usePartnerPrograms} from "../../hooks/usePartnerProgramsForOverview";
 import {useFilter} from "@resources/Product/hooks/useFilter";
 import {useSavedFilter} from "@resources/SavedFilter/hooks/useSavedFilter"
 import {useQuery} from "@apollo/client";
@@ -146,8 +146,8 @@ export const ProductsTable: FC<any> = ({
             </Typography>
         },
         {
-            key: "provisionInPercent",
-            label: "Provision %",
+            key: "commissionInPercent",
+            label: "Commission %",
             alignRight: false,
             renderCell: (row, value) => (value !== null ? <ReactApexChart
                 className={classes.chartColumn}
@@ -163,8 +163,8 @@ export const ProductsTable: FC<any> = ({
             </Typography>)
         },
         {
-            key: "provisionFixed",
-            label: "Provision €",
+            key: "commissionFixed",
+            label: "Commission €",
             alignRight: false,
             renderCell: (row, value) => {
                 const val = value ?? row['earningsPerSale'];
@@ -241,7 +241,7 @@ export const ProductsTable: FC<any> = ({
 
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('title');
-    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [rowsPerPage, setRowsPerPage] = useState(25);
 
     /* add to campaign modal */
     const [showAddToCampaignModal, setShowAddToCampaignModal] = useState(false);
@@ -286,6 +286,12 @@ export const ProductsTable: FC<any> = ({
         activeFilterCount
     } = useFilter(categorySalaryModelsData);
 
+    const { setCenterItems } = useContext(HeaderItemsContext);
+
+    useEffect(() => {
+        setCenterItems([<SearchInput placeholder={"Suche aus über 12.000 Partnerprogrammen ..."} searchValue={searchValue} updateInput={setSearchValue} key={1} />]);
+    }, []);
+
     const {
         getSavedFilterById,
         dataAppliedSavedFilter,
@@ -295,6 +301,7 @@ export const ProductsTable: FC<any> = ({
     const {
         refreshPartnerprograms,
         selectedPartnerPrograms,
+        emptyData,
         fetchNext,
         loadingSelected,
         partnerprograms,
@@ -303,8 +310,7 @@ export const ProductsTable: FC<any> = ({
         total,
         setTotal,
         setPage
-    } = usePartnerPrograms(() => {
-    }, filter, getGraphQlFilters, selected, order === 'asc' ? 1 : -1, orderBy, rowsPerPage);
+    } = usePartnerPrograms(() => {}, filter, getGraphQlFilters,  selected, order === 'asc' ? 1 : -1, orderBy, rowsPerPage);
 
 
     useEffect(() => {
@@ -340,7 +346,6 @@ export const ProductsTable: FC<any> = ({
         setPage(0);
     }
 
-
     return <>
         <PartnerProgramModal
             isModalOpen={showPartnerProgramModal}
@@ -375,10 +380,10 @@ export const ProductsTable: FC<any> = ({
 
         <TableComponent
             resource={"product"}
-            height={embedded ? "524px" : "70vh"}
             activeFilterCount={activeFilterCount}
             columns={TableColumns}
             rows={loading ? [] : partnerprograms}
+            emptyData={emptyData}
             page={page}
             openFilter={() => setShowFilterModal(true)}
             loading={loading}
@@ -407,14 +412,14 @@ export const ProductsTable: FC<any> = ({
                     title: "add to campaign", onAction: (selected) => {
                         setShowAddToCampaignModal(true)
                         setAddToCampaignProducts(selected)
-                    }, icon: 'carbon:add-alt'
+                    }, icon: 'codicon:add'
                 },
                 {
                     title: "compare", onAction: (selected) => {
                         setSelected(selected);
                         setAddToCampaignProducts(selected);
                         setShowNoticedPartnerPrograms(true);
-                    }, icon: 'tabler:arrows-maximize'
+                    }, icon: 'grommet-icons:compare'
                 }
             ]}
             menuItems={[
@@ -425,7 +430,7 @@ export const ProductsTable: FC<any> = ({
                         setAddToCampaignProducts([row.id])
                     },
                     // style: { color: 'error.main' },
-                    icon: 'carbon:add-alt'
+                    icon: 'codicon:add'
                 },
                 {
                     title: "show",
@@ -433,7 +438,7 @@ export const ProductsTable: FC<any> = ({
                         toggleDetailedPartnerProgramModal(row)
                     },
                     // style: { color: 'error.main' },
-                    icon: 'tabler:arrows-maximize'
+                    icon: 'akar-icons:eye-open'
                 }
             ]}
         />

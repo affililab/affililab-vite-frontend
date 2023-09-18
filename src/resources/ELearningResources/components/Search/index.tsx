@@ -4,7 +4,7 @@ import {IconButton, Icon, InputAdornment, TextField} from "my-lib";
 export const Search: FC<any> = ({searchValue, setSearchValue, updateInput}) => {
     return  <TextField
         value={searchValue}
-        onChange={updateInput}
+        onChange={(e) => updateInput(e.target.value)}
         size="small"
         InputProps={{
             startAdornment: (
@@ -15,7 +15,7 @@ export const Search: FC<any> = ({searchValue, setSearchValue, updateInput}) => {
             endAdornment: searchValue && (
                 <InputAdornment position="end">
                     <IconButton onClick={() => {
-                        setSearchValue("")
+                        updateInput("")
                     }}>
                         <Icon icon={'eva:close-fill'}/>
                     </IconButton>
