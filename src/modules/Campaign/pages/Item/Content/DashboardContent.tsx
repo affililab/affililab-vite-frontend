@@ -178,7 +178,7 @@ export const DashboardContent = ({ campaign }) => {
                             {recommendetPartnerPrograms.map((partnerprogram, index) => (
                                 <Box sx={{px: 2}}>
                                     <SmallItem
-                                        key={index}
+                                        key={index + ' ' + partnerprogram.id}
                                         addToCampaign={(id) => {
                                             setAddToCampaignItems([id]);
                                             setShowAddToCampaignModal(true);
@@ -194,42 +194,42 @@ export const DashboardContent = ({ campaign }) => {
                     </CardContent>
                 </Card>
             </Grid>
-            <Grid item xs={8}>
-                <Card sx={{p: 2}}>
-                    <CardContent>
-                        {!recommendetPartnerPrograms.length && <Box sx={{
-                            height: "256px",
-                            width: "100%",
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center"
-                        }}>
-                            <CircularProgress/>
-                        </Box>}
-                        <CarouselSlider {...{...settings, autoplay: false}}>
-                            {!!recommendetPartnerPrograms?.length &&
-                                <Box>
-                                    <Typography variant="subtitle1">
-                                        Vergleich der Empfohlenen Partnerprogramme
-                                    </Typography>
-                                    <ComparisonChart items={recommendetPartnerPrograms}/>
-                                </Box>}
-                            {!!partnerPrograms?.length && <Box>
-                                <Typography variant="subtitle1">
-                                    Vergleich der Partnerprogramme in der Kampagne
-                                </Typography>
-                                <ComparisonChart items={partnerPrograms}/>
-                            </Box>}
-                            {!!(recommendetPartnerPrograms?.length && partnerPrograms?.length) && <Box>
-                                <Typography variant="subtitle1">
-                                    Vergleich der Partnerprogramme in der Kampagne & der empfohlenen
-                                </Typography>
-                                <ComparisonChart items={[...recommendetPartnerPrograms, ...partnerPrograms]}/>
-                            </Box>}
-                        </CarouselSlider>
-                    </CardContent>
-                </Card>
-            </Grid>
+            {/*<Grid item xs={8}>*/}
+            {/*    <Card sx={{p: 2}}>*/}
+            {/*        <CardContent>*/}
+            {/*            {!recommendetPartnerPrograms.length && <Box sx={{*/}
+            {/*                height: "256px",*/}
+            {/*                width: "100%",*/}
+            {/*                display: "flex",*/}
+            {/*                justifyContent: "center",*/}
+            {/*                alignItems: "center"*/}
+            {/*            }}>*/}
+            {/*                <CircularProgress/>*/}
+            {/*            </Box>}*/}
+            {/*            <CarouselSlider {...{...settings, autoplay: false}}>*/}
+            {/*                {!!recommendetPartnerPrograms?.length &&*/}
+            {/*                    <Box>*/}
+            {/*                        <Typography variant="subtitle1">*/}
+            {/*                            Vergleich der Empfohlenen Partnerprogramme*/}
+            {/*                        </Typography>*/}
+            {/*                        <ComparisonChart items={recommendetPartnerPrograms}/>*/}
+            {/*                    </Box>}*/}
+            {/*                {!!partnerPrograms?.length && <Box>*/}
+            {/*                    <Typography variant="subtitle1">*/}
+            {/*                        Vergleich der Partnerprogramme in der Kampagne*/}
+            {/*                    </Typography>*/}
+            {/*                    <ComparisonChart items={partnerPrograms}/>*/}
+            {/*                </Box>}*/}
+            {/*                {!!(recommendetPartnerPrograms?.length && partnerPrograms?.length) && <Box>*/}
+            {/*                    <Typography variant="subtitle1">*/}
+            {/*                        Vergleich der Partnerprogramme in der Kampagne & der empfohlenen*/}
+            {/*                    </Typography>*/}
+            {/*                    <ComparisonChart items={[...recommendetPartnerPrograms, ...partnerPrograms]}/>*/}
+            {/*                </Box>}*/}
+            {/*            </CarouselSlider>*/}
+            {/*        </CardContent>*/}
+            {/*    </Card>*/}
+            {/*</Grid>*/}
         </Grid>
         {/* modals */}
         <AddToModal addToObjects={{partnerPrograms: addToCampaignItems}} isModalOpen={showAddToCampaignModal}

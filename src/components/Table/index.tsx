@@ -44,10 +44,14 @@ export const TableComponent: FC<any> = ({
                                             resource = "item",
                                             height = "100%",
                                             filterName = "",
-                                            emptyData = false,
+                                            emptyData = null,
+                                            embedded = false,
                                             activeFilterCount = 0,
+                                            disableToolbar = false,
                                             showCheckbox = true,
+                                            singleSelect = false,
                                             disableFilter = false,
+                                            disableMenu = false,
                                             loading = false,
                                             columns = [],
                                             page = 0,
@@ -77,6 +81,8 @@ export const TableComponent: FC<any> = ({
                                             setSelected
                                         }) => {
 
+    if (emptyData === null) emptyData = rows.length <= 0;
+
     const classes = useStyles();
 
     const isNotFound : boolean = emptyData && !loading;
@@ -84,6 +90,12 @@ export const TableComponent: FC<any> = ({
     const theme = useTheme();
 
     const handleSelectAllClick = (checked) => {
+
+        if (singleSelect) {
+            setSelected([]);
+            return;
+        }
+
         if (checked) {
             const newSelecteds = rows.map((n) => n.id);
             setSelected(newSelecteds);
@@ -93,6 +105,12 @@ export const TableComponent: FC<any> = ({
     };
 
     const handleClick = (id) => {
+
+        if (singleSelect) {
+            setSelected([id]);
+            return;
+        }
+
         const selectedIndex = selected.indexOf(id);
         let newSelected = [];
         if (selectedIndex === -1) {
@@ -108,8 +126,8 @@ export const TableComponent: FC<any> = ({
     };
 
     return <>
-        <TableContainer sx={{flex: 1, flexDirection: "column", display: "flex"}}>
-            <TableComponentToolbar
+        <TableContainer sx={{flex: 1, flexDirection: "column", display: "flex", p: embedded ? 0 : 0}}>
+            {!disableToolbar && <TableComponentToolbar
                 numSelected={selected.length}
                 onSearch={handleSearch}
                 activeFilterCount={activeFilterCount}
@@ -124,8 +142,8 @@ export const TableComponent: FC<any> = ({
                         icon: 'mdi:delete-off-outline'
                     }]
                 })}
-            />
-            <Scrollbar sx={{
+            />}
+            {!isNotFound && <Scrollbar sx={{
                 display: "flex",
                 flex: 1,
                 flexDirection: "column",
@@ -146,6 +164,7 @@ export const TableComponent: FC<any> = ({
 
             <Table  size="small" sx={{borderCollapse: "separate"}}>
                 <TableComponentHead
+                    disableMenu={disableMenu}
                     showCheckbox={showCheckbox}
                     order={order}
                     orderBy={orderBy}
@@ -181,33 +200,27 @@ export const TableComponent: FC<any> = ({
                                 return <TableCell align={'left'} key={key + " " + index}>{column.renderCell(row, rowValue) ?? rowValue}</TableCell>;
                             })}
                             {/* menu */}
-                            <TableCell className={classes.stickyColumn}>
+                            {!disableMenu && <TableCell className={classes.stickyColumn}>
                                 <TableComponentMoreMenu
                                     moreMenuOnlyItems={moreMenuOnlyItems} {...(menuItems.length && menuItems)}
                                     row={row}
                                     menuItems={menuItems}
                                     onDelete={() => deleteHandler(row.id)}/>
-                            </TableCell>
+                            </TableCell>}
                         </TableRow>)
                     })}
                 </TableBody>
-                {isNotFound && (
-                    <TableBody>
-                        <TableRow>
-                            <TableCell align="center" colSpan={12} sx={{py: 3}}>
-                                <EmptyContent
-                                    title={"Keine " + resource + "s gefunden"}
-                                    description={"Nach diesen Kriterien wurden keine " + resource + " gefunden"}
-                                    img="/static/illustrations/illustration_empty.svg"
-                                />
-                            </TableCell>
-                        </TableRow>
-                    </TableBody>
-                )}
             </Table>
-            </Scrollbar>
+            </Scrollbar>}
+            {isNotFound && <Box sx={{ display: "flex", flex: 1, justifyContent: "center", alignItems: "center" }}>
+                <EmptyContent
+                    title={"Keine " + resource + "s gefunden"}
+                    description={"Nach diesen Kriterien wurden keine " + resource + " gefunden"}
+                    img="/static/illustrations/illustration_empty.svg"
+                />
+            </Box>}
         </TableContainer>
-        <TablePagination
+        {!isNotFound && <TablePagination
             sx={(theme) => ({
                 position: "sticky",
                 zIndex: 999,
@@ -224,7 +237,6 @@ export const TableComponent: FC<any> = ({
             page={page}
             onPageChange={changePageHandler}
             onRowsPerPageChange={changeRowsPerPageHandler}
-        />
+        />}
     </>
-
 };

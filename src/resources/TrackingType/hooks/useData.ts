@@ -89,6 +89,7 @@ export const useData = (meta = {direction: 1, sortBy: "name", limit: 10, filters
         total,
         searchValue,
         setSearchValue,
+        emptyData: !(!!data?.getTrackingTypes?.items?.length),
         order,
         orderBy,
         setOrderBy,

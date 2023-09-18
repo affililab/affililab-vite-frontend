@@ -34,9 +34,9 @@ export default () => {
 
     const getGraphqlUpdateObjects = (resourceKey, id) => {
         const updateRelationshipObject = {};
-        updateRelationshipObject[resourceKey] = { delete: [id] }
+        updateRelationshipObject[resourceKey] = { delete: [id] };
         return updateRelationshipObject;
-    }
+    };
 
     const {loading: isLoading, error, data: campaignData, status, refetch} = useQuery(GET_CAMPAIGN, { variables: { id: campaignId } });
 
@@ -201,7 +201,7 @@ export default () => {
             <StickySubNavProvider sx={{ py: 0, height: "62px" }}>
                 <Box sx={(theme) => ({display: 'flex', alignItems: 'center', height: "100%", justifyContent: 'space-between', px: theme.spacing(4)})}>
                     <Box sx={{ display: "flex", gap: (theme) => theme.spacing(2), alignItems: "center" }}>
-                        <Button onClick={() => {navigate("/app/campaign")}} color="inherit" startIcon={<Icon icon="eva:arrow-back-fill" />}>Zurück zu allen Kampagnen</Button>
+                        <Button onClick={() => {navigate("/app/campaign")}} color="inherit" startIcon={<Icon icon="eva:arrow-back-fill" />}>Zurück</Button>
                         <Typography variant="h6" component="h4">{campaign?.title}</Typography>
                     </Box>
                     <Box sx={{ alignSelf: "flex-end" }}>

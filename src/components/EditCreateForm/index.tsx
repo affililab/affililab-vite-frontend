@@ -1,19 +1,23 @@
-import React, {useState, useMemo, useEffect} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {
-    Stack,
     Box,
-    useSnackbar,
-    useForm,
+    Button,
     FormProvider,
+    Icon,
+    LoadingButton,
+    Scrollbar,
+    Stack,
+    useForm,
+    useSnackbar,
     Yup,
-    yupResolver,
-    LoadingButton
+    yupResolver
 } from "my-lib";
 import {useMutation} from "@apollo/client";
 import {FormFieldMapper} from "@components/FormFieldMapper"
 
 export const EditCreateForm = ({
                                    refetchingOptions = {},
+                                    abort = {},
                                    isEdit,
                                    item,
                                    finishCallBack,
@@ -39,7 +43,7 @@ export const EditCreateForm = ({
     const defaultValues = useMemo(
         () => (
             Object.fromEntries(resourceSchema.map(resourceSchemaItem => {
-                let { defaultValue } = resourceSchemaItem.formConfig;
+                let {defaultValue} = resourceSchemaItem.formConfig;
                 if (item && !["images"].includes(resourceSchemaItem.formConfig.type)) {
                     defaultValue = ["categories", "relation"].includes(resourceSchemaItem.formConfig.type) ? item[resourceSchemaItem.key].map(({id}) => id) : item[resourceSchemaItem.key]
                     if (resourceSchemaItem.formConfig.type === "relationSingle") defaultValue = item[resourceSchemaItem.key]?.id;
@@ -101,17 +105,36 @@ export const EditCreateForm = ({
     };
 
     return (
-        <FormProvider methods={formMethods} onSubmit={handleSubmit(onSubmit)}>
-            <Box px={4}>
-                <Stack spacing={3} mb={2}>
-                    {resourceSchema.filter(({formConfig}) => formConfig.visibility !== "hidden").map(({
-                                                                                                    formConfig,
-                                                                                                    key
-                                                                                                }) => FormFieldMapper(formConfig.type, {name: key, ...formConfig.fieldConfig}, formMethods))}
-                </Stack>
-                <LoadingButton sx={{float: "right"}} type="submit" variant="contained" loading={isSubmitting}>
-                    Save
-                </LoadingButton>
+        <FormProvider sx={{overflow: "hidden"}} methods={formMethods} onSubmit={handleSubmit(onSubmit)}>
+            <Box sx={{height: "724px", background: (theme) => theme.palette.background.neutral}}>
+                <Scrollbar>
+                    <Box sx={{p: 4}}>
+                        <Stack spacing={3} mb={2}>
+                            {resourceSchema.filter(({formConfig}) => formConfig.visibility !== "hidden").map(({
+                                                                                                                  formConfig,
+                                                                                                                  key
+                                                                                                              }) => FormFieldMapper(formConfig.type, {name: key, ...formConfig.fieldConfig}, formMethods))}
+                        </Stack>
+                    </Box></Scrollbar></Box>
+            <Box sx={{
+                width: "100%",
+                display: "flex",
+                justifyContent: "flex-end",
+                alignItems: "center",
+                p: 2,
+                boxShadow: (theme) => theme.customShadows.z12,
+            }}>
+                <Box sx={{justifySelf: "flex-end", width: "100%", display: "flex", justifyContent: "space-between", gap: (theme) => theme.spacing(2)}}>
+                    <Button size={'large'} color={'inherit'} variant="" onClick={() => { abort() }}>
+                        abort
+                    </Button>
+                    <LoadingButton size={'large'} sx={{float: "right"}} type="submit" variant="contained" loading={isSubmitting}>
+                        <Icon sx={{ mr: 2 }} width={18}
+                              height={18}
+                              icon={'fa-regular:save'}/>
+                        Save
+                    </LoadingButton>
+                </Box>
             </Box>
         </FormProvider>
     )

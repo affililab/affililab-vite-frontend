@@ -1,6 +1,6 @@
 import React from 'react';
 // components
-import {Icon, Label} from 'my-lib';
+import {Icon} from 'my-lib';
 import {PATH_APP} from "./paths";
 
 const getIcon = (name: string) => <Icon icon={name}/>;
@@ -32,7 +32,7 @@ const ICONS = {
     source: getIcon('mdi:relation-many-to-many'),
     eLearningResourcesType: getIcon('tabler:category-2'),
     crawlingSource: getIcon('akar-icons:link-chain'),
-    advertismentAsset: getIcon('ri:advertisement-line'),
+    advertisementAsset: getIcon('ri:advertisement-line'),
 };
 
 const navConfig = [
@@ -126,14 +126,26 @@ const navConfig = [
                     ]
                 },
                 {
-                    title: 'tools', path: PATH_APP.support.tools, icon: ICONS.tools,
+                    title: 'tools', path: PATH_APP.support.tools, icon: ICONS.eLearning,
+                    children: [
+                        {
+                            title: 'items', path: PATH_APP.support.tools, icon: ICONS.tools,
+                        },
+                        {
+                            title: 'types',
+                            path: PATH_APP.support.toolType,
+                            icon: ICONS.eLearningResourcesType,
+                        },
+                    ]
                 },
                 /* PLOP_INJECT_TYPE_NAVCONFIG_CONTRIBUTOR_ITEMS */
                 {
                     title: 'advertisingtype', path: PATH_APP.support.advertisingtype, icon: ICONS.advertisingtype,
                 },
                 {
-                    title: 'categories', path: PATH_APP.support.campaignSupportCategory, icon: ICONS.campaignSupportCategory,
+                    title: 'categories',
+                    path: PATH_APP.support.campaignSupportCategory,
+                    icon: ICONS.campaignSupportCategory,
                 },
                 {
                     title: 'targetgroup', path: PATH_APP.support.targetGroup, icon: ICONS.targetGroup,
@@ -149,9 +161,9 @@ const navConfig = [
                     ]
                 },
                 {
-                    title: 'advertismentAsset',
-                    path: PATH_APP.support.advertismentAsset,
-                    icon: ICONS.advertismentAsset,
+                    title: 'advertisementAsset',
+                    path: PATH_APP.support.advertisementAsset,
+                    icon: ICONS.advertisementAsset,
                 },
                 {
                     title: 'partnerprogramme',

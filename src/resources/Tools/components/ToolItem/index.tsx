@@ -14,7 +14,7 @@ import {
     Image,
     styled,
     SVGIcon,
-    TextMaxLine,
+    TextMaxLine, ToggleButton, Tooltip,
     Typography
 } from "my-lib"
 import {partnerProgramsBackend} from "@config"
@@ -40,9 +40,13 @@ const ToolIconBox = styled(Box)(({theme}) => ({
 // ----------------------------------------------------------------------
 
 export const ToolItem: FC<any> = ({toolItem, addToCampaign, openModalHandler, actionItems = [
-    <IconButton onClick={() => { addToCampaign(toolItem) }}>
-        <Icon color={"white"} icon={'carbon:add-alt'} />
-    </IconButton>
+        <Box>
+            <Tooltip title={ "add to campaign" } arrow>
+                <ToggleButton sx={(theme) => ({ background: theme.palette.grey[500_80] })} onClick={() => addToCampaign(toolItem)} aria-label="add to campaign">
+                    <Icon color={"white"} sx={(theme) => ({height: 20, width: 20, color: theme.palette.primary.dark })} icon={"codicon:add"}/>
+                </ToggleButton>
+            </Tooltip>
+        </Box>
 ]}) => {
 
     const {cover, title, shortDescription, categories} = toolItem;
@@ -57,10 +61,10 @@ export const ToolItem: FC<any> = ({toolItem, addToCampaign, openModalHandler, ac
                     left: 0,
                     right: 0,
                     zIndex: 2,
-                    backdropFilter: "blur(1px)",
-                    backgroundColor: alpha("#0000", 0.8)
+                    backdropFilter: "blur(4px)",
+                    backgroundColor: theme.palette.grey[500_56]
                 })}
-                action={<>{actionItems.map(item => item)}</>}
+                action={<Box sx={(theme) => ({ display: "flex", gap: theme.spacing(1) })}>{actionItems.map((item, index) => <Box key={index}>{item}</Box>)}</Box>}
             />
             <CardContent onClick={openModalHandler} sx={{p: 0}}>
             <Box sx={{position: 'relative'}}>

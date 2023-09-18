@@ -1,8 +1,8 @@
 import React from "react";
 import { Container } from "my-lib";
-import {OverviewItems} from "@resources/ELearningResources/components/OverviewItems";
+import {Content} from "@resources/ELearningResources/components/OverviewItems/content";
 export const ELearning = () => {
     return <Container maxWidth={"xl"} sx={{height: "100%"}}>
-        <OverviewItems actionItems={[]} />
+        <Content actionItems={[]} />
     </Container>
 };

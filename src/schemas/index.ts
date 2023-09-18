@@ -5,7 +5,9 @@ export * from "./savedFilters";
 export * from "./tools";
 export * from "./eLearningResources";
 export * from "./payment"
+export * from "./adGeneration"
 /* PLOP_INJECT_TYPE_SCHEMA_EXPORTS */
+export * from "./toolType"
 export * from "./plan"
 export * from "./advertisingType"
 export * from "./targetGroupType"
@@ -21,4 +23,4 @@ export * from "./trackingType"
 export * from "./source"
 export * from "./eLearningResourcesType"
 export * from "./crawlingSource"
-export * from "./advertismentAsset"
+export * from "./advertisementAsset"

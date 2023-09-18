@@ -1,77 +1,80 @@
 import {useEffect, useState} from "react";
 import {useMutation, useQuery} from "@apollo/client";
-import {DELETE_AdvertismentAsset, GET_AdvertismentAssets, CREATE_AdvertismentAsset, UPDATE_AdvertismentAsset } from "@schemas/advertismentAsset";
+import {DELETE_TOOLTYPE, GET_TOOLTYPES, CREATE_TOOLTYPE, UPDATE_TOOLTYPE } from "@schemas/toolType";
 import { useSnackbar } from "my-lib"
 
-export const useData = (meta = {direction: 1, sortBy: "name", limit: 10, filters: []}) => {
+export const useData = (meta = {direction: 1, sortBy: "title", limit: 5, filters: []}) => {
 
     const { enqueueSnackbar } = useSnackbar();
-
     const [items, setItems] = useState([]);
     const [page, setPage] = useState(0);
-    const [limit, setLimit] = useState(10);
     const [total, setTotal] = useState(0);
     const [searchValue, setSearchValue] = useState("");
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('title');
-    const [rowsPerPage, setRowsPerPage] = useState(25);
+    const [rowsPerPage, setRowsPerPage] = useState(meta.limit);
 
     const refetchingOptions = [{
-        query: GET_AdvertismentAssets,
+        query: GET_TOOLTYPES,
         variables: {
             meta: {
                 ...meta,
-                ...{direction: order === "asc" ? 1 : -1, sortBy: orderBy, limit: rowsPerPage, filters: [] },
+                ...{direction: order === "asc" ? 1 : -1, sortBy: orderBy, limit: rowsPerPage },
                 page,
                 filters: [...meta?.filters, {searchParam: "title", searchQuery: searchValue}]
             }
         }
     }];
 
-    const {refetch, loading, error, data, called, networkStatus} = useQuery(GET_AdvertismentAssets, {
+    const {refetch, loading, error, data, called, networkStatus} = useQuery(GET_TOOLTYPES, {
         variables: {
             meta: {
                 ...meta,
-                ...{direction: order === "asc" ? 1 : -1, sortBy: orderBy, limit: rowsPerPage, filters: [] },
+                ...{direction: order === "asc" ? 1 : -1, sortBy: orderBy, limit: rowsPerPage },
                 page,
                 filters: [...meta?.filters, {searchParam: "title", searchQuery: searchValue}]
             }
         }
     });
 
-    const [deleteMutation, {deleteErrors}] = useMutation(DELETE_AdvertismentAsset, {
+    const [deleteMutation, {deleteErrors}] = useMutation(DELETE_TOOLTYPE, {
         refetchQueries: refetchingOptions
     });
 
     const refetchItems = async () => {
         // refetch with new page
-        await refetch({
+        return await refetch({
             meta: {
                 ...meta,
-                ...{direction: order === "asc" ? 1 : -1, sortBy: orderBy, limit: rowsPerPage, filters: [] },
+                ...{direction: order === "asc" ? 1 : -1, sortBy: orderBy, limit: rowsPerPage },
                 page,
                 filters: [...meta?.filters, {searchParam: "title", searchQuery: searchValue}]
             }})
-    }
-
-    useEffect(() => {
-        // reset eLearningResources
-        setItems([]);
-        if (data) {
-            setTotal(data.getAdvertismentAssets.pageInfo.total);
-            setItems(data.getAdvertismentAssets.items);
-        }
-    }, [data]);
+    };
 
     useEffect( () => {
         const refetch = async () => {
-            await refetchItems()
+            const { data } = await refetchItems();
+
+            setItems([]);
+            setTotal(data.getToolTypes.pageInfo.total);
+            setItems(data.getToolTypes.items);
         }
         refetch()
-    }, [order, orderBy, rowsPerPage, limit, page, searchValue]);
+    }, [order, orderBy, rowsPerPage, searchValue]);
 
-    const fetchNext = async (param) => {
+    useEffect( () => {
+        const refetch = async () => {
+            const { data } = await refetchItems();
+            setTotal(data.getToolTypes.pageInfo.total);
+            if (data?.getToolTypes?.items) setItems([...items, ...data.getToolTypes.items]);
+        }
+        refetch()
+    }, [page]);
+
+    const fetchNext = async () => {
         if (loading) return;
+        console.log("page", page + 1);
         setPage(page + 1);
     };
 
@@ -89,16 +92,17 @@ export const useData = (meta = {direction: 1, sortBy: "name", limit: 10, filters
         total,
         searchValue,
         setSearchValue,
+        emptyData: !(!!data?.getToolTypes?.items?.length),
         order,
         orderBy,
         setOrderBy,
         setOrder,
-        setLimit,
         rowsPerPage,
         setRowsPerPage,
         deleteItems,
-        createMutation: CREATE_AdvertismentAsset,
-        editMutation: UPDATE_AdvertismentAsset,
-        refetchingOptions
+        createMutation: CREATE_TOOLTYPE,
+        editMutation: UPDATE_TOOLTYPE,
+        refetchingOptions,
+        fetchNext
     }
 }

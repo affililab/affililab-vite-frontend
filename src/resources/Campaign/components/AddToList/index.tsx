@@ -13,7 +13,7 @@ import React, {FC, useEffect, useState} from "react";
 import {useMutation, useQuery} from "@apollo/client";
 import {GET_CAMPAIGNS, UPDATE_CAMPAIGN} from "@schemas/campaigns";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme: any) => ({
     tableRow: {
         '&:hover': {
             background: theme.palette.background.neutral,
@@ -39,7 +39,7 @@ export const AddToList: FC<any> = ({ addToObjects, height='512px' }) => {
 
     const [campaigns, setCampaigns] = useState([]);
 
-    const {loading: isLoading, error, data: campaignData, status, refetch} = useQuery(GET_CAMPAIGNS, {
+    const {loading: isLoading, error, data: campaignData, status, refetch} : any = useQuery(GET_CAMPAIGNS, {
         variables: {meta : { page: 0, direction: 1, sortBy: "title", limit: 10, filters: []}}}
     );
 
@@ -58,12 +58,12 @@ export const AddToList: FC<any> = ({ addToObjects, height='512px' }) => {
         }
     }, [campaignData]);
 
-    const hasAlreadyElements = (row) => {
+    const hasAlreadyElements = (row: any) => {
         let hasAddToAlready = false
         Object.keys(addToObjects).forEach(resourceKey => {
             hasAddToAlready = false;
-            addToObjects[resourceKey].forEach(resourceItemId => {
-                if (!row[resourceKey].find(rowResourceItem => rowResourceItem.id === resourceItemId)) hasAddToAlready = true
+            addToObjects[resourceKey].forEach((resourceItemId: any) => {
+                if (!row[resourceKey].find((rowResourceItem: any) => rowResourceItem.id === resourceItemId)) hasAddToAlready = true
             })
         })
         return hasAddToAlready;
@@ -77,10 +77,26 @@ export const AddToList: FC<any> = ({ addToObjects, height='512px' }) => {
         return updateRelationshipObject;
     }
 
-    const addTo = (item) => { editCampaignMutation({ variables: { id: item.id, ...getGraphqlUpdateObjects() } }) }
+    const addTo = (item: any) => { editCampaignMutation({ variables: { id: item.id, ...getGraphqlUpdateObjects() } }) }
 
-    return <Scrollbar>
-        <TableContainer sx={{ mt: 3, height }}>
+    return <TableContainer sx={{ mt: 3, flex: 1 }}>
+            <Scrollbar sx={{
+                display: "flex",
+                flex: 1,
+                flexDirection: "column",
+                ".simplebar-content-wrapper": {
+                    // height: "100%",
+                    flex: 1,
+                    display: "flex",
+                    flexDirection: "column",
+
+                    overflow: "auto"
+                },
+                ".simplebar-content": {
+                    // height: "100%",
+                    flex: 1,
+                }
+            }} forceVisible="y" style={{height: "100%"}}>
             <Table stickyHeader>
                 <TableHead>
                     <TableRow className={classes.tableRow}>
@@ -92,13 +108,13 @@ export const AddToList: FC<any> = ({ addToObjects, height='512px' }) => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {campaigns.map((row, index) => (
-                        <TableRow className={classes.tableRow} key={index + row.title}>
-                            <TableCell align={"center"} className={classes.tableCell} component="th" scope="row">{row.title}</TableCell>
-                            <TableCell align={"center"} className={classes.tableCell}>{fShortenNumber(row?.tools.length)}</TableCell>
+                    {campaigns.map((row: any, index) => (
+                        <TableRow className={classes.tableRow} key={index + row?.title}>
+                            <TableCell align={"center"} className={classes.tableCell} component="th" scope="row">{row?.title}</TableCell>
+                            <TableCell align={"center"} className={classes.tableCell}>{fShortenNumber(row?.tools?.length)}</TableCell>
                             <TableCell align={"center"} className={classes.tableCell}>{fShortenNumber(row?.partnerPrograms.length)}</TableCell>
                             <TableCell align={"center"} className={classes.tableCell}>{fShortenNumber(row?.eLearningResources.length)}</TableCell>
-                            <TableCell align={"center"} align={"center"} className={classes.tableCell}>
+                            <TableCell align={"center"} className={classes.tableCell}>
                                 {hasAlreadyElements(row) ? <IconButton onClick={() => addTo(row)}>
                                     <Icon icon={'carbon:add-alt'} />
                                 </IconButton> : <Icon color={theme.palette.success.light} icon={'akar-icons:check'} />}
@@ -107,6 +123,6 @@ export const AddToList: FC<any> = ({ addToObjects, height='512px' }) => {
                     ))}
                 </TableBody>
             </Table>
-        </TableContainer>
-    </Scrollbar>
+            </Scrollbar>
+    </TableContainer>
 }

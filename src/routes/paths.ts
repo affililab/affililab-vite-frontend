@@ -47,6 +47,7 @@ export const PATH_APP = {
         source: paths(ROOTS_SUPPORT, '/source'),
         eLearningResourcesType: paths(ROOTS_SUPPORT, '/elearningresourcestype'),
         crawlingSource: paths(ROOTS_SUPPORT, '/crawlingsource'),
-        advertismentAsset: paths(ROOTS_SUPPORT, '/advertismentAsset')
+        advertisementAsset: paths(ROOTS_SUPPORT, '/advertisementAsset'),
+        toolType: paths(ROOTS_SUPPORT, '/toolType'),
     }
 }

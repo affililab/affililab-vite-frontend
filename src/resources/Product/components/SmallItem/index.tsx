@@ -203,8 +203,8 @@ export const SmallItem = ({
         title,
         productImg,
         categories,
-        provisionInPercent,
-        provisionFixed,
+        commissionInPercent,
+        commissionFixed,
         earningsPerSale,
         earningsPerCartVisitor,
         performance,
@@ -227,7 +227,7 @@ export const SmallItem = ({
         targetGroups,
         directActivation,
         affiliateSupportURL,
-        advertismentAssets,
+        advertisementAssets,
         sources,
         createdAt,
         updatedAt
@@ -298,9 +298,9 @@ export const SmallItem = ({
 
     return <Box sx={{textAlign: 'center', paddingBottom: 0}}>
         <Box sx={{p: 0}}>
-            <Box sx={(theme) => ({position: 'relative', display: "flex", flexDirection: "column", backgroundColor: theme.palette.background.neutral})}>
+            <Box sx={(theme: any) => ({position: 'relative', display: "flex", flexDirection: "column", backgroundColor: theme.palette.background.neutral})}>
                 <Box sx={{alignSelf: "flex-end", display: "flex", gap: ".6rem", p: 2}}>
-                    {actionItems.map(actionItem => actionItem(item, auth.isAuthenticated))}
+                    {actionItems.map( (actionItem, index) => <Box key={index}>{actionItem(item, auth.isAuthenticated)}</Box>)}
                 </Box>
                 <SVGIcon
                     src="https://minimal-assets-api.vercel.app/assets/icons/shape-avatar.svg"

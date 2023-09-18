@@ -1,16 +1,7 @@
 import React, {useEffect, useState} from "react";
-import {
-    Scrollbar,
-    Box,
-    Grid,
-    EmptyContent,
-    Skeleton,
-    Tooltip,
-    Icon,
-    ToggleButton, IconButton
-} from "my-lib"
+import {Box, EmptyContent, Grid, Icon, IconButton, Skeleton, Tooltip} from "my-lib"
 import {useLazyQuery} from "@apollo/client";
-import {GET_PARTNERPROGRAMS_BY_IDS} from "@schemas";
+import {GET_PARTNERPROGRAMS} from "@schemas";
 import {PartnerProgramModal} from "@resources/Product/components/PartnerProgramModal";
 import {Item} from "@resources/Product/components/Item";
 
@@ -30,24 +21,36 @@ const SkeletonLoad = (
 
 export const ProductsContent = ({pItems, campaignData, remove = () => {}, ids = []}) => {
 
-    const [getItems, {loading, error, data, called}] = useLazyQuery(GET_PARTNERPROGRAMS_BY_IDS);
+    const [getItems, {loading, error, data, called}] = useLazyQuery(GET_PARTNERPROGRAMS);
 
     const [items, setItems] = useState([]);
 
     const [showPartnerProgramModal, setShowPartnerProgramModal] = useState(false);
     const [currentPartnerProgram, setCurrentPartnerProgram] = useState(null);
-    const toggleDetailedPartnerProgramModal = (partnerProgram) => {
+    const toggleDetailedPartnerProgramModal = (partnerProgram: any) => {
         setCurrentPartnerProgram(partnerProgram);
         setShowPartnerProgramModal(!showPartnerProgramModal);
-    }
+    };
+
+    const getPartnerPrograms =  async () => {
+        return (await getItems({variables: {
+                meta: {
+                    ids,
+                    limit: 2,
+                    page: 0
+                }
+        }}));
+    };
 
     useEffect(() => {
-        if (ids.length) getItems({variables: {ids}});
+        if (ids.length) {
+            // const response = await getCampaignCategoriesItems({variables: { id: campaignId }});
+            (async () => {
+                const response = await getPartnerPrograms();
+                setItems(response.data.getPartnerPrograms.items);
+            })();
+        }
     }, [ids, campaignData]);
-
-    useEffect(() => {
-        if (data) setItems(data.getPartnerProgramsByIds);
-    }, [data]);
 
     return <>
         <PartnerProgramModal

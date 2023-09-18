@@ -124,12 +124,19 @@ export const TableCellMapper = (type, cellTypeParams, cellFunctions) => {
         {value ? 'active' : 'not active'}
     </Label>
 
-    const ImageCellRenderer = (row, value) => value ? <Image
-        disabledEffect
-        alt={row.title}
+    const ImageCellRenderer = (row, value) => value ? <Box sx={{
+        justifyContent: "center",
+        alignItems: "center",
+        width: "156px",
+        height: "auto",
+        maxHeight: "86px",
+        overflow: "hidden",
+        borderRadius: 2,
+        p: "4px"
+    }}><Image
         src={value.includes("http") ? value : partnerProgramsBackend.previewFilesEndpoint + value}
-        sx={{borderRadius: 1.5, width: 128, height: 56, mr: 2}}
-    /> : "-";
+        sx={{ height: "100%", width: "100%", borderRadius: 2 }}
+    /></Box> : "-";
 
     const AvatarCellRenderer = (row, value) => <Avatar src={value ? partnerProgramsBackend.previewFilesEndpoint + value : "https://minimal-assets-api.vercel.app/assets/images/avatars/avatar_20.jpg"} sx={{ mr: 2 }} />;
 
@@ -210,7 +217,7 @@ export const TableCellMapper = (type, cellTypeParams, cellFunctions) => {
         verified: VerifiedCellRenderer,
         options: OptionsCellRenderer,
         avatarName: AvatarName
-    }
+    };
 
     return cellTypeMappingObject[type];
 }

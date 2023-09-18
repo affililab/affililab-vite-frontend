@@ -49,13 +49,11 @@ export const RegisterForm: FC<RegisterFormProps> = ({
     }: any = methods;
 
     const onSubmit = async (data: { email: string, password: string, passwordConfirmation: string, firstName: string, lastName: string }) => {
-        console.log(data);
         try {
             await register(data.email, data.password, data.passwordConfirmation, data.firstName, data.lastName);
             onFinish();
         } catch (error) {
             console.error(error);
-            reset();
             if (isMountedRef.current) {
                 setError('afterSubmit', error);
             }

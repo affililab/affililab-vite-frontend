@@ -28,8 +28,8 @@ export const InformationTabs = ({item}) => {
         title,
         productImg,
         categories,
-        provisionInPercent,
-        provisionFixed,
+        commissionInPercent,
+        commissionFixed,
         earningsPerSale,
         earningsPerCartVisitor,
         performance,
@@ -54,7 +54,7 @@ export const InformationTabs = ({item}) => {
         trackingTypes,
         directActivation,
         affiliateSupportURL,
-        advertismentAssets,
+        advertisementAssets,
         sources,
         createdAt,
         updatedAt
@@ -193,8 +193,8 @@ export const InformationTabs = ({item}) => {
             icon: <Icon icon={'charm:credit-card'} width={20} height={20}/>,
             component: <InformationContent informationItems={[
                 {
-                    title: "Provision %",
-                    component: PercentageRenderer(provisionInPercent)
+                    title: "Commission %",
+                    component: PercentageRenderer(commissionInPercent)
                 },
                 {
                     title: "Bezahlarten",
@@ -217,9 +217,9 @@ export const InformationTabs = ({item}) => {
                     component: SubproductsRenderer(products)
                 },
                 {
-                    title: "Provision",
+                    title: "Commission",
                     component:  <Typography color="textPrimary" variant="body1" align={"left"}>
-                            {(earningsPerSale || provisionFixed) ? earningsPerSale ? fCurrency(earningsPerSale) : fCurrency(provisionFixed) : "Keine Angabe"}
+                            {(earningsPerSale || commissionFixed) ? earningsPerSale ? fCurrency(earningsPerSale) : fCurrency(commissionFixed) : "Keine Angabe"}
                         </Typography>
                 },
                 {
@@ -243,7 +243,7 @@ export const InformationTabs = ({item}) => {
                 },
                 {
                     title: "Marketing Assets",
-                    component: CategoriesRenderer(advertismentAssets)
+                    component: CategoriesRenderer(advertisementAssets)
                 },
                 {
                     title: "Tracking",

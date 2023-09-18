@@ -1,4 +1,4 @@
-import {FC, useState} from "react";
+import React, {FC, useState} from "react";
 import {
     Accordion,
     AccordionDetails,
@@ -19,7 +19,7 @@ import {
     Tooltip,
     Typography,
     useAuth,
-    capitalCase
+    capitalCase, IconButton
 } from "my-lib";
 import {partnerProgramsBackend} from "@config";
 
@@ -58,31 +58,11 @@ export const Content: FC<any> = ({
                             handleClose,
                             addToCampaign,
                             actionItems = [
-                                (item, isAuthenticated) => (isAuthenticated && addToCampaign) && <Box>
-                                    <Tooltip title={"add to campaign"} arrow>
-                                        <ToggleButton onClick={() => addToCampaign(item)}
-                                                      color="primary" aria-label="add to campaign">
-                                            <Icon sx={(theme) => ({
-                                                height: 20,
-                                                width: 20,
+                                (item, isAuthenticated) => (isAuthenticated && addToCampaign) && <IconButton aria-label="close" onClick={() => addToCampaign(item)}>
+                                            <Icon width={32} height={32} sx={(theme) => ({
                                                 color: theme.palette.primary.dark
-                                            })} icon={"carbon:add-alt"}/>
-                                        </ToggleButton>
-                                    </Tooltip>
-                                </Box>,
-                                (item) => <Box>
-                                    <Tooltip title={"schließen"} arrow>
-                                        <ToggleButton value="checked" onClick={() => handleClose()}
-                                                      color="primary"
-                                                      aria-label={"close"}>
-                                            <Icon sx={(theme) => ({
-                                                height: 20,
-                                                width: 20,
-                                                color: theme.palette.primary.dark
-                                            })} icon={"tabler:arrows-minimize"}/>
-                                        </ToggleButton>
-                                    </Tooltip>
-                                </Box>
+                                            })} icon={"codicon:add"}/>
+                                </IconButton>
                             ]
 }) => {
 
@@ -166,6 +146,11 @@ export const Content: FC<any> = ({
                 <Button color="info" href={item.link}  variant="contained" target="_blank" size="medium">Get Tool</Button>
                 <ActionButtonsContainer>
                     {actionItems.map(actionItem => actionItem(item, isAuthenticated))}
+                    <IconButton aria-label="close" onClick={handleClose}>
+                        <Icon width={42}
+                              height={42}
+                              icon={'ei:close'}/>
+                    </IconButton>
                 </ActionButtonsContainer>
             </Box>
             {/* TODO: Logo */}

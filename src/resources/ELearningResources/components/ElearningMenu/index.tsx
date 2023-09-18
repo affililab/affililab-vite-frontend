@@ -40,14 +40,14 @@ export const ElearningMenu: FC<any> = ({ searchValue, setSearchValue, updateSear
                 ...sx
             }}
         >
-            <Box sx={(theme) => ({ ...theme.typography.overline, paddingLeft: (theme) => theme.spacing(4), display: "flex", alignItems: "center", gap: (theme) => theme.spacing(2) })}>
-                <Icon icon={'akar-icons:settings-horizontal'} width="32" height={"32"}/>
-                <Typography
-                    variant="body2">Filter</Typography>
-            </Box>
-            <Box sx={{ paddingTop: (theme) => theme.spacing(2), paddingX: (theme) => theme.spacing(2) }}>
-                <Search searchValue={searchValue} setSearchValue={setSearchValue} updateInput={updateSearch} />
-            </Box>
+            {/*<Box sx={(theme) => ({ ...theme.typography.overline, paddingLeft: (theme) => theme.spacing(4), display: "flex", alignItems: "center", gap: (theme) => theme.spacing(2) })}>*/}
+            {/*    <Icon icon={'akar-icons:settings-horizontal'} width="32" height={"32"}/>*/}
+            {/*    <Typography*/}
+            {/*        variant="body2">Filter</Typography>*/}
+            {/*</Box>*/}
+            {/*<Box sx={{ paddingTop: (theme) => theme.spacing(2), paddingX: (theme) => theme.spacing(2) }}>*/}
+            {/*    <Search searchValue={searchValue} setSearchValue={setSearchValue} updateInput={updateSearch} />*/}
+            {/*</Box>*/}
             {loading ?
                 <Box
                 sx={{

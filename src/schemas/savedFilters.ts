@@ -14,7 +14,7 @@ export const GET_SAVED_FILTERS = gql`
                 title
                 description
                 searchValue
-                provisionInPercent {
+                commissionInPercent {
                     showEmpty
                     value
                 }
@@ -70,7 +70,7 @@ export const GET_SAVED_FILTERS = gql`
                         title
                     }
                 }
-                advertismentAssets {
+                advertisementAssets {
                     showEmpty
                     value {
                         id
@@ -93,7 +93,7 @@ export const GET_SAVED_FILTER = gql`
             title
             description
             searchValue
-            provisionInPercent {
+            commissionInPercent {
                 showEmpty
                 value
             }
@@ -149,7 +149,7 @@ export const GET_SAVED_FILTER = gql`
                     title
                 }
             }
-            advertismentAssets {
+            advertisementAssets {
                 showEmpty
                 value {
                     id
@@ -165,13 +165,13 @@ export const GET_SAVED_FILTER = gql`
 `;
 
 export const UPDATE_SAVED_FILTER = gql`
-    mutation updateSavedFilter($id: ID!, $title: String!, $description: String, $searchValue: String, $provisionInPercent: RangeTypeInput, $earningsPerSale: RangeTypeInput, $averageSalesPrice: RangeTypeInput, $performance: RangeTypeInput, $processingTime: RangeTypeInput, $cartConversionInPercent: RangeTypeInput, $cancellationRateInPercent: RangeTypeInput, $trackingTypes: RelationTypeInput, $targetGroups: RelationTypeInput, $categories: RelationTypeInput, $advertismentAssets: RelationTypeInput, $directActivation: SwitchTypeInput) {
-        updateSavedFilter(id: $id, payload: { title: $title, description: $description, searchValue: $searchValue, provisionInPercent: $provisionInPercent, earningsPerSale: $earningsPerSale, averageSalesPrice: $averageSalesPrice, performance: $performance, processingTime: $processingTime, cartConversionInPercent: $cartConversionInPercent, cancellationRateInPercent: $cancellationRateInPercent,  trackingTypes: $trackingTypes, targetGroups: $targetGroups, categories: $categories, advertismentAssets : $advertismentAssets, directActivation: $directActivation }) {
+    mutation updateSavedFilter($id: ID!, $title: String!, $description: String, $searchValue: String, $commissionInPercent: RangeTypeInput, $earningsPerSale: RangeTypeInput, $averageSalesPrice: RangeTypeInput, $performance: RangeTypeInput, $processingTime: RangeTypeInput, $cartConversionInPercent: RangeTypeInput, $cancellationRateInPercent: RangeTypeInput, $trackingTypes: RelationTypeInput, $targetGroups: RelationTypeInput, $categories: RelationTypeInput, $advertisementAssets: RelationTypeInput, $directActivation: SwitchTypeInput) {
+        updateSavedFilter(id: $id, payload: { title: $title, description: $description, searchValue: $searchValue, commissionInPercent: $commissionInPercent, earningsPerSale: $earningsPerSale, averageSalesPrice: $averageSalesPrice, performance: $performance, processingTime: $processingTime, cartConversionInPercent: $cartConversionInPercent, cancellationRateInPercent: $cancellationRateInPercent,  trackingTypes: $trackingTypes, targetGroups: $targetGroups, categories: $categories, advertisementAssets : $advertisementAssets, directActivation: $directActivation }) {
             id
             title
             description
             searchValue
-            provisionInPercent {
+            commissionInPercent {
                 showEmpty
                 value
             }
@@ -227,7 +227,7 @@ export const UPDATE_SAVED_FILTER = gql`
                     title
                 }
             }
-            advertismentAssets {
+            advertisementAssets {
                 showEmpty
                 value {
                     id
@@ -243,13 +243,13 @@ export const UPDATE_SAVED_FILTER = gql`
 `;
 
 export const CREATE_SAVED_FILTER = gql`
-    mutation createSavedFilter($title: String!, $description: String, $searchValue: String, $provisionInPercent: RangeTypeInput, $earningsPerSale: RangeTypeInput, $averageSalesPrice: RangeTypeInput, $performance: RangeTypeInput, $processingTime: RangeTypeInput, $cartConversionInPercent: RangeTypeInput, $cancellationRateInPercent: RangeTypeInput, $trackingTypes: RelationTypeInput, $targetGroups: RelationTypeInput, $categories: RelationTypeInput, $salaryModel: RelationTypeInput, $advertismentAssets: RelationTypeInput, $directActivation: SwitchTypeInput) {
-        createSavedFilter(payload: { title: $title, description: $description, searchValue: $searchValue, provisionInPercent: $provisionInPercent, earningsPerSale: $earningsPerSale, averageSalesPrice: $averageSalesPrice, performance: $performance, processingTime: $processingTime, cartConversionInPercent: $cartConversionInPercent, cancellationRateInPercent: $cancellationRateInPercent,  trackingTypes: $trackingTypes, targetGroups: $targetGroups, categories: $categories, salaryModel: $salaryModel, advertismentAssets : $advertismentAssets, directActivation: $directActivation}) {
+    mutation createSavedFilter($title: String!, $description: String, $searchValue: String, $commissionInPercent: RangeTypeInput, $earningsPerSale: RangeTypeInput, $averageSalesPrice: RangeTypeInput, $performance: RangeTypeInput, $processingTime: RangeTypeInput, $cartConversionInPercent: RangeTypeInput, $cancellationRateInPercent: RangeTypeInput, $trackingTypes: RelationTypeInput, $targetGroups: RelationTypeInput, $categories: RelationTypeInput, $salaryModel: RelationTypeInput, $advertisementAssets: RelationTypeInput, $directActivation: SwitchTypeInput) {
+        createSavedFilter(payload: { title: $title, description: $description, searchValue: $searchValue, commissionInPercent: $commissionInPercent, earningsPerSale: $earningsPerSale, averageSalesPrice: $averageSalesPrice, performance: $performance, processingTime: $processingTime, cartConversionInPercent: $cartConversionInPercent, cancellationRateInPercent: $cancellationRateInPercent,  trackingTypes: $trackingTypes, targetGroups: $targetGroups, categories: $categories, salaryModel: $salaryModel, advertisementAssets : $advertisementAssets, directActivation: $directActivation}) {
             id
             title
             description
             searchValue
-            provisionInPercent {
+            commissionInPercent {
                 showEmpty
                 value
             }
@@ -305,7 +305,7 @@ export const CREATE_SAVED_FILTER = gql`
                     title
                 }
             }
-            advertismentAssets {
+            advertisementAssets {
                 showEmpty
                 value {
                     id

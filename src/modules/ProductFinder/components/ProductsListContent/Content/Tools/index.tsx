@@ -1,8 +1,8 @@
 import React from "react";
 import { Container } from "my-lib";
-import {OverviewItems} from "@resources/Tools/components/OverviewItems";
-export const Tools = () => {
+import {Content} from "@resources/Tools/components/OverviewItems/content";
+export const Tools = ({ scrollableNodeRef }) => {
     return <Container maxWidth={"xl"} sx={{height: "100%"}}>
-        <OverviewItems actionItems={[]} />
+        <Content actionItems={[]} scrollableNodeRef={scrollableNodeRef} />
     </Container>
 };

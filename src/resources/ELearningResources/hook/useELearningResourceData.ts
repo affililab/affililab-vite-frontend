@@ -88,6 +88,7 @@ export const useELearningResourceData = (meta = {direction: 1, sortBy: "name", l
         total,
         searchValue,
         setSearchValue,
+        emptyData: !(!!data?.getELearningResources?.items?.length),
         order,
         orderBy,
         setOrderBy,

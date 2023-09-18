@@ -53,7 +53,7 @@ export const Filter = ({height, filtersList, filter, setFilter, applyFilter, emb
 
     if (!filter.length) return <></>
 
-    return<Box sx={(theme) => ({ border: embedded ? `solid 1px ${theme.palette.divider}` : "" , width: "100%" })}>
+    return<Box sx={(theme) => ({ border: embedded ? `solid 1px ${theme.palette.divider}` : "" , flex: 1, display: "flex", flexDirection: "column", width: "100%" })}>
         <Tabs
             sx={{ px: 2, boxShadow: theme.customShadows.z12, }}
             value={currentTab}
@@ -64,14 +64,18 @@ export const Filter = ({height, filtersList, filter, setFilter, applyFilter, emb
                 <Tab disableRipple key={index} label={capitalCase(tab.value)} icon={tab.icon} value={tab.value}/>
             ))}
         </Tabs>
-
-        <Box p={FILTER_TABS.find((tab) => tab.value === currentTab)?.full ? 0 : 4} sx={{ height: height ?? "512px", overflow: "hidden", background: theme.palette.background.neutral }}>
-            {FILTER_TABS.find((tab) => tab.value === currentTab)?.full  ? <Box sx={{m: 0}}>
-                    <Grid container direction="column" spacing={4}>{FILTER_TABS.find((tab) => tab.value === currentTab)?.component}</Grid>
-                </Box> : <Scrollbar>
-                <Box sx={{m: 4}}>
-                    <Grid container direction="column" spacing={4}>{FILTER_TABS.find((tab) => tab.value === currentTab)?.component}</Grid>
+        <Box sx={{height: "724px", background: theme.palette.background.neutral}}>
+            <Scrollbar>
+                <Box sx={{p: 4}}>
+                    {FILTER_TABS.find((tab) => tab.value === currentTab)?.full  ? <Box sx={{m: 0}}>
+                            <Grid container direction="column" spacing={4}>{FILTER_TABS.find((tab) => tab.value === currentTab)?.component}</Grid>
+                        </Box> :
+                        <Box sx={{m: 4}}>
+                            <Grid container direction="column" spacing={4}>{FILTER_TABS.find((tab) => tab.value === currentTab)?.component}</Grid>
+                        </Box>
+                    }
                 </Box>
-            </Scrollbar>}
-        </Box></Box>
+            </Scrollbar>
+        </Box>
+    </Box>
 };

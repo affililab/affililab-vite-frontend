@@ -201,8 +201,8 @@ export const Item: FC<any> = ({
         title,
         productImg,
         categories,
-        provisionInPercent,
-        provisionFixed,
+        commissionInPercent,
+        commissionFixed,
         earningsPerSale,
         earningsPerCartVisitor,
         performance,
@@ -225,7 +225,7 @@ export const Item: FC<any> = ({
         targetGroups,
         directActivation,
         affiliateSupportURL,
-        advertismentAssets,
+        advertisementAssets,
         sources,
         createdAt,
         updatedAt
@@ -376,31 +376,31 @@ export const Item: FC<any> = ({
                                 minHeight: "286px",
                             })}>
                                 <InformationContainer>
-                                    {!!provisionInPercent && <InformationItem active sx={{ minHeight: "58px" }}>
+                                    {!!commissionInPercent && <InformationItem active sx={{ minHeight: "58px" }}>
                                         <Typography color="white" variant="subtitle2" align={"left"}>
-                                            Provision
+                                            Commission
                                         </Typography>
                                         <Box sx={(theme: any) => ({display: "flex", flexDirection: "column", justifyContent: "space-between", alignItems: "flex-end" })}>
                                             <Typography color="white" variant="subtitle2">
-                                                {provisionInPercent} %
+                                                {commissionInPercent} %
                                             </Typography>
                                             <ReactApexChart
-                                                options={chartOptions(provisionInPercent)}
+                                                options={chartOptions(commissionInPercent)}
                                                 width={112}
                                                 height={8}
                                                 type="bar"
                                                 series={[{
-                                                    data: [provisionInPercent]
+                                                    data: [commissionInPercent]
                                                 }]}
                                             />
                                         </Box>
                                     </InformationItem>}
-                                    {!!(earningsPerSale || provisionFixed) && <InformationItem active={!provisionInPercent}>
-                                        <Typography color={!provisionInPercent ? "white" : theme.palette.text.primary} variant="subtitle2" align={"left"}>
-                                            Provision
+                                    {!!(earningsPerSale || commissionFixed) && <InformationItem active={!commissionInPercent}>
+                                        <Typography color={!commissionInPercent ? "white" : theme.palette.text.primary} variant="subtitle2" align={"left"}>
+                                            Commission
                                         </Typography>
-                                        <Typography color={!provisionInPercent ? "white" : theme.palette.text.primary} variant={!provisionInPercent ? "subtitle1" : "subtitle2"} align={"left"}>
-                                            {earningsPerSale ? fCurrency(earningsPerSale) : fCurrency(provisionFixed)}
+                                        <Typography color={!commissionInPercent ? "white" : theme.palette.text.primary} variant={!commissionInPercent ? "subtitle1" : "subtitle2"} align={"left"}>
+                                            {earningsPerSale ? fCurrency(earningsPerSale) : fCurrency(commissionFixed)}
                                         </Typography>
                                     </InformationItem>}
                                     {!!averageSalesPrice && <InformationItem>
