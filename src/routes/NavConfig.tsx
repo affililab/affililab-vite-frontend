@@ -60,9 +60,9 @@ const navConfig = [
                 {
                     title: 'saved filters', path: PATH_APP.general.savedFilter, icon: ICONS.savedFilters
                 },
-                {
-                    title: 'events calendar', path: PATH_APP.general.events, icon: ICONS.events
-                },
+                // {
+                //     title: 'events calendar', path: PATH_APP.general.events, icon: ICONS.events
+                // },
                 /* PLOP_INJECT_TYPE_NAVCONFIG_USER_ITEMS */
             ],
         },

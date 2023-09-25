@@ -7,8 +7,9 @@ import {
     ListingLayout, Page,
     SearchInput, ToggleButton, ToggleButtonGroup, Typography,
     useAuth,
-    useSettings
-} from "my-lib";
+    useSettings,
+    Router
+} from "my-lib"
 import React, {useState} from "react";
 import {PATH_APP} from "./paths";
 import navConfig from "./NavConfig";
@@ -209,12 +210,12 @@ export const routes = [
     },
     {
         path: "/",
-        element: <>
+        element: <Page title={"Products"}>
             <ListingLayout centerElements={[<SearchInput key={1} />]} rightElements={[<RightElementsProductFinder key={2} />]} />
             <LoginModal />
             <RegisterModal />
             <PlanModal />
-            </>,
+            </Page>,
         children: [
             ProductFinderModule
         ]

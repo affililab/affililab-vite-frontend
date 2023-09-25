@@ -62,7 +62,7 @@ export const GET_PARTNERPROGRAMS = gql`
                 sources {
                     signupLink
                     source {
-                        source
+                        title
                     }
                 }
                 createdAt
@@ -128,7 +128,7 @@ export const GET_PARTNERPROGRAMS_BY_IDS = gql`
             sources {
                 signupLink
                 source {
-                    source
+                    title
                 }
             }
             createdAt
@@ -189,7 +189,7 @@ export const GET_PARTNERPROGRAM = gql`
             sources {
                 signupLink
                 source {
-                    source
+                    title
                     smallLogo
                 }
             }
@@ -319,7 +319,7 @@ export const CREATE_PARTNERPROGRAM = gql`
             sources {
                 signupLink
                 source {
-                    source
+                    title
                     smallLogo
                 }
             }
@@ -452,7 +452,7 @@ export const UPDATE_PARTNERPROGRAM = gql`
             sources {
                 signupLink
                 source {
-                    source
+                    title
                     smallLogo
                 }
             }
@@ -518,7 +518,7 @@ export const GET_RECOMMENDET_PARTNER_PROGRAMS = gql`
                 sources {
                     signupLink
                     source {
-                        source
+                        title
                     }
                 }
                 createdAt
@@ -582,7 +582,7 @@ export const GET_RECOMMENDET_PARTNER_PROGRAMS_BY_CAMPAIGN = gql`
                 sources {
                     signupLink
                     source {
-                        source
+                        title
                     }
                 }
                 createdAt

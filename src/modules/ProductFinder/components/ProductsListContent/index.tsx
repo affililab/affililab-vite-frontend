@@ -55,7 +55,7 @@ export const ProductsListContent: FC<any> = ({ filterHook = {} }) => {
 
     // sort
     const [direction, setDirection] = useState(-1);
-    const [sortBy, setSortBy] = useState("rank");
+    const [sortBy, setSortBy] = useState("created");
 
 
     const handleSortBy = async value => {
@@ -88,9 +88,6 @@ export const ProductsListContent: FC<any> = ({ filterHook = {} }) => {
                     direction={direction}
                     directionSwitching={handleDirectionSwitching}
                     sortByOptions={[{
-                        value: "rank",
-                        label: "Rank",
-                    }, {
                         value: "created",
                         label: "Erscheinungsdatum",
                     }, {

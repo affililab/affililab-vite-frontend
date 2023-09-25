@@ -52,8 +52,8 @@ export const SubNav : FC<any> = ({ actionItemsLeft, actionItemsRight, filterHook
                             // color: "textSecondary",
                         }
                     })} value={tab} exclusive onChange={(event: any, tab: string) => {
-                        setTab(tab)
                         navigate("/"+tab)
+                        setTab(tab)
                     }}>
                         <ToggleButton
                             sx={(theme: any) => ({
@@ -64,12 +64,12 @@ export const SubNav : FC<any> = ({ actionItemsLeft, actionItemsRight, filterHook
                             <Icon icon="tabler:package" width={19} height={19}/>
                             <Typography color="textPrimary" variant="body2">Programme</Typography>
                         </ToggleButton>
-                        <ToggleButton
-                            sx={(theme: any) => ({gap: theme.spacing(2), borderRadius: 0})}
-                            value="new">
-                            <Icon icon="clarity:new-line" width={19} height={19}/>
-                            <Typography variant="body2">Neustarts</Typography>
-                        </ToggleButton>
+                        {/*<ToggleButton*/}
+                        {/*    sx={(theme: any) => ({gap: theme.spacing(2), borderRadius: 0})}*/}
+                        {/*    value="new">*/}
+                        {/*    <Icon icon="clarity:new-line" width={19} height={19}/>*/}
+                        {/*    <Typography variant="body2">Neustarts</Typography>*/}
+                        {/*</ToggleButton>*/}
                         <ToggleButton
                             sx={(theme: any) => ({gap: theme.spacing(2), borderRadius: 0})}
                             value="tools">

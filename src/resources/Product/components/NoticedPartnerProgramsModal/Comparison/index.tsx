@@ -34,11 +34,12 @@ export const Comparison: FC<any> = ({
             component: <TableView items={items} addToCampaign={addToCampaign} toggleDetailedModal={toggleDetailedModal}  noticedPartnerPrograms={noticedPartnerPrograms}
                                   toggleNoticedPartnerProgram={toggleNoticedPartnerProgram} />
         },
-        {
-            value: 'Graphen',
-            icon: <Icon icon={'bi:bar-chart'} width={20} height={20}/>,
-            component: <ChartView items={items} noticedPartnerPrograms={noticedPartnerPrograms}/>
-        }
+        // {
+        //     value: 'Graphen',
+        //     icon: <Icon icon={'bi:bar-chart'} width={20} height={20}/>,
+        //     component: <ChartView items={items} noticedPartnerPrograms={noticedPartnerPrograms}/>
+        // }
+        // TODO: activate when we have enough information to display that in a nice way
     ];
 
     const theme = useTheme();

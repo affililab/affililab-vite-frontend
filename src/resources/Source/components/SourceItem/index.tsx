@@ -31,7 +31,7 @@ const ToolIconBox = styled(Box)(({theme}) => ({
 }));
 
 export const SourceItem: FC<any> = ({ item }) => {
-    const { cover, source, smallLogo } = item;
+    const { cover, title, smallLogo } = item;
     return <Card sx={{textAlign: 'center'}}>
         {/*<CardHeader*/}
         {/*    sx={(theme) => ({*/}
@@ -84,7 +84,7 @@ export const SourceItem: FC<any> = ({ item }) => {
                 </PrimaryColoredBox>
             </Box>
         <Typography variant="subtitle1" sx={{mt: 6, mb: 2}}>
-            {source}
+            {title}
         </Typography>
         </CardContent>
     </Card>
