@@ -21,7 +21,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <React.StrictMode>
         <Provider store={store}>
             <AppProvider
-                logoSettings={{ small:  '/static/brand/logo.svg', big: '/static/brand/logo_full.svg' }}
+                logoSettings={{ small:  '/static/brand/logo.svg', big: '/static/brand/logo_full.svg', action: '/' }}
                 store={store}
                 persistor={persistor}
                 apiURL={partnerProgramsBackend.apiURL ?? ''}

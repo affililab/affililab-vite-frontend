@@ -1,5 +1,7 @@
 import OverviewPage from "./pages/overview";
 import ManageTable from "./pages/ManageTable";
+import { Router as ReactRouter } from "my-lib";
+const { Navigate } = ReactRouter
 
 export const ProductsModule = {
     path: "",
@@ -8,7 +10,8 @@ export const ProductsModule = {
         children: [
             {
                 index: true,
-                element: <OverviewPage />,
+                element: <Navigate to="/" replace />,
+                // element: <OverviewPage />,
             },
             {
                 path: ":savedFilterId",

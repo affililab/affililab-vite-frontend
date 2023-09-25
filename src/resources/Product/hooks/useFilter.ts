@@ -8,7 +8,7 @@ export const useFilter = (categorySalaryModelsData) => {
 
     const [filtersList, setFiltersList] = useState([
         {
-            title: "Commission",
+            title: "Provisionen %",
             key: "commissionInPercent",
             type: "range",
             showEmpty: true,
@@ -18,39 +18,39 @@ export const useFilter = (categorySalaryModelsData) => {
                 max: 100
             }
         },
-        {
-            title: "Verdienst pro Verkauf",
-            key: "earningsPerSale",
-            type: "range",
-            showEmpty: true,
-            settings: {
-                type: "price",
-                min: 0,
-                max: 1000
-            }
-        },
-        {
-            title: "Durchscnittlicher Verkaufspreis",
-            key: "averageSalesPrice",
-            type: "range",
-            showEmpty: true,
-            settings: {
-                type: "price",
-                min: 0,
-                max: 12000
-            }
-        },
-        {
-            title: "Popularität",
-            key: "performance",
-            type: "range",
-            showEmpty: true,
-            settings: {
-                type: "number",
-                min: 0,
-                max: 5
-            }
-        },
+        // {
+        //     title: "Verdienst pro Verkauf",
+        //     key: "earningsPerSale",
+        //     type: "range",
+        //     showEmpty: true,
+        //     settings: {
+        //         type: "price",
+        //         min: 0,
+        //         max: 1000
+        //     }
+        // },
+        // {
+        //     title: "Durchscnittlicher Verkaufspreis",
+        //     key: "averageSalesPrice",
+        //     type: "range",
+        //     showEmpty: true,
+        //     settings: {
+        //         type: "price",
+        //         min: 0,
+        //         max: 12000
+        //     }
+        // },
+        // {
+        //     title: "Popularität",
+        //     key: "performance",
+        //     type: "range",
+        //     showEmpty: true,
+        //     settings: {
+        //         type: "number",
+        //         min: 0,
+        //         max: 5
+        //     }
+        // },
         // {
         //     title: "Verkaufsrang",
         //     key: "salesPrestige",
@@ -63,7 +63,7 @@ export const useFilter = (categorySalaryModelsData) => {
         //     }
         // },
         {
-            title: "Processingtime",
+            title: "Bearbeitungszeit",
             key: "processingTime",
             type: "range",
             showEmpty: true,
@@ -73,28 +73,28 @@ export const useFilter = (categorySalaryModelsData) => {
                 max: 120
             }
         },
-        {
-            title: "Cart Conversion",
-            key: "cartConversionInPercent",
-            type: "range",
-            showEmpty: true,
-            settings: {
-                type: "percent",
-                min: 0,
-                max: 100
-            }
-        },
-        {
-            title: "Stornoquote",
-            key: "cancellationRateInPercent",
-            type: "range",
-            showEmpty: true,
-            settings: {
-                type: "percent",
-                min: 0,
-                max: 100
-            }
-        },
+        // {
+        //     title: "Cart Conversion",
+        //     key: "cartConversionInPercent",
+        //     type: "range",
+        //     showEmpty: true,
+        //     settings: {
+        //         type: "percent",
+        //         min: 0,
+        //         max: 100
+        //     }
+        // },
+        // {
+        //     title: "Stornoquote",
+        //     key: "cancellationRateInPercent",
+        //     type: "range",
+        //     showEmpty: true,
+        //     settings: {
+        //         type: "percent",
+        //         min: 0,
+        //         max: 100
+        //     }
+        // },
         {
             title: "Kategorie",
             key: "categories",
@@ -106,7 +106,7 @@ export const useFilter = (categorySalaryModelsData) => {
             }
         },
         {
-            title: "Advertisement Types",
+            title: "Werbemittel",
             key: "advertisementAssets",
             type: "category",
             showEmpty: true,
@@ -115,18 +115,18 @@ export const useFilter = (categorySalaryModelsData) => {
                 options: []
             }
         },
+        // {
+        //     title: "Zielgruppen",
+        //     key: "targetGroups",
+        //     type: "category",
+        //     showEmpty: true,
+        //     settings: {
+        //         showTitle: false,
+        //         options: []
+        //     }
+        // },
         {
-            title: "Target Groups",
-            key: "targetGroups",
-            type: "category",
-            showEmpty: true,
-            settings: {
-                showTitle: false,
-                options: []
-            }
-        },
-        {
-            title: "Tracking Types",
+            title: "Tracking",
             key: "trackingTypes",
             type: "category",
             showEmpty: true,
@@ -137,7 +137,7 @@ export const useFilter = (categorySalaryModelsData) => {
         },
         {
             title: "Bezahlart",
-            key: "salaryModel",
+            key: "revenueType",
             type: "category",
             showEmpty: true,
             settings: {
@@ -146,7 +146,7 @@ export const useFilter = (categorySalaryModelsData) => {
             }
         },
         {
-            title: "Direct Activation",
+            title: "Sofortige Freischaltung",
             key: "directActivation",
             type: "options",
             value: 0,

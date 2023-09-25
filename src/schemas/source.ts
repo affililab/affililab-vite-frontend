@@ -11,7 +11,7 @@ export const GET_SOURCES = gql`
             }
             items {
                 id
-                source
+                title
                 cover
                 smallLogo
                 approved
@@ -24,7 +24,7 @@ export const GET_SOURCES_BY_IDS =  gql`
     query GET_SOURCES_BY_IDS($ids: [ID]) {
         getSourcesByIds(ids: $ids) {
             id
-            source
+            title
             cover
             smallLogo
             approved
@@ -36,7 +36,7 @@ export const GET_SOURCE = gql`
     query GET_SOURCE($id: String!) {
         getSource (id: $id) {
             id
-            source
+            title
             cover
             smallLogo
             approved
