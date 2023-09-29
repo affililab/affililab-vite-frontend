@@ -31,7 +31,7 @@ export const Content : FC<any> = ({
     const selectedCategoriesState = useState([]);
     const selectedTargetGroupState = useState([]);
     const [step, setStep] = useState(0);
-    const [plan, setPlan] = useState(0);
+    const [plan, setPlan] = useState<any>(null);
     const [unit, setUnit] = useState('month');
 
     const [selectedCategories] = selectedCategoriesState;
@@ -49,7 +49,8 @@ export const Content : FC<any> = ({
             callbackFnc: async () => {
                 //send mutation and redirect to stripe if successfull
                 const response = await choosePlanMutation({ variables: { id: plan, unit, callbackUrl: `${window.location.origin.toString()}/partnerPrograms/` } });
-                if (response?.data?.choosePlan?.payload?.sessionUrl) {
+                console.log(response);
+                if (plan.monthlyPrice > 0 && response?.data?.choosePlan?.payload?.sessionUrl) {
                     window.location.replace(response.data.choosePlan.payload.sessionUrl)
                 }
             },

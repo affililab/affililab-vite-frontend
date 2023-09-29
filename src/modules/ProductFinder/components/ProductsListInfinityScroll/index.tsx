@@ -9,14 +9,17 @@ import {ExternalProductsPageModal, NoticedPartnerProgramsModal} from "@resources
 import {useExternalLink} from "@resources/Product/hooks/useExternalLink";
 import {PartnerProgramModal} from "@resources/Product/components/PartnerProgramModal";
 import {NoticedBottomBar} from "@resources/Product/components/NoticedBottomBar";
+import { useProductInteraction } from "@resources/User/hooks/useProductInteraction";
 
 export const ProductsListInfinityScroll: FC<any> = ({limit, resetAll, resetScroll, scrollableNodeRef, searchValue, direction, sortBy, graphqlFilters}) => {
 
     const [currentPartnerProgram, setCurrentPartnerProgram] = useState(null);
 
     const [showPartnerProgramModal, setShowPartnerProgramModal] = useState(false);
+    const { registerInteraction } = useProductInteraction();
 
     const toggleDetailedPartnerProgramModal = (partnerProgram) => {
+        registerInteraction(partnerProgram.id, "viewed");
         setCurrentPartnerProgram(partnerProgram);
         setShowPartnerProgramModal(!showPartnerProgramModal);
     }
@@ -62,7 +65,6 @@ export const ProductsListInfinityScroll: FC<any> = ({limit, resetAll, resetScrol
     } = useAddToCampaign();
 
     const nextPage = async () => {
-        console.log("fetchnext");
         if (!fetchAllowed) return;
         setFetchAllowed(false);
         await fetchNext();

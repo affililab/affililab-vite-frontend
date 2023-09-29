@@ -171,3 +171,11 @@ export const COMPLETE_SUBSCRIPTION = gql`
         }
     }      
 `;
+
+export const REGISTER_PRODUCT_INTERACTION = gql`
+    mutation registerProductInteraction($id: ID!, $interactionType: InteractionType) {
+      registerProductInteraction(id: $id, payload: { interactionType: $interactionType }) {
+        success       
+      }
+    }
+`;

@@ -12,6 +12,7 @@ import {
 import React, {FC, useEffect, useState} from "react";
 import {useMutation, useQuery} from "@apollo/client";
 import {GET_CAMPAIGNS, UPDATE_CAMPAIGN} from "@schemas/campaigns";
+import { useProductInteraction } from "@resources/User/hooks/useProductInteraction";
 
 const useStyles = makeStyles((theme: any) => ({
     tableRow: {
@@ -32,6 +33,8 @@ const useStyles = makeStyles((theme: any) => ({
 }));
 
 export const AddToList: FC<any> = ({ addToObjects, height='512px' }) => {
+
+    const {registerInteraction} = useProductInteraction();
 
 
     const classes = useStyles();
@@ -77,7 +80,14 @@ export const AddToList: FC<any> = ({ addToObjects, height='512px' }) => {
         return updateRelationshipObject;
     }
 
-    const addTo = (item: any) => { editCampaignMutation({ variables: { id: item.id, ...getGraphqlUpdateObjects() } }) }
+    const addTo = (item: any) => {
+        editCampaignMutation({ variables: { id: item.id, ...getGraphqlUpdateObjects() } });
+        if (addToObjects?.partnerPrograms) {
+            addToObjects.partnerPrograms.forEach((partnerProgramId: any) => {
+                registerInteraction(partnerProgramId, 'campaign_added');
+            });
+        }
+    }
 
     return <TableContainer sx={{ mt: 3, flex: 1 }}>
             <Scrollbar sx={{
