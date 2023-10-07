@@ -78,7 +78,8 @@ export const TableComponent: FC<any> = ({
                                             deleteHandler = (ids) => {
                                             },
                                             selected = [],
-                                            setSelected
+                                            setSelected,
+                                            sx = {},
                                         }) => {
 
     if (emptyData === null) emptyData = rows.length <= 0;
@@ -152,7 +153,6 @@ export const TableComponent: FC<any> = ({
                     flex: 1,
                     display: "flex",
                     flexDirection: "column",
-
                     overflow: "auto"
                 },
                 ".simplebar-content": {

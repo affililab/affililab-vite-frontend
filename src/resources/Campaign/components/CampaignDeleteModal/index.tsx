@@ -21,16 +21,14 @@ export const CampaignDeleteModal: FC<any> = ({ isModalOpen, handleCloseModal, ag
                   icon={'ei:close'}/>
         </IconButton>
         <DialogContent sx={(theme) => ({display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: theme.spacing(4)})}>
-            <Icon icon={'lucide:trash-2'} width={126} height={126} />
-            <Typography variant={"subtitle1"}>
-                Delete Campaign
-            </Typography>
+            <Icon icon={'heroicons:trash'} mt={8} width={126} height={126} />
+            
             <Typography variant={"body2"}>
                 Are you sure you want to delete Campaign
             </Typography>
         </DialogContent>
         <DialogActions sx={{ display: "flex", justifyContent: "space-between" }}>
-            <Button variant={'contained'} color={'secondary'} onClick={handleCloseModal}>Disagree</Button>
+            <Button variant={'text'} color={'inherit'} onClick={handleCloseModal}>Cancel</Button>
             <Button variant={'contained'} onClick={agree}>
                 Agree
             </Button>

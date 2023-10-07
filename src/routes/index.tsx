@@ -49,11 +49,7 @@ import {ToolTypeModule} from "../modules/ToolType";
 
 const MENU_OPTIONS = [
     {
-        label: 'Product Finder',
-        linkTo: '/',
-    },
-    {
-        label: 'App',
+        label: 'Dashboard',
         linkTo: '/app',
     },
     {
@@ -168,6 +164,7 @@ const RightElements = () => {
                 </ToggleButton>
             </ToggleButtonGroup>
         </Box>
+        <AccountPopover menuOptions={MENU_OPTIONS}/>
     </>
 };
 
@@ -211,7 +208,7 @@ export const routes = [
     {
         path: "/",
         element: <Page title={"Products"}>
-            <ListingLayout centerElements={[<SearchInput key={1} />]} rightElements={[<RightElementsProductFinder key={2} />]} />
+            <ListingLayout navConfig={navConfig} menuOptions={MENU_OPTIONS} centerElements={[<SearchInput key={1} />]} rightElements={[<RightElementsProductFinder key={2} />]} />
             <LoginModal />
             <RegisterModal />
             <PlanModal />

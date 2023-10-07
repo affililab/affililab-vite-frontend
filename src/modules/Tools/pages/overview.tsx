@@ -11,7 +11,7 @@ export default function () {
     const {themeStretch} = useSettings();
 
     return <>
-        <Page title="Dashboard">
+        <Page title="Tools">
             <OverviewItems />
         </Page>
     </>

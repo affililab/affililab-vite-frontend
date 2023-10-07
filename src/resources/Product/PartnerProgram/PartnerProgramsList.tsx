@@ -42,12 +42,12 @@ export const PartnerProgramsList : FC<any> = ({
     return <Grid rowSpacing={3} container alignItems="center" justifyContent="center"
                  className={clsx(classes.root, className)}  {...rest}>
         {partnerprograms.map((partnerprogram: any, index: number) => (
-            // <Grid container direction={"column"} key={partnerprogram.id} item style={{width: "100%"}}>
             <Grid key={index + "-" + partnerprogram.id} item xs={12}>
                 <Box
                     component={MotionViewport}
                     variants={getVariant('slideInUp')}
-                    viewport={{root: scrollableNodeRef.current.getScrollElement(), once: true, amount: 0}}>
+                    viewport={{root: scrollableNodeRef.current.getScrollElement(), once: true, amount: 0}}
+                >
                     <Item
                         addToCampaign={addToCampaign}
                         toggleModal={toggleModal}
@@ -59,13 +59,5 @@ export const PartnerProgramsList : FC<any> = ({
                 </Box>
             </Grid>
         ))}
-        {/*<Grid item xs={12}>*/}
-        {/*    <Box*/}
-        {/*    component={MotionViewport}*/}
-        {/*    variants={getVariant('slideInUp')}*/}
-        {/*    viewport={{root: scrollableNodeRef.current.getScrollElement(), once: true, amount: 0}}>*/}
-        {/*        <SkeletonItem />*/}
-        {/*    </Box>*/}
-        {/*</Grid>*/}
     </Grid>
 };

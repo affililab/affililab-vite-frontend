@@ -3,6 +3,7 @@ import React, {FC} from "react";
 import {Content} from "./Content";
 
 export const PartnerProgramModal: FC<any> = ({ toggleModal, actionItems, isModalOpen, handleCloseModal, toggleNoticedPartnerProgram, isNoticed, partnerprogram }) => {
+
     return   <DialogAnimate  maxWidth={"xl"} open={isModalOpen} onClose={handleCloseModal}>
         {/*{!!partnerprogram && <PartnerProgramsItem*/}
         {/*    toggleModal={toggleModal}*/}

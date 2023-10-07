@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from "react";
 import {Box, EmptyContent, Grid, Icon, IconButton, Skeleton, Tooltip} from "my-lib"
 import {useLazyQuery} from "@apollo/client";
-import {GET_PARTNERPROGRAMS} from "@schemas";
+import {GET_PARTNERPROGRAMS_BY_IDS} from "@schemas";
 import {PartnerProgramModal} from "@resources/Product/components/PartnerProgramModal";
 import {Item} from "@resources/Product/components/Item";
+import { useProductInteraction } from "@resources/User/hooks/useProductInteraction";
 
 const SkeletonLoad = (
     <Grid container spacing={3}>
@@ -21,24 +22,24 @@ const SkeletonLoad = (
 
 export const ProductsContent = ({pItems, campaignData, remove = () => {}, ids = []}) => {
 
-    const [getItems, {loading, error, data, called}] = useLazyQuery(GET_PARTNERPROGRAMS);
+    const [getItems, {loading, error, data, called}] = useLazyQuery(GET_PARTNERPROGRAMS_BY_IDS);
 
     const [items, setItems] = useState([]);
 
     const [showPartnerProgramModal, setShowPartnerProgramModal] = useState(false);
     const [currentPartnerProgram, setCurrentPartnerProgram] = useState(null);
+    const {registerInteraction} = useProductInteraction();
+
     const toggleDetailedPartnerProgramModal = (partnerProgram: any) => {
+        // TODO: register view event
         setCurrentPartnerProgram(partnerProgram);
         setShowPartnerProgramModal(!showPartnerProgramModal);
+        registerInteraction(partnerProgram.id, "viewed");
     };
 
     const getPartnerPrograms =  async () => {
         return (await getItems({variables: {
-                meta: {
-                    ids,
-                    limit: 2,
-                    page: 0
-                }
+                    ids
         }}));
     };
 
@@ -47,7 +48,7 @@ export const ProductsContent = ({pItems, campaignData, remove = () => {}, ids = 
             // const response = await getCampaignCategoriesItems({variables: { id: campaignId }});
             (async () => {
                 const response = await getPartnerPrograms();
-                setItems(response.data.getPartnerPrograms.items);
+                setItems(response.data.getPartnerProgramsByIds);
             })();
         }
     }, [ids, campaignData]);

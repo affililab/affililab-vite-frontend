@@ -329,7 +329,7 @@ export const Item: FC<any> = ({
                             </Typography>
                             <Box>
                                 {!!categories?.length && <Grid my={2} spacing={1} container>
-                                    {categories.map((categoryItem: any, index: number) => <Grid key={`${categoryItem.id}-${index}`} p={0} item><Chip
+                                    {categories.slice(0, 5).map((categoryItem: any, index: number) => <Grid key={`${categoryItem.id}-${index}`} p={0} item><Chip
                                         className={classes.tagItem}
                                         size="small"
                                         title={`${categoryItem.title}`}
@@ -430,7 +430,7 @@ export const Item: FC<any> = ({
                                         </Typography>
                                         <Box sx={(theme: any) => ({ display: "flex", flexWrap: "wrap", gap: theme.spacing(2) })}>
                                             <ImageButton>
-                                                {!!sources?.length > 0 ? sources.map((sourceItem: any, index: number) => <Tooltip key={`${sourceItem.id}-${index}`} title={sourceItem.source.source}><SourceBox href={sourceItem.signupLink} target="_blank">
+                                                {!!sources?.length > 0 ? sources.map((sourceItem: any, index: number) => <Tooltip key={`${sourceItem.id}-${index}`} title={sourceItem?.source?.title}><SourceBox href={sourceItem.signupLink} target="_blank">
                                                     <Image
                                                         src={sourceItem?.smallLogo ? partnerProgramsBackend.filesEndpoint + sourceItem?.smallLogo : "https://www.100partnerprogramme.de/filestore/icons/network/awin-neu.jpg"}
                                                         sx={{width: "20px", height: "20px"}}></Image>
@@ -478,14 +478,14 @@ export const Item: FC<any> = ({
                                                 open={Boolean(isOpenAddMenu)}
                                                 onClose={handleCloseAddMenu}
                                             >
-                                                {!!sources?.length > 0 ? sources.map((sourceItem, index) => <MenuItem key={`${sourceItem.id}-${index}`} onClick={() => { window.open(sourceItem.signupLink, '_blank').focus(); handleCloseAddMenu(); }} sx={{ display: "flex", gap: (theme) => theme.spacing(2) }}>
+                                                {!!sources?.length > 0 ? sources.map((sourceItem, index) => <MenuItem key={`${sourceItem?.id}-${index}`} onClick={() => { window.open(sourceItem?.signupLink, '_blank').focus(); handleCloseAddMenu(); }} sx={{ display: "flex", gap: (theme) => theme.spacing(2) }}>
                                                     <Box>
                                                         <Image
                                                             src={sourceItem?.smallLogo ? partnerProgramsBackend.filesEndpoint + sourceItem?.smallLogo : "https://www.100partnerprogramme.de/filestore/icons/network/awin-neu.jpg"}
                                                             sx={{width: "20px", height: "20px"}} />
                                                     </Box>
                                                     <Box>
-                                                        {sourceItem.source.source}
+                                                        {sourceItem?.source?.title}
                                                     </Box>
                                                 </MenuItem>) : <MenuItem onClick={() => { window.open(getRegisterForPartnerProgramURL(), '_blank').focus(); handleCloseAddMenu(); }} sx={{ display: "flex", gap: (theme) => theme.spacing(2) }}>
                                                     <Box>

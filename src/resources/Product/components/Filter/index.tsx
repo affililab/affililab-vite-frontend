@@ -29,6 +29,7 @@ export const Filter = ({height, filtersList, filter, setFilter, applyFilter, emb
             value: 'Saved Filters',
             icon: <Icon icon={'fa-regular:save'} width={20} height={20}/>,
             full: true,
+            // component: <></>
             component: <ApplyList applyFilter={(filter) => { setFilter(filter); setCurrentTab(FILTER_TABS[1].value);  }} />
         },
         {
@@ -64,13 +65,31 @@ export const Filter = ({height, filtersList, filter, setFilter, applyFilter, emb
                 <Tab disableRipple key={index} label={capitalCase(tab.value)} icon={tab.icon} value={tab.value}/>
             ))}
         </Tabs>
-        <Box sx={{height: "724px", background: theme.palette.background.neutral}}>
-            <Scrollbar>
-                <Box sx={{p: 4}}>
-                    {FILTER_TABS.find((tab) => tab.value === currentTab)?.full  ? <Box sx={{m: 0}}>
-                            <Grid container direction="column" spacing={4}>{FILTER_TABS.find((tab) => tab.value === currentTab)?.component}</Grid>
+        <Box sx={{height: "50vh", display: "flex", flexDirection: "column", background: theme.palette.background.neutral}}>
+            <Scrollbar sx={{
+                display: "flex",
+                flex: 1,
+                flexDirection: "column",
+                ".simplebar-content-wrapper": {
+                    // height: "100%",
+                    flex: 1,
+                    display: "flex",
+                    flexDirection: "column",
+
+                    overflow: "auto"
+                },
+                ".simplebar-content": {
+                    // height: "100%",
+                    flex: 1,
+                    display: "flex",
+                    flexDirection: "column",
+                }
+            }} style={{height: "100%"}}>
+                <Box sx={{flex: 1, display: "flex", flexDirection: "column"}}>
+                    {FILTER_TABS.find((tab) => tab.value === currentTab)?.full  ? <Box sx={{ m: 0, display: "flex", flexDirection: "column", flex: 1 }}>
+                            <Grid sx={{ display: "flex", flexDirection: "column", flex: 1 }} container direction="column" spacing={4}>{FILTER_TABS.find((tab) => tab.value === currentTab)?.component}</Grid>
                         </Box> :
-                        <Box sx={{m: 4}}>
+                        <Box sx={{p: 4}}>
                             <Grid container direction="column" spacing={4}>{FILTER_TABS.find((tab) => tab.value === currentTab)?.component}</Grid>
                         </Box>
                     }

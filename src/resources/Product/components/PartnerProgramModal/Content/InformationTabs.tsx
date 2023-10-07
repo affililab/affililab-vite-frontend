@@ -129,7 +129,7 @@ export const InformationTabs = ({item}) => {
     }));
 
     const CategoriesRenderer = (value) => ( !!value.length ? <Grid spacing={1} container>
-        {value.map((valueItem, index) => <Grid item><Chip key={index}
+        {value.slice(0, 10).map((valueItem, index) => <Grid item><Chip key={index}
                                                           sx={{maxWidth: "212px"}}
                                                           size="small"
                                                           title={`${valueItem.title}`}

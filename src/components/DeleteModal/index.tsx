@@ -1,27 +1,22 @@
-import React, {FC, useState} from "react"
-import {
-    Dialog,
-    DialogTitle,
-    DialogContent,
-    Typography,
-    DialogActions,
-    Button
-} from "my-lib"
+import React, {FC} from "react"
+import {Button, Dialog, DialogActions, DialogContent, Icon, Typography} from "my-lib"
 
 export const DeleteModal: FC<any> = ({ resourceName = "item", isModalOpen, handleCloseModal, agree }) => {
 
     return <Dialog open={isModalOpen} onClose={handleCloseModal}>
-        <DialogTitle>Delete {resourceName}</DialogTitle>
-        <DialogContent>
-            <Typography variant={"body"}>
+        <DialogContent sx={(theme) => ({display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", gap: theme.spacing(4)})}>
+
+            <Icon icon={'lucide:trash-2'} width={126} height={126}/>
+
+            <Typography variant={"body2"}>
                 Are you sure you want to delete {resourceName}
             </Typography>
         </DialogContent>
-        <DialogActions>
-            <Button onClick={handleCloseModal}>Disagree</Button>
-            <Button onClick={agree}>
+        <DialogActions sx={{ display: "flex", justifyContent: "space-between" }}>
+            <Button variant={'text'} color={'inherit'} onClick={handleCloseModal}>Disagree</Button>
+            <Button variant={'contained'} onClick={agree}>
                 Agree
             </Button>
         </DialogActions>
-    </Dialog>
+    </Dialog>;
 }

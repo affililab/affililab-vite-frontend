@@ -1,6 +1,17 @@
-import {Box, Button, CircularProgress, Container, EmptyContent, InfiniteScroll, m, varContainer} from "my-lib";
+import {
+    Box,
+    Button,
+    CircularProgress,
+    Container,
+    EmptyContent,
+    HeaderItemsContext,
+    InfiniteScroll,
+    m,
+    SearchInput,
+    varContainer
+} from "my-lib";
 import {PartnerProgramsList} from "@resources/Product/PartnerProgram";
-import React, {FC, useEffect, useState} from "react";
+import React, {FC, useContext, useEffect, useState} from "react";
 import {usePartnerPrograms} from "@resources/Product/hooks/usePartnerPrograms";
 import {useNoticedPartnerProgram} from "@resources/Product/hooks/useNoticedPartnerProgram";
 import {AddToModal} from "@resources/Campaign/components/AddToModal";
@@ -9,17 +20,15 @@ import {ExternalProductsPageModal, NoticedPartnerProgramsModal} from "@resources
 import {useExternalLink} from "@resources/Product/hooks/useExternalLink";
 import {PartnerProgramModal} from "@resources/Product/components/PartnerProgramModal";
 import {NoticedBottomBar} from "@resources/Product/components/NoticedBottomBar";
-import { useProductInteraction } from "@resources/User/hooks/useProductInteraction";
 
-export const ProductsListInfinityScroll: FC<any> = ({limit, resetAll, resetScroll, scrollableNodeRef, searchValue, direction, sortBy, graphqlFilters}) => {
+export const ProductsListInfinityScroll: FC<any> = ({limit, resetAll, resetScroll, scrollableNodeRef, searchValue, setSearchValue, direction, sortBy, graphqlFilters}) => {
 
     const [currentPartnerProgram, setCurrentPartnerProgram] = useState(null);
 
     const [showPartnerProgramModal, setShowPartnerProgramModal] = useState(false);
-    const { registerInteraction } = useProductInteraction();
+    const {setCenterItems} = useContext(HeaderItemsContext);
 
     const toggleDetailedPartnerProgramModal = (partnerProgram) => {
-        registerInteraction(partnerProgram.id, "viewed");
         setCurrentPartnerProgram(partnerProgram);
         setShowPartnerProgramModal(!showPartnerProgramModal);
     }
@@ -70,6 +79,11 @@ export const ProductsListInfinityScroll: FC<any> = ({limit, resetAll, resetScrol
         await fetchNext();
         setFetchAllowed(true);
     }
+    
+    useEffect(() => {
+        setCenterItems([<SearchInput placeholder={"Suche aus über 8.000 Partnerprogrammen ..."} searchValue={searchValue}
+                                     updateInput={setSearchValue}/>]);
+    }, []);
 
     useEffect(() => {
         if (graphqlFilters) {
@@ -81,7 +95,19 @@ export const ProductsListInfinityScroll: FC<any> = ({limit, resetAll, resetScrol
     return <Box sx={(theme: any) => ({height: "100%", flex: 1, display: "flex", flexDirection: "column"})} component={m.div} variants={varContainer()}>
         <Container maxWidth={"xl"} sx={{height: "100%", flex: 1, display: "flex", flexDirection: "column"}}>
             {!!scrollableNodeRef.current &&
-                <Box sx={(theme: any) => ({height: "100%", flex: 1, display: "flex", flexDirection: "column"})}>
+                <Box sx={(theme: any) => ({
+                    height: "100%", flex: 1, display: "flex", flexDirection: "column",
+                    ".infinite-scroll-component__outerdiv": {
+                        display: "flex",
+                        flexDirection: "column",
+                        flex: 1,
+                        ".infinite-scroll-component": {
+                            display: "flex",
+                            flexDirection: "column",
+                            flex: 1,
+                        }
+                    }
+                })}>
                     {loading && <Box sx={{
                         flex: 1,
                         display: "flex",
@@ -121,11 +147,11 @@ export const ProductsListInfinityScroll: FC<any> = ({limit, resetAll, resetScrol
                         sx={(theme: any) => ({
                             height: "100%",
                             width: "100%",
+                            flex: 1,
                             display: "flex",
-                            overflow: "hidden",
                             flexDirection: "column",
                             justifyContent: "center",
-                            alignItems: "center"
+                            alignItems: "center",
                         })}
                         dataLength={partnerprograms.length} // This is important field to render the next data
                         next={nextPage}
@@ -155,7 +181,6 @@ export const ProductsListInfinityScroll: FC<any> = ({limit, resetAll, resetScrol
                             scrollableNodeRef={scrollableNodeRef}
                             partnerprograms={partnerprograms}
                         />
-                        {/*{partnerprograms.length && partnerprograms.map( (partnerprogram) => <Box key={partnerprogram.id} sx={{ height: "512px" }}>hey</Box>)}*/}
                     </InfiniteScroll>} </Box>
             }
         </Container>

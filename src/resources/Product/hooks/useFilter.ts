@@ -247,6 +247,7 @@ export const useFilter = (categorySalaryModelsData) => {
         let filterChanges = 0;
         filter.forEach(filterItem => {
             const defaultFilter = filtersList.find(filtersListItem => filtersListItem.key === filterItem.key);
+            if (!defaultFilter) return;
             if (defaultFilter.type === "range") {
                 if(JSON.stringify(filterItem.value) !== JSON.stringify([defaultFilter.settings.min, defaultFilter.settings.max])) filterChanges += 1;
                 return;

@@ -72,7 +72,6 @@ export const Content: FC<any> = ({
     const [fetchAllowed, setFetchAllowed] = useState(true);
 
     const nextPage = async () => {
-        console.log("fetchnext");
         if (!fetchAllowed) return;
         setFetchAllowed(false);
         await fetchNext();
@@ -107,9 +106,9 @@ export const Content: FC<any> = ({
                     }}
                               searchValue={searchValue} setSearchValue={setSearchValue}
                               updateSearch={(e) => setSearchValue(e.target.value)}
-                              activeCategories={activeCategories} setActiveCategories={setActiveCategories}/>
+                              activeCategories={activeCategories} setActiveCategories={setActiveCategories} />
                 </Box>
-                <Container maxWidth={themeStretch ? false : 'xl'} sx={(theme) => ({py: theme.spacing(2)})}>
+                <Container maxWidth={themeStretch ? false : 'xl'} sx={(theme: any) => ({py: theme.spacing(3)})}>
                         {!!scrollableNodeRef?.current && <Box
                             sx={(theme: any) => ({height: "100%", flex: 1, display: "flex", flexDirection: "column"})}>
 
@@ -153,7 +152,7 @@ export const Content: FC<any> = ({
                                     <CircularProgress/>
                                 </Box>}
                                 >
-                                <Grid container spacing={4} px={2}>
+                                <Grid container spacing={4}>
                                 {items.map(toolItem => <Grid item xs={12} sm={6} md={4}>
                                     {isSelection ? <ToolItem
                                     actionItems={[

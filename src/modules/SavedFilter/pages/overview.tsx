@@ -5,7 +5,7 @@ import React from "react";
 export default function () {
     return <>
         <Page title="Saved Filters Table">
-                <SavedFiltersTable />
+            <SavedFiltersTable />
         </Page>
     </>
 }

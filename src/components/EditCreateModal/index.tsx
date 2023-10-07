@@ -9,7 +9,7 @@ import { EditCreateForm } from "@components/EditCreateForm";
 export const EditCreateModal: FC<any> = ({ resourceName = "item", resourceSchema = [], refetchingOptions, isModalOpen, item, handleCloseModal, isEdit = false, createMutation, editMutation }) => {
     return <DialogAnimate maxWidth={"xl"} open={isModalOpen} onClose={handleCloseModal}>
         <Box sx={{display: "flex", justifyContent: "space-between", p: 2}}>
-            <DialogTitle variant={'subtitle1'}>{(isEdit ? "Edit" : "Create") + " " + resourceName}</DialogTitle>
+            <DialogTitle variant={'subtitle2'}>{(isEdit ? "Edit" : "Create") + " " + resourceName}</DialogTitle>
             <IconButton aria-label="close" onClick={handleCloseModal}>
                 <Icon width={42}
                       height={42}

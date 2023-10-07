@@ -26,6 +26,7 @@ import {DashboardContent} from "./Content/DashboardContent";
 import {CategoriesContent} from "./Content/CategoriesContent";
 import {TargetGroupsContent} from "./Content/TargetGroupsContent";
 import {StickySubNavProvider} from "../../../../providers/StickyNavProvider";
+import { useProductInteraction } from "@resources/User/hooks/useProductInteraction";
 
 const {useParams, useNavigate} = Router;
 
@@ -56,6 +57,8 @@ export default () => {
 
     const [removeModalState, setRemoveModalState] = useState(false);
     const [currentResource, setCurrentResource] = useState(false);
+
+    const { registerInteraction } = useProductInteraction();
 
     // add Button
     const [isOpenAddMenu, setOpenAddMenu] = useState(null);
@@ -112,6 +115,9 @@ export default () => {
 
     const agreeRemove = async () => {
         await editCampaignMutation({ variables: { id: campaignId, ...getGraphqlUpdateObjects(currentResource.key, currentResource.id) } })
+        if (currentResource.key === 'partnerPrograms') {
+            registerInteraction(currentResource.id, "removed_from_campaign");
+        }
         closeRemoveModalHandler();
     }
 
@@ -217,7 +223,7 @@ export default () => {
                     </Box>
                     <Box sx={(theme) => ({ display: "flex", gap: theme.spacing(2) })}>
                         <Button onClick={() => {editCampaign()}} color="inherit" endIcon={<Icon icon="fluent:text-bullet-list-square-edit-20-regular" />}>edit</Button>
-                        <Button variant="contained" size={"large"}  onClick={handleOpenAddMenu} color="primary" endIcon={<Icon icon="akar-icons:plus" />}>add Item</Button>
+                        <Button variant="contained" size={"large"}  onClick={handleOpenAddMenu} color="primary" startIcon={<Icon icon="akar-icons:plus" />}>add Item</Button>
                         <Menu
                             keepMounted
                             id="demo-positioned-menu"

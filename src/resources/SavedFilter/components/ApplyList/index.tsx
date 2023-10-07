@@ -187,17 +187,18 @@ export const ApplyList = ({
 
     if (!isAuthenticated) return <></>;
 
-    return <TableContainer sx={{ flex: 1 }}>
+    return <TableContainer sx={{ height: "100%" }}>
             <Scrollbar sx={{
                 display: "flex",
                 flex: 1,
                 flexDirection: "column",
+                p: 2,
+                pt: 4,
                 ".simplebar-content-wrapper": {
-                    // height: "100%",
+                    height: "100%",
                     flex: 1,
                     display: "flex",
                     flexDirection: "column",
-
                     overflow: "auto"
                 },
                 ".simplebar-content": {
@@ -205,7 +206,7 @@ export const ApplyList = ({
                     flex: 1,
                 }
             }} forceVisible="y" style={{height: "100%"}}>
-            <Table stickyHeader>
+            <Table size="small" sx={{borderCollapse: "separate"}} stickyHeader>
                 <TableHead>
                     <TableRow className={classes.tableRow}>
                         {TableColumns.map((headCell, index) => (
@@ -224,7 +225,7 @@ export const ApplyList = ({
                 </TableHead>
                 <TableBody>
                     {savedFilters.map((row, index) => (
-                        <TableRow className={classes.tableRow} key={index + row.title}>
+                        <TableRow style={{height: "100px"}} className={classes.tableRow} key={index + row.title}>
                             {TableColumns.map(({key}, index) => {
                                 const rowValue = row[key];
                                 const column = TableColumns.find(({key: columnKey}) => columnKey === key);

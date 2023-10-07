@@ -13,8 +13,9 @@ import {
 
 import {InformationTabs} from "./InformationTabs";
 import {SmallItem} from "../../SmallItem"
-import React, {FC} from "react";
+import React, {FC, useEffect} from "react";
 import {toggleNoticedPartnerProgram} from "@slices/noticedPartnerPrograms";
+import {useProductInteraction} from "@resources/User/hooks/useProductInteraction";
 
 export const Content: FC<any> = ({
                             item,
@@ -65,6 +66,15 @@ export const Content: FC<any> = ({
                                 </Box>
                             ],
                         }) => {
+
+    const { registerInteraction } = useProductInteraction();
+
+    useEffect(() => {
+        // view partnerprogram
+        (async () => {
+            await registerInteraction(item.id, "viewed");
+        })();
+    }, []);
 
     const ActionButtonsContainer = styled(Box)(({theme}) => ({
         display: "flex",
@@ -137,7 +147,7 @@ export const Content: FC<any> = ({
         item,
         item,
         item
-    ]
+    ];
 
     return <Box sx={(theme) => ({display: "flex", flexDirection: "column", gap: theme.spacing(2)})}>
         {/* action buttons */}
@@ -221,7 +231,7 @@ export const Content: FC<any> = ({
             </GeneralContainer>
 
             {/* TODO: information tabs */}
-            <Box sx={{ minHeight: "512px", flex: 1, display: "flex", flexDirection: "column", px: 12}}>
+            <Box sx={{ minHeight: "464px", flex: 1, display: "flex", flexDirection: "column", px: 12}}>
             {/*<Box sx={{height: "286px", px: 12}}>*/}
                 <InformationTabs item={item}/>
             </Box>

@@ -126,9 +126,9 @@ export const EditCreateForm = ({
             }}>
                 <Box sx={{justifySelf: "flex-end", width: "100%", display: "flex", justifyContent: "space-between", gap: (theme) => theme.spacing(2)}}>
                     <Button size={'large'} color={'inherit'} variant="" onClick={() => { abort() }}>
-                        abort
+                        cancel
                     </Button>
-                    <LoadingButton size={'large'} sx={{float: "right"}} type="submit" variant="contained" loading={isSubmitting}>
+                    <LoadingButton sx={{float: "right"}} type="submit" variant="contained" loading={isSubmitting}>
                         <Icon sx={{ mr: 2 }} width={18}
                               height={18}
                               icon={'fa-regular:save'}/>

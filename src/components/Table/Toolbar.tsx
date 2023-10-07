@@ -39,6 +39,7 @@ export const TableComponentToolbar = ({
         <RootStyle
             sx={{
                 background: theme.palette.background.paper,
+                py: 6,
                 ...(numSelected > 0 && {
                     color: isLight ? 'primary.main' : 'text.primary',
                     bgcolor: isLight ? 'secondary.lighter' : 'secondary.dark',

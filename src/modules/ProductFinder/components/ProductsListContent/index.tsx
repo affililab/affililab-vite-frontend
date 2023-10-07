@@ -99,7 +99,7 @@ export const ProductsListContent: FC<any> = ({ filterHook = {} }) => {
                     }))]}
                 />
             ],
-            content: <ProductsListInfinityScroll limit={10} resetAll={resetAll} scrollableNodeRef={scrollableNodeRef} searchValue={searchValue} direction={direction} sortBy={sortBy} graphqlFilters={getGraphQlFilters} resetScroll={resetScroll}  />,
+            content: <ProductsListInfinityScroll limit={10} setSearchValue={setSearchValue} resetAll={resetAll} scrollableNodeRef={scrollableNodeRef} searchValue={searchValue} direction={direction} sortBy={sortBy} graphqlFilters={getGraphQlFilters} resetScroll={resetScroll}  />,
             actionItemsRight: [
                 (stuck: boolean) => <Badge badgeContent={activeFilterCount} color="primary">
                     <ToggleButton

@@ -63,7 +63,7 @@ export const ManageTable: FC<any> = ({resourceName = "item", resourceSchema = []
     const [currentItem, setCurrentItem] = useState(null);
 
     const toolbarItems = [{
-        title: "edit",
+        title: "create",
         click: (row) => {
             setIsModalOpen(true);
         },

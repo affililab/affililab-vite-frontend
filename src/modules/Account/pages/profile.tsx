@@ -22,7 +22,7 @@ export default function () {
 
     return <>
         <Page title="Profile">
-            <Container maxWidth={themeStretch ? false : 'xl'}>
+            <Container maxWidth={themeStretch ? false : 'xl'} sx={{ py: 8 }}>
                 <Tabs
                     value={currentTab}
                     scrollButtons="auto"

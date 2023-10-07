@@ -17,7 +17,7 @@ const {useNavigate} = ReactRouter;
 
 /* TODO: outsource renderer too hook */
 const RangeTypeRenderer = (row, value) => {
-    console.log(value);
+    console.log("value", value);
     return value ? <Typography variant="subtitle2" noWrap>{value.value[0]} - {value.value[1]}</Typography> : "-"
 };
 
@@ -261,7 +261,6 @@ export const SavedFiltersTable: FC<any> = ({embedded = false, applyFilter}) => {
             activeFilterCount={0}
             disableFilter
             showCheckbox={!embedded}
-            height={embedded ? "284px" : "70vh"}
             columns={TableColumns}
             rows={loading ? [] : savedFilters}
             emptyData={emptyData}

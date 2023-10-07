@@ -10,7 +10,7 @@ const ModalContent: FC<any> = ({saveFilter, filter, filtersList, applyFilter, re
         _setFilter(filter);
     }, [filter]);
 
-    return <Box sx={{ overflow: "hidden" }}>
+    return <Box>
                 <Filter
                     save={saveFilter}
                     filter={_filter}
