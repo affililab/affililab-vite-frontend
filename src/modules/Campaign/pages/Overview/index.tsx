@@ -78,7 +78,7 @@ const Content: FC<any> = ({
                         paddingRight: (theme) => theme.spacing(2),
                         paddingBottom: campaigns.length ? "52px" : "0px"
                     }}>
-                        {isLoading ? Array.from(Array(5)).map((i, index) => <Grid key={"campaign-skeleton-" + index}
+                        {isLoading ? Array.from(Array(10)).map((i, index) => <Grid key={"campaign-skeleton-" + index}
                                                                                   item xs={12} sm={4} md={3}
                                                                                   md={3}><CampaignCard loading={true}
                                                                                                        campaign={{}} /></Grid>) : !!campaigns.length ? campaigns.map((campaignItem: any, index: number) => (

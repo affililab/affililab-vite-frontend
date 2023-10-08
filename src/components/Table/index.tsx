@@ -1,4 +1,4 @@
-import React, {createRef, FC} from "react";
+import React, {FC} from "react";
 import {
     Box,
     Checkbox,
@@ -11,12 +11,12 @@ import {
     TableCell,
     TableContainer,
     TablePagination,
-    TableRow, Typography, useScrollSticky, useTheme
+    TableRow,
+    useTheme
 } from "my-lib";
 import {TableComponentHead} from "./Head"
 import {TableComponentMoreMenu} from "./MoreMenu"
 import {TableComponentToolbar} from "./Toolbar"
-import {StickySubNavProvider} from "../../providers/StickyNavProvider";
 
 const useStyles = makeStyles(theme => ({
     stickyColumn: {

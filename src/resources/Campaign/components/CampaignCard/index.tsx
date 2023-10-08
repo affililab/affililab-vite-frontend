@@ -102,7 +102,7 @@ export const CampaignCard: FC<any> = ({loading, campaign, deleteCampaign, editCa
                             height: "100%"
                         }}/>
                     </CampaignIconBox>
-                    {loading ? <Skeleton variant={"rounded"} height={"140px"} /> : <PrimaryColoredBox>
+                    {loading ? <PrimaryColoredBox /> : <PrimaryColoredBox>
                         <Image src={"/static/images/campaignbg.svg"} alt={"/static/images/campaignbg.svg"}/>
                     </PrimaryColoredBox>}
                 </Box>
@@ -145,12 +145,4 @@ export const CampaignCard: FC<any> = ({loading, campaign, deleteCampaign, editCa
             </CardContent>
         </Card>
     );
-}
-
-export const CampaignCardSkeleton: FC<any> = () => {
-    return <Stack spacing={1}>
-        <Skeleton variant={"rectangular"} height={118}/>
-        <Skeleton sx={{alignSelf: "center"}} variant="circular" width={40} height={40}/>
-        <Skeleton variant={"rectangular"} height={226}/>
-    </Stack>
 }
