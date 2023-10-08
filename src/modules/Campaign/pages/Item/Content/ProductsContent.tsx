@@ -62,7 +62,7 @@ export const ProductsContent = ({pItems, campaignData, remove = () => {}, ids = 
             }}
             partnerprogram={currentPartnerProgram}
         />
-            <Grid sx={{paddingRight: (theme) => theme.spacing(2) }} container spacing={4}>
+            <Grid sx={{ flex: 1, display: "flex", paddingRight: (theme) => theme.spacing(2) }} container spacing={4}>
             {(loading && !called) ? SkeletonLoad : items?.map((item, index) => (
                     <Grid item key={index + "" + item.title} sx={{width: "100%"}} xs={12}>
                         <Item
@@ -95,47 +95,19 @@ export const ProductsContent = ({pItems, campaignData, remove = () => {}, ids = 
                                                  color: theme.palette.primary.dark
                                              })} icon={"akar-icons:eye-open"} />
                                         </IconButton>
-                                        {/*<ToggleButton*/}
-                                        {/*    sx={{ height: "42px", width: "42px" }}*/}
-                                        {/*    value="checked" onClick={() => toggleModal(item)}*/}
-                                        {/*              color="primary"*/}
-                                        {/*              aria-label={"open partnerprogram"}>*/}
-                                        {/*    <Icon*/}
-                                        {/*        width={19}*/}
-                                        {/*        height={19}*/}
-                                        {/*        sx={(theme) => ({*/}
-                                        {/*            color: theme.palette.primary.dark*/}
-                                        {/*        })} icon={"tabler:arrows-maximize"} />*/}
-                                        {/*</ToggleButton>*/}
                                     </Tooltip>
                                 </Box>
-                                // (item, isAuthenticated) => <Box>
-                                //     <Tooltip title={"öffnen"} arrow>
-                                //         <ToggleButton
-                                //             sx={{ height: "42px", width: "42px" }}
-                                //             value="checked" onClick={() => toggleDetailedPartnerProgramModal(item)}
-                                //             color="primary"
-                                //             aria-label={"open partnerprogram"}>
-                                //             <Icon
-                                //                 width={19}
-                                //                 height={19}
-                                //                 sx={(theme) => ({
-                                //                     color: theme.palette.primary.dark
-                                //                 })} icon={"tabler:arrows-maximize"} />
-                                //         </ToggleButton>
-                                //     </Tooltip>
-                                // </Box>
                             ]}
                             item={item}
                         />
                     </Grid>
                 ))}
-            {(!loading && called && !items.length) &&
-                <Box sx={{width: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}><EmptyContent
-                    title="Noch keine Partnerprogramme"
-                    description="Sie haben noch keine Partnerprogramme zu ihrer Kampagne hinzugefügt"
-                    img="/static/illustrations/illustration_empty.svg"
-                /></Box>}
+                {!(!!data?.getPartnerProgramsByIds?.length) &&
+                    <Box sx={{width: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}><EmptyContent
+                        title="Noch keine Partnerprogramme"
+                        description="Sie haben noch keine Partnerprogramme zu ihrer Kampagne hinzugefügt"
+                        img="/static/illustrations/illustration_empty.svg"
+                    /></Box>}
         </Grid>
     </>
 }

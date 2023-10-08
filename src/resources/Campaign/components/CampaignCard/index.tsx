@@ -146,3 +146,11 @@ export const CampaignCard: FC<any> = ({loading, campaign, deleteCampaign, editCa
         </Card>
     );
 }
+
+export const CampaignCardSkeleton: FC<any> = () => {
+    return <Stack spacing={1}>
+        <Skeleton variant={"rectangular"} height={118}/>
+        <Skeleton sx={{alignSelf: "center"}} variant="circular" width={40} height={40}/>
+        <Skeleton variant={"rectangular"} height={226}/>
+    </Stack>
+}

@@ -85,6 +85,7 @@ export const DashboardContent = ({ campaign }) => {
 
     useEffect(() => {
         const fetchData = async () => {
+            if (!campaign?.id) return;
             const statsData = await getStats({variables: {id: campaign?.id }});
             setStats(statsData.data.getCampaignStats);
         }
@@ -93,7 +94,7 @@ export const DashboardContent = ({ campaign }) => {
 
     useEffect(() => {
         const fetchData = async () => {
-            if (!campaign.id) return;
+            if (!campaign?.id) return;
             const data = await getRecommendetByCampaign(campaign.id);
             setRecommendetPartnerprograms(data);
 
@@ -176,7 +177,7 @@ export const DashboardContent = ({ campaign }) => {
                         </Box>}
                         <CarouselSlider {...settings}>
                             {recommendetPartnerPrograms.map((partnerprogram, index) => (
-                                <Box sx={{px: 2}}>
+                                <Box key={partnerprogram.id + "-" + index} sx={{px: 2}}>
                                     <SmallItem
                                         key={index + ' ' + partnerprogram.id}
                                         addToCampaign={(id) => {

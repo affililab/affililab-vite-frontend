@@ -28,11 +28,19 @@ import {DeleteModal} from "@components/DeleteModal";
 import {resourceSchema} from "@resources/Campaign/configs/resourceSchema";
 import {EditCreateModal} from "@components/EditCreateModal";
 import {useDataItem} from "@resources/Campaign/hooks/useDataItem";
+import { GET_CAMPAIGN, UPDATE_CAMPAIGN } from "@schemas/campaigns";
+import {useMutation} from "@apollo/client";
 
 const {useParams, useNavigate} = Router;
 
 export default () => {
     const {campaignId} = useParams();
+
+    const [editCampaignMutation, { error: updateCampaignError }] = useMutation(UPDATE_CAMPAIGN, {
+        refetchQueries: [
+            { query: GET_CAMPAIGN, variables: { id: campaignId } }
+        ]
+    });
 
 
     const {
@@ -240,19 +248,17 @@ export default () => {
                     </Box>
                 </Box>
             </StickySubNavProvider>
-            <Box sx={{flex: 1}}>
-                <Container maxWidth={themeStretch ? false : 'xl'}>
+            <Box sx={{display: "flex", flexDirection: "column", flex: 1}}>
+                <Container sx={{ flex: 1, display: "flex", flexDirection: "column" }} maxWidth={themeStretch ? false : 'xl'}>
                     <Box sx={(theme) => ({
                         display: "flex",
+                        flex: 1,
                         justifyContent: "center",
                         alignCenter: "center",
                         background: theme.palette.background.neutral,
                         paddingTop: theme.spacing(2)
                     })}>
-                        {TABS.map((tab, index) => {
-                            const isMatched = tab.value === currentTab;
-                            return isMatched && <Box sx={{ width: "100%" }} key={index}>{tab.component}</Box>
-                        })}
+                        <Box sx={{ width: "100%", flex: 1, display: "flex", flexDirection: "column" }}>{TABS.find((tab) => tab.value === currentTab)?.component}</Box>
                     </Box>
                 </Container>
             </Box>

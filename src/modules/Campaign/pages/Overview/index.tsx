@@ -23,7 +23,7 @@ import {DeleteModal} from "@components/DeleteModal";
 
 const Content: FC<any> = ({
                               openCreateModal,
-                              called,
+                              emptyData,
                               deleteCampaign,
                               editCampaign,
                               campaigns,
@@ -79,14 +79,16 @@ const Content: FC<any> = ({
                         paddingBottom: campaigns.length ? "52px" : "0px"
                     }}>
                         {isLoading ? Array.from(Array(10)).map((i, index) => <Grid key={"campaign-skeleton-" + index}
-                                                                                  item xs={12} sm={4} md={3}
-                                                                                  md={3}><CampaignCard loading={true}
-                                                                                                       campaign={{}} /></Grid>) : !!campaigns.length ? campaigns.map((campaignItem: any, index: number) => (
+                                                                                   item xs={12} sm={4} md={3}
+                                                                                   md={3}><CampaignCard loading={true}
+                                                                                                        campaign={{}}/></Grid>) : campaigns.map((campaignItem: any, index: number) => (
                             <Grid key={campaignItem + "-" + index} item xs={12} sm={4} md={3}>
                                 <CampaignCard deleteCampaign={deleteCampaign} editCampaign={editCampaign}
                                               campaign={campaignItem}></CampaignCard>
                             </Grid>
-                        )) : called && <Box sx={{
+                        ))}
+
+                        {emptyData && <Box sx={{
                             width: "100%",
                             display: "flex",
                             flex: 1,
@@ -125,7 +127,7 @@ export default () => {
         setSearchValue,
         deleteItems,
         items,
-        called,
+        emptyData,
         loading
     } = useData();
 
@@ -157,9 +159,8 @@ export default () => {
     }
 
     const agreeDeleteCampaign = async () => {
-        await deleteItems({variables: {ids: [currentCampaign.id]}});
+        await deleteItems([currentCampaign.id]);
         closeDeleteModalHandler();
-        enqueueSnackbar('Campaign successfully removed!');
     }
 
 
@@ -177,7 +178,7 @@ export default () => {
 
     return <>
         <Page title="Dashboard">
-            <Content called={called} isLoading={loading}
+            <Content emptyContent={emptyData} isLoading={loading}
                      campaigns={items} openCreateModal={openCreateModal} editCampaign={editCampaign}
                      deleteCampaign={deleteCampaign}/>
             {!!items.length && <TablePagination
@@ -218,6 +219,6 @@ export default () => {
             editMutation={editMutation}
         />
         <DeleteModal resourceName={"Campaign"} isModalOpen={deleteModal} handleCloseModal={closeDeleteModalHandler}
-                     agree={agreeDeleteCampaign}/>
+                     agree={agreeDeleteCampaign} />
     </>
 }

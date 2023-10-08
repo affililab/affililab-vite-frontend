@@ -38,10 +38,10 @@ export const ELearningContent = ({
     return <>
         <ElearningItemModal item={currentItem} isModalOpen={itemModalState}
                             handleCloseModal={closeModalHandler}/>
-        <Grid container spacing={4} sx={{mt: 2}}>
-            {loading ? Array.from(Array(5)).map(i => <Grid item xs={12} sm={6}
-                                                           md={4}><CampaignCardSkeleton/></Grid>) : !!items.length ? items.map(item => (
-                <Grid item xs={12} sm={6} md={4}>
+        <Grid container spacing={4} sx={{ flex: 1, display: "flex", flexDirection: "container"}}>
+            {loading ? Array.from(Array(5)).map((i, index) => <Grid key={index} item xs={12} sm={6}
+                                                           md={4}><CampaignCardSkeleton/></Grid>) : !!items.length ? items.map((item, index) => (
+                <Grid key={item?.id + "-" + index} item xs={12} sm={6} md={4}>
                     <ELearningItem
                         openModalHandler={() => openModalHandler(item)}
                         eLearningResourcesItem={item}
@@ -53,12 +53,7 @@ export const ELearningContent = ({
                             </Tooltip>
                         </Box>]}/>
                 </Grid>
-            )) : called && <Box sx={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center"
-            }}><EmptyContent
+            )) : !(!!data?.getELearningResourcesByIds?.length) && <Box sx={{width: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}><EmptyContent
                 title="Keine E Learning Resources gefunden"
                 description="Nach diesen Kriterien wurden keine Tools gefunden"
                 img="/static/illustrations/illustration_empty.svg"
