@@ -13,6 +13,7 @@ import {
 import {useSavedFilter} from "@resources/SavedFilter/hooks/useSavedFilter";
 import {SavedFilterDeleteModal} from "../SavedFilterDeleteModal";
 import {SaveFilterModal} from "@resources/SavedFilter/components/SaveFilterModal"
+import {DeleteModal} from "@components/DeleteModal";
 const {useNavigate} = ReactRouter;
 
 /* TODO: outsource renderer too hook */
@@ -239,7 +240,7 @@ export const SavedFiltersTable: FC<any> = ({embedded = false, applyFilter}) => {
     ] ;
 
     return <>
-        <SavedFilterDeleteModal isModalOpen={deleteModalState} handleCloseModal={() => {
+        <DeleteModal resourceName={"Saved Filter"}  isModalOpen={deleteModalState} handleCloseModal={() => {
             setDeleteModalState(false)
         }} agree={async () => {
             // delete items

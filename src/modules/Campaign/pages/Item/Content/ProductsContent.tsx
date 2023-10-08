@@ -28,13 +28,10 @@ export const ProductsContent = ({pItems, campaignData, remove = () => {}, ids = 
 
     const [showPartnerProgramModal, setShowPartnerProgramModal] = useState(false);
     const [currentPartnerProgram, setCurrentPartnerProgram] = useState(null);
-    const {registerInteraction} = useProductInteraction();
 
     const toggleDetailedPartnerProgramModal = (partnerProgram: any) => {
-        // TODO: register view event
         setCurrentPartnerProgram(partnerProgram);
         setShowPartnerProgramModal(!showPartnerProgramModal);
-        registerInteraction(partnerProgram.id, "viewed");
     };
 
     const getPartnerPrograms =  async () => {

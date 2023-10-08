@@ -25,7 +25,8 @@ const {useNavigate} = Router;
 
 const PrimaryColoredBox = styled(Box)(({theme}) => ({
     // ...cssStyles().bgBlur({ blur: 0, color: theme.palette.primary.darker }),
-    backgroundColor: theme.palette.primary.main
+    backgroundColor: theme.palette.primary.main,
+    height: "140px",
 }));
 
 const CampaignIconBox = styled(Box)(({theme}) => ({
@@ -43,7 +44,7 @@ const CampaignIconBox = styled(Box)(({theme}) => ({
 
 // ----------------------------------------------------------------------
 
-export const CampaignCard: FC<any> = ({campaign, deleteCampaign, editCampaign}) => {
+export const CampaignCard: FC<any> = ({loading, campaign, deleteCampaign, editCampaign}) => {
     const navigate = useNavigate();
     const {title, tools, partnerPrograms, eLearningResources} = campaign;
 
@@ -93,7 +94,7 @@ export const CampaignCard: FC<any> = ({campaign, deleteCampaign, editCampaign}) 
                         bottom: -16,
                         mx: 'auto',
                         position: 'absolute',
-                        p: 2
+                        p: 2,
                     }}>
                         <Icon icon={'simple-icons:campaignmonitor'} sx={{
                             color: "white",
@@ -101,14 +102,14 @@ export const CampaignCard: FC<any> = ({campaign, deleteCampaign, editCampaign}) 
                             height: "100%"
                         }}/>
                     </CampaignIconBox>
-                    <PrimaryColoredBox>
+                    {loading ? <Skeleton variant={"rounded"} height={"140px"} /> : <PrimaryColoredBox>
                         <Image src={"/static/images/campaignbg.svg"} alt={"/static/images/campaignbg.svg"}/>
-                    </PrimaryColoredBox>
+                    </PrimaryColoredBox>}
                 </Box>
                 {/*<OverlayStyle />*/}
 
-                <Typography variant="subtitle1" sx={{mt: 6, mb: 6}}>
-                    {title}
+                <Typography variant="subtitle1" sx={{mt: 6, mb: 6, display: "flex", justifyContent: "center"}}>
+                    {loading ? <Skeleton variant={"text"} width={"124px"} fontSize={"24px"} /> : title}
                 </Typography>
 
                 <Divider sx={{borderStyle: 'dashed'}}/>
@@ -118,21 +119,27 @@ export const CampaignCard: FC<any> = ({campaign, deleteCampaign, editCampaign}) 
                         <Typography variant="caption" component="div" sx={{mb: 0.75, color: 'text.disabled'}}>
                             Tools
                         </Typography>
-                        <Typography variant="subtitle1">{fShortenNumber(tools.length)}</Typography>
+                        <Typography variant="subtitle1" sx={{ display: "flex", justifyContent: "center" }}>
+                            {loading ? <Skeleton width={"26px"} variant={"text"} fontSize={"24px"} /> : fShortenNumber(tools.length)}
+                        </Typography>
                     </div>
 
                     <div>
                         <Typography variant="caption" component="div" sx={{mb: 0.75, color: 'text.disabled'}}>
                             Products
                         </Typography>
-                        <Typography variant="subtitle1">{fShortenNumber(partnerPrograms.length)}</Typography>
+                        <Typography variant="subtitle1" sx={{ display: "flex", justifyContent: "center" }}>
+                            {loading ? <Skeleton width={"26px"} variant={"text"} fontSize={"24px"} /> : fShortenNumber(partnerPrograms.length)}
+                        </Typography>
                     </div>
 
                     <div>
                         <Typography variant="caption" component="div" sx={{mb: 0.75, color: 'text.disabled'}}>
                             Learning Items
                         </Typography>
-                        <Typography variant="subtitle1">{fShortenNumber(eLearningResources.length)}</Typography>
+                        <Typography variant="subtitle1" sx={{ display: "flex", justifyContent: "center" }}>
+                            {loading ? <Skeleton width={"26px"} variant={"text"} fontSize={"24px"} /> : fShortenNumber(eLearningResources.length)}
+                        </Typography>
                     </div>
                 </Box>
             </CardContent>
@@ -144,6 +151,6 @@ export const CampaignCardSkeleton: FC<any> = () => {
     return <Stack spacing={1}>
         <Skeleton variant={"rectangular"} height={118}/>
         <Skeleton sx={{alignSelf: "center"}} variant="circular" width={40} height={40}/>
-        <Skeleton variant={"rectangular"} height={118}/>
+        <Skeleton variant={"rectangular"} height={226}/>
     </Stack>
 }

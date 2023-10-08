@@ -8,12 +8,12 @@ import {
     FormProvider,
     Yup,
     yupResolver,
-    LoadingButton, Alert
+    LoadingButton, Alert, Button, Icon
 } from "my-lib";
 import {useMutation} from "@apollo/client";
 import {CREATE_CAMPAIGN, UPDATE_CAMPAIGN, GET_CAMPAIGNS} from "@schemas"
 
-export const CampaignNewForm: FC<any> = ({isEdit, currentCampaign, onFinish}) => {
+export const CampaignNewForm: FC<any> = ({isEdit, currentCampaign, onFinish, }) => {
 
     const [saveCampaignMutation, { error }] = useMutation(isEdit ? UPDATE_CAMPAIGN : CREATE_CAMPAIGN, {
         refetchQueries: [
@@ -97,9 +97,26 @@ export const CampaignNewForm: FC<any> = ({isEdit, currentCampaign, onFinish}) =>
                      {!!errors.afterSubmit && <Alert severity="error">{errors.afterSubmit.message}</Alert>}
                     <RHFTextField name="title" label="title"/>
                     <RHFTextField name="description" label="Description" multiline rows={3} />
-                    <LoadingButton type="submit" variant="contained" loading={isSubmitting}>
-                        {!isEdit ? 'Create Campaign' : 'Save Changes'}
-                    </LoadingButton>
+                    <Box sx={{
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "flex-end",
+                        alignItems: "center",
+                        p: 2,
+                        boxShadow: (theme) => theme.customShadows.z12,
+                    }}>
+                        <Box sx={{justifySelf: "flex-end", width: "100%", display: "flex", justifyContent: "space-between", gap: (theme) => theme.spacing(2)}}>
+                            <Button size={'large'} color={'inherit'} variant="" onClick={() => { abort() }}>
+                                cancel
+                            </Button>
+                            <LoadingButton sx={{float: "right"}} type="submit" variant="contained" loading={isSubmitting}>
+                                <Icon sx={{ mr: 2 }} width={18}
+                                      height={18}
+                                      icon={'fa-regular:save'}/>
+                                Save
+                            </LoadingButton>
+                        </Box>
+                    </Box>
                 </Stack>
             </Box>
         </FormProvider>

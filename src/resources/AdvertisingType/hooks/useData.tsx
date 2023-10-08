@@ -43,7 +43,7 @@ export const useData = (meta = {direction: 1, sortBy: "name", limit: 10, filters
         refetchQueries: refetchingOptions
     });
 
-    const refetchELearningResources = async () => {
+    const refetchItems = async () => {
         // refetch with new page
         await refetch({
             meta: {
@@ -55,8 +55,7 @@ export const useData = (meta = {direction: 1, sortBy: "name", limit: 10, filters
     }
 
     useEffect(() => {
-        // reset eLearningResources
-        setItems([]);
+        // reset items
         if (data) {
             setTotal(data.getAdvertisingTypes.pageInfo.total);
             setItems(data.getAdvertisingTypes.items);
@@ -65,15 +64,10 @@ export const useData = (meta = {direction: 1, sortBy: "name", limit: 10, filters
 
     useEffect( () => {
         const refetch = async () => {
-            await refetchELearningResources()
+            await refetchItems()
         }
         refetch()
     }, [order, orderBy, rowsPerPage, limit, page, searchValue]);
-
-    const fetchNext = async (param) => {
-        if (loading) return;
-        setPage(page + 1);
-    };
 
     const deleteItems = async (ids) => {
         await deleteMutation({variables: {ids}});

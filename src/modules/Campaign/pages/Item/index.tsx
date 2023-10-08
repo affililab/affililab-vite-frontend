@@ -1,24 +1,21 @@
 import {
-    useSettings,
-    Router,
     Box,
-    Tabs,
-    Tab,
-    Page,
     Button,
     Container,
     Icon,
-    Typography,
     Menu,
-    MenuItem, Scrollbar
+    MenuItem,
+    Page,
+    Router,
+    Scrollbar,
+    Tab,
+    Tabs,
+    Typography,
+    useSettings
 } from "my-lib";
-import React, {useState, useEffect, useRef} from "react";
-import {GET_CAMPAIGN, UPDATE_CAMPAIGN} from "@schemas"
-import {useMutation, useQuery} from "@apollo/client";
+import React, {useRef, useState} from "react";
 import {capitalCase} from "change-case";
-import { ToolsContent, ELearningContent, ProductsContent, TasksContent } from "./Content"
-import {Modal} from "@resources/Campaign/components/CampaignSaveModal";
-import {DeleteFromCampaignModal} from "@resources/Campaign/components/DeleteFromCampaignModal";
+import {ELearningContent, ProductsContent, ToolsContent} from "./Content"
 import {AddProductsModal} from "@resources/Campaign/components/AddProductsModal";
 import {AddToolsModal} from "@resources/Campaign/components/AddToolsModal";
 import {AddELearningResourcesModal} from "@resources/Campaign/components/AddELearningResourcesModal";
@@ -26,37 +23,40 @@ import {DashboardContent} from "./Content/DashboardContent";
 import {CategoriesContent} from "./Content/CategoriesContent";
 import {TargetGroupsContent} from "./Content/TargetGroupsContent";
 import {StickySubNavProvider} from "../../../../providers/StickyNavProvider";
-import { useProductInteraction } from "@resources/User/hooks/useProductInteraction";
+import {useProductInteraction} from "@resources/User/hooks/useProductInteraction";
+import {DeleteModal} from "@components/DeleteModal";
+import {resourceSchema} from "@resources/Campaign/configs/resourceSchema";
+import {EditCreateModal} from "@components/EditCreateModal";
+import {useDataItem} from "@resources/Campaign/hooks/useDataItem";
 
 const {useParams, useNavigate} = Router;
 
 export default () => {
     const {campaignId} = useParams();
 
+
+    const {
+        item,
+        refetchingOptions,
+        createMutation,
+        editMutation
+    } = useDataItem(campaignId);
     const getGraphqlUpdateObjects = (resourceKey, id) => {
         const updateRelationshipObject = {};
         updateRelationshipObject[resourceKey] = { delete: [id] };
         return updateRelationshipObject;
+
     };
-
-    const {loading: isLoading, error, data: campaignData, status, refetch} = useQuery(GET_CAMPAIGN, { variables: { id: campaignId } });
-
-
-    const [editCampaignMutation, { error: updateCampaignError }] = useMutation(UPDATE_CAMPAIGN, {
-        refetchQueries: [
-            { query: GET_CAMPAIGN, variables: { id: campaignId } }
-        ]
-    });
-
-    const [campaign, setCampaign] = useState(null);
-
     const [addProductsModalState, setAddProductsModalState] = useState(false);
     const [addToolsModalState, setAddToolsModalState] = useState(false);
+
     const [addELearningResourcesModalState, setAddELearningResourcesModalState] = useState(false);
-    const [editModalState, setEditModalState] = useState(false);
 
     const [removeModalState, setRemoveModalState] = useState(false);
     const [currentResource, setCurrentResource] = useState(false);
+
+    const [editModalState, setEditModalState] = useState(false);
+
 
     const { registerInteraction } = useProductInteraction();
 
@@ -97,14 +97,6 @@ export default () => {
     const {themeStretch} = useSettings();
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (campaignId) refetch();
-    }, [campaignId])
-
-    useEffect(() => {
-        if (campaignData) setCampaign(campaignData?.getCampaign);
-    }, [campaignData]);
-
     const removeResource = (resourceKey, id) => {
         setCurrentResource({
             key: resourceKey,
@@ -126,32 +118,32 @@ export default () => {
         {
             value: 'dashboard',
             icon: <Icon icon={'carbon:dashboard'} width={20} height={20}/>,
-            component: <DashboardContent campaign={campaign} />
+            component: <DashboardContent campaign={item} />
         },
         {
             value: 'products',
             icon: <Icon icon={'tabler:package'} width={20} height={20}/>,
-            component: <ProductsContent campaignData={campaignData} remove={removeResource} pItems={campaign?.partnerPrograms} ids={campaign?.partnerPrograms?.map(item => item?.id)} />
+            component: <ProductsContent campaignData={item} remove={removeResource} pItems={item?.partnerPrograms} ids={item?.partnerPrograms?.map(item => item?.id)} />
         },
         {
             value: 'categories',
             icon: <Icon icon={'dashicons:screenoptions'} width={20} height={20}/>,
-            component: <CategoriesContent campaign={campaign} />
+            component: <CategoriesContent campaign={item} />
         },
         {
             value: 'targetGroups',
             icon: <Icon icon={'fluent:target-arrow-16-filled'} width={20} height={20}/>,
-            component: <TargetGroupsContent campaign={campaign} />
+            component: <TargetGroupsContent campaign={item} />
         },
         {
             value: 'tools',
             icon: <Icon icon={'clarity:tools-line'} width={20} height={20}/>,
-            component: <ToolsContent campaignData={campaignData} remove={removeResource} ids={campaign?.tools?.map(item => item?.id)} />
+            component: <ToolsContent campaignData={item} remove={removeResource} ids={item?.tools?.map(tool => tool?.id)} />
         },
         {
             value: 'E-Learning',
             icon: <Icon icon={'bx:movie-play'} width={20} height={20}/>,
-            component: <ELearningContent campaignData={campaignData} remove={removeResource} ids={campaign?.eLearningResources?.map(item => item?.id)} />
+            component: <ELearningContent campaignData={item} remove={removeResource} ids={item?.eLearningResources?.map(eLearningResource => eLearningResource?.id)} />
         },
         // {
         //     value: 'Tasks',
@@ -179,11 +171,21 @@ export default () => {
     const scrollableNodeRef = useRef();
 
     return <Page title="Campaign Item">
-        <Modal update={true} isModalOpen={editModalState} item={campaign} handleCloseModal={closeModalHandler}/>
-        <DeleteFromCampaignModal isModalOpen={removeModalState} handleCloseModal={closeRemoveModalHandler} agree={agreeRemove} />
-        <AddProductsModal isModalOpen={addProductsModalState} handleCloseModal={closeAddProductsModalHandler} item={campaign} />
-        <AddToolsModal isModalOpen={addToolsModalState} handleCloseModal={closeAddToolsModalHandler} item={campaign} />
-        <AddELearningResourcesModal isModalOpen={addELearningResourcesModalState} handleCloseModal={closeAddELearningResourcesModalHandler} item={campaign} />
+        <EditCreateModal
+            resourceName={'Campaign'}
+            resourceSchema={resourceSchema()}
+            handleCloseModal={closeModalHandler}
+            isModalOpen={editModalState}
+            refetchingOptions={refetchingOptions}
+            item={item}
+            isEdit={true}
+            createMutation={createMutation}
+            editMutation={editMutation}
+        />
+        <DeleteModal resourceName={"Parnterprogram"} isModalOpen={removeModalState} handleCloseModal={closeRemoveModalHandler} agree={agreeRemove} />
+        <AddProductsModal isModalOpen={addProductsModalState} handleCloseModal={closeAddProductsModalHandler} item={item} />
+        <AddToolsModal isModalOpen={addToolsModalState} handleCloseModal={closeAddToolsModalHandler} item={item} />
+        <AddELearningResourcesModal isModalOpen={addELearningResourcesModalState} handleCloseModal={closeAddELearningResourcesModalHandler} item={item} />
         <Scrollbar sx={{
         display: "flex",
         flex: 1,
@@ -208,7 +210,7 @@ export default () => {
                 <Box sx={(theme) => ({display: 'flex', alignItems: 'center', height: "100%", justifyContent: 'space-between', px: theme.spacing(4)})}>
                     <Box sx={{ display: "flex", gap: (theme) => theme.spacing(2), alignItems: "center" }}>
                         <Button onClick={() => {navigate("/app/campaign")}} color="inherit" startIcon={<Icon icon="eva:arrow-back-fill" />}>Zurück</Button>
-                        <Typography variant="h6" component="h4">{campaign?.title}</Typography>
+                        <Typography variant="h6" component="h4">{item?.title}</Typography>
                     </Box>
                     <Box sx={{ alignSelf: "flex-end" }}>
                         <Tabs
