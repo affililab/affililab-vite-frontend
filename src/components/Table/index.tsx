@@ -127,7 +127,7 @@ export const TableComponent: FC<any> = ({
     };
 
     return <>
-        <TableContainer sx={{flex: 1, flexDirection: "column", display: "flex", p: embedded ? 0 : 0}}>
+        <TableContainer sx={{flex: 1, flexDirection: "column", display: "flex", height}}>
             {!disableToolbar && <TableComponentToolbar
                 numSelected={selected.length}
                 onSearch={handleSearch}
@@ -190,7 +190,7 @@ export const TableComponent: FC<any> = ({
                         const isItemSelected = selected.indexOf(row.id) !== -1;
                         return (<TableRow key={row.id + ' ' + index}>
                             {/* select checkbox cell */}
-                            {showCheckbox && <TableCell>
+                            {showCheckbox && <TableCell className={classes.stickyColumn} sx={{ left: 0 }}>
                                 <Checkbox checked={isItemSelected} onClick={() => handleClick(row.id)}/>
                             </TableCell>}
                             {/* render cell by rowvalue renderCell method of columns */}
@@ -224,8 +224,8 @@ export const TableComponent: FC<any> = ({
             sx={(theme) => ({
                 position: "sticky",
                 zIndex: 999,
-                boxShadow: theme.customShadows.z24,
-                background: theme.palette.background.paper,
+                boxShadow: embedded ? 'none' : theme.customShadows.z24,
+                background: embedded ? theme.palette.background.neutral : theme.palette.background.paper,
                 bottom: 0,
                 left: 0,
                 right: 0

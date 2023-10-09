@@ -12,24 +12,22 @@ import {
 } from "my-lib";
 
 import {InformationTabs} from "./InformationTabs";
-import {SmallItem} from "../../SmallItem"
 import React, {FC, useEffect} from "react";
-import {toggleNoticedPartnerProgram} from "@slices/noticedPartnerPrograms";
 import {useProductInteraction} from "@resources/User/hooks/useProductInteraction";
 
 export const Content: FC<any> = ({
                             item,
                             toggleExternalLink,
                             isNoticed,
-                            addToCampaign,
+                            addToCampaign = () => {},
                             toggleModal,
                             toggleNoticed,
                             actionItems = [
                                 (item, isAuthenticated) => isAuthenticated && <Box>
                                     <Tooltip title={"add to campaign"} arrow>
                                         <IconButton
-                                            value={isNoticed ? 'checked' : 'unchecked'} onClick={() => addToCampaign(item.id)}
-                                            color="secondary" aria-label="add to campaign"
+                                           onClick={() => addToCampaign(item.id)}
+                                            aria-label="add to campaign"
                                         >
                                             <Icon
                                                 color={"text.disabled"}
@@ -53,8 +51,8 @@ export const Content: FC<any> = ({
                                 (item) => <Box>
                                     <Tooltip title={"merken"} arrow>
                                         <IconButton
-                                            value={isNoticed ? 'checked' : 'unchecked'} onClick={() => toggleNoticedPartnerProgram(item)}
-                                            color="secondary" aria-label="toggle noticed partnerprogram"
+                                            value={isNoticed ? 'checked' : 'unchecked'} onClick={() => toggleNoticed(item)}
+                                            aria-label="toggle noticed partnerprogram"
                                         >
                                             <Icon
                                                 color={"text.disabled"}
@@ -155,7 +153,7 @@ export const Content: FC<any> = ({
             {actionItems.map(actionItem => actionItem(item, auth.isAuthenticated))}
             <Box>
                 <Tooltip title={"schließen"} arrow>
-                    <IconButton color="secondary" aria-label="close" onClick={() => toggleModal(item)}>
+                    <IconButton aria-label="close" onClick={() => toggleModal(item)}>
                         <Icon
                             color={"text.disabled"}
                             width={34}

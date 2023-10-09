@@ -4,13 +4,15 @@ import {Comparison} from "./Comparison"
 import {useTriggerHook} from "./hook"
 
 const ModalContent: FC<any> = ({
-                          isModalOpen,
-                          addToCampaign,
-                          handleCloseModal,
-                          noticedPartnerPrograms,
-                          toggleDetailedModal,
-                          toggleNoticedPartnerProgram
-                      }) => {
+                                   isModalOpen,
+                                   addToCampaign,
+                                   handleCloseModal,
+                                   noticedPartnerPrograms,
+                                   toggleDetailedModal,
+                                   toggleNoticedPartnerProgram
+                               }) => {
+
+    const [selected, setSelected] = useState<string[]>([]);
 
     const theme = useTheme();
     const [items, setItems] = useState(noticedPartnerPrograms);
@@ -22,11 +24,17 @@ const ModalContent: FC<any> = ({
         setItems(noticedPartnerPrograms);
     }, [handleCloseModal, isModalOpen]);
 
-    return <Box sx={{ overflow: "hidden" }}>
-        <Comparison addToCampaign={addToCampaign} items={items} toggleDetailedModal={toggleDetailedModal} currentTab={currentTab}
-                    setCurrentTab={setCurrentTab} noticedPartnerPrograms={noticedPartnerPrograms}
-                    compareViewTrigger={compareViewTrigger} toggleNoticedPartnerProgram={toggleNoticedPartnerProgram}/>
-        {/*<Box sx={{ background: theme.palette.background.neutral, height: "512px" }} px={4}>*/}
+    return <Box sx={{overflow: "hidden"}}>
+            <Comparison
+            selected={selected}
+            setSelected={setSelected}
+            addToCampaigns={addToCampaign}
+            items={items}
+            toggleDetailedModal={toggleDetailedModal}
+            currentTab={currentTab}
+            setCurrentTab={setCurrentTab} noticedPartnerPrograms={noticedPartnerPrograms}
+            compareViewTrigger={compareViewTrigger}
+            toggleNoticedPartnerProgram={toggleNoticedPartnerProgram} />
         <Box sx={{
             width: "100%",
             display: "flex",
@@ -35,15 +43,18 @@ const ModalContent: FC<any> = ({
             p: 2,
             boxShadow: theme.customShadows.z12,
         }}>
-            <Box  sx={{justifySelf: "flex-end", display : "flex", gap: (theme) => theme.spacing(2) }}>
+            <Box sx={{justifySelf: "flex-end",  width: "100%", justifyContent: "space-between", display: "flex", gap: (theme) => theme.spacing(2)}}>
+                {/*<Button size={'large'} onClick={() => {*/}
+                {/*    setCurrentTab("Graphen")*/}
+                {/*}} variant="text">*/}
+                {/*    Vergleichen*/}
+                {/*</Button>*/}
+                <Box></Box>
                 <Button size={'large'} onClick={() => {
-                    setCurrentTab("Graphen")
-                }} variant="text">
-                    Vergleichen
-                </Button>
-                <Button size={'large'} onClick={() => { addToCampaign() }} variant="contained">
+                    addToCampaign(selected)
+                }} variant="contained">
                     Zu Kampagne hinzufügen
-                    <Icon sx={{ ml: 2 }} width={24}
+                    <Icon sx={{ml: 2}} width={24}
                           height={24}
                           icon={'codicon:add'}/>
                 </Button>
@@ -52,17 +63,17 @@ const ModalContent: FC<any> = ({
 }
 
 export const NoticedPartnerProgramsModal: FC<any> = ({
-                                                isModalOpen,
-                                                addToCampaign,
-                                                handleCloseModal,
-                                                toggleDetailedModal,
-                                                noticedPartnerPrograms,
-                                                toggleNoticedPartnerProgram
-                                            }) => {
+                                                         isModalOpen,
+                                                         addToCampaign,
+                                                         handleCloseModal,
+                                                         toggleDetailedModal,
+                                                         noticedPartnerPrograms,
+                                                         toggleNoticedPartnerProgram
+                                                     }) => {
 
     return (
         <DialogAnimate maxWidth={"xl"} open={isModalOpen} onClose={handleCloseModal}>
-            <Box sx={{ display: "flex", justifyContent: "space-between", p: 2 }}>
+            <Box sx={{display: "flex", justifyContent: "space-between", p: 2}}>
                 <DialogTitle variant={'subtitle1'}>Gemerkte Partnerprogramme ansehen</DialogTitle>
                 <IconButton aria-label="close" onClick={handleCloseModal}>
                     <Icon width={42}

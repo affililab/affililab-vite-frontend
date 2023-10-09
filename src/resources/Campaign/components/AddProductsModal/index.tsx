@@ -1,22 +1,20 @@
 import React, {FC, useEffect, useState} from "react";
 import {
-    Box, DialogAnimate, DialogTitle, DialogActions, LoadingButton, useSnackbar
+    Box, DialogAnimate, DialogTitle, DialogActions, LoadingButton, useSnackbar, Icon, IconButton
 } from "my-lib";
 import {ProductsTable} from "@resources/Product/components/ProductsTable";
 import {useMutation} from "@apollo/client";
 import {GET_CAMPAIGN, GET_ROLES, UPDATE_CAMPAIGN} from "@schemas";
+import {SelectTable} from "@resources/Product/components/SelectTable";
 
-const Content: FC<any> = ({item, resourceKey, handleCloseModal}) => {
+const Content: FC<any> = ({item, resourceKey, refetchingOptions = [], handleCloseModal}) => {
 
     const { enqueueSnackbar } = useSnackbar();
 
     const [isLoading, setIsLoading] =  useState(false);
 
     const [editCampaignMutation, {error: updateCampaignError}] = useMutation(UPDATE_CAMPAIGN, {
-        refetchQueries:  [{
-            query: GET_CAMPAIGN,
-            variables: { id: item.id }
-        }]
+        refetchQueries:  refetchingOptions
     });
 
     const [selectedItems, setSelectedItems] = useState([]);
@@ -30,11 +28,13 @@ const Content: FC<any> = ({item, resourceKey, handleCloseModal}) => {
     }
 
 
-    return <><Box sx={(theme) => ({borderBottom: "2px solid " + theme.palette.divider})}>
-        <ProductsTable embedded={true} handleSelectedItems={setSelectedItems}/>
+    return <><Box>
+        <SelectTable handleSelectedItems={(selected: any) => {
+            setSelectedItems(selected);
+        }} />
     </Box>
         <Box sx={{ p: 2 }}>
-            <LoadingButton sx={{ float: "right" }} onClick={() => { addTo() }} variant="contained" loading={isLoading}>
+            <LoadingButton sx={{ float: "right" }} onClick={() => { addTo() }} size={'large'}  variant="contained" loading={isLoading}>
                 add selected
             </LoadingButton>
         </Box>
@@ -42,6 +42,7 @@ const Content: FC<any> = ({item, resourceKey, handleCloseModal}) => {
 };
 
 export const AddProductsModal = ({
+                                    refetchingOptions = [],
                                     isModalOpen,
                                     item,
                                     handleCloseModal,
@@ -50,9 +51,16 @@ export const AddProductsModal = ({
                                 }) => {
 
     return (
-        <DialogAnimate maxWidth={"xl"} open={isModalOpen} onClose={handleCloseModal}>
-            <DialogTitle sx={{py: 2}}>Add {resource} to Campaign</DialogTitle>
-            <Content item={item} resourceKey={key} handleCloseModal={handleCloseModal} />
+        <DialogAnimate height={"50vh"} maxWidth={"xl"} open={isModalOpen} onClose={handleCloseModal}>
+            <Box sx={{display: "flex", justifyContent: "space-between", p: 2}}>
+                <DialogTitle sx={{py: 2}}>Add {resource} to Campaign</DialogTitle>
+                <IconButton aria-label="close" onClick={handleCloseModal}>
+                    <Icon width={42}
+                          height={42}
+                          icon={'ei:close'}/>
+                </IconButton>
+            </Box>
+            <Content refetchingOptions={refetchingOptions} item={item} resourceKey={key} handleCloseModal={handleCloseModal} />
         </DialogAnimate>
     )
 }

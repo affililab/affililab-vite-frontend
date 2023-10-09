@@ -26,7 +26,7 @@ export const TableComponentHead: FC<any> = ({
 
     return <TableHead ref={stickyRef} sx={(theme: any) => ({  boxShadow: stuck ? theme.customShadows.z24 : "none" })}>
         <TableRow sx={(theme: any) => ({ top: -1, position: "sticky", zIndex: 1, background: stuck ? theme.palette.background.paper + " !important" : theme.palette.background.neutral})}>
-            { showCheckbox && <TableCell>
+            { showCheckbox && <TableCell className={stickyColumnClass} sx={{ width: "56px", left: 0, zIndex: 999 }}>
                <Checkbox
                     indeterminate={numSelected > 0 && numSelected < rowCount}
                     checked={rowCount > 0 && numSelected === rowCount}

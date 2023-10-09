@@ -18,9 +18,6 @@ import {useFilter} from "@resources/Product/hooks/useFilter";
 import {useSavedFilter} from "@resources/SavedFilter/hooks/useSavedFilter"
 import {useQuery} from "@apollo/client";
 import {merge} from "lodash";
-import {PartnerProgramModal} from "../PartnerProgramModal";
-import {FilterModal, NoticedPartnerProgramsModal} from "@resources/Product/components"
-import {AddToModal} from "@resources/Campaign/components/AddToModal"
 
 const {useParams} = ReactRouter;
 
@@ -33,10 +30,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export const SelectTable: FC<any> = ({
-                                           embedded = false, handleSelectedItems = (selected) => {
-    }
-                                       }) => { // handleSelectedItems is a prop to access selected items from parent element
+export const SelectTable: FC<any> = ({ multiple = true, handleSelectedItems = (selected) => {}}) => {
 
     let {savedFilterId} = useParams();
 
@@ -240,58 +234,11 @@ export const SelectTable: FC<any> = ({
         }
     ];
 
+    const [searchValue, setSearchValue] = useState('');
     const [order, setOrder] = useState('desc');
     const [orderBy, setOrderBy] = useState('rank');
     const [rowsPerPage, setRowsPerPage] = useState(25);
 
-    /* add to campaign modal */
-    const [showAddToCampaignModal, setShowAddToCampaignModal] = useState(false);
-    const [addToCampaignProducts, setAddToCampaignProducts] = useState([]);
-    /* end */
-
-    /* partnerprogram modal */
-    const [showPartnerProgramModal, setShowPartnerProgramModal] = useState(false);
-    const [currentPartnerProgram, setCurrentPartnerProgram] = useState(null);
-    const toggleDetailedPartnerProgramModal = (partnerProgram) => {
-        setCurrentPartnerProgram(partnerProgram);
-        setShowPartnerProgramModal(!showPartnerProgramModal);
-    }
-    /* end */
-
-    /* noticed partnerprogram models */
-    const [showNoticedPartnerPrograms, setShowNoticedPartnerPrograms] = useState(false);
-    const handleCloseNoticedPartnerProgramsModal = () => {
-        setShowNoticedPartnerPrograms(false);
-    }
-    /* end */
-
-    /* filter modal */
-    const [showFilterModal, setShowFilterModal] = useState(false);
-    const handleCloseFilterModal = () => {
-        setShowFilterModal(false);
-    }
-    /* end filter modal */
-
-    const {data: categorySalaryModelsData} = useQuery(CATEGORIES_SALARYMODELS);
-
-    const {
-        resetFilter,
-        resetAll,
-        getGraphQlFilters,
-        filtersList,
-        filter,
-        searchValue,
-        setSearchValue,
-        applyFilter,
-        filterForm,
-        activeFilterCount
-    } = useFilter(categorySalaryModelsData);
-
-    const {
-        getSavedFilterById,
-        dataAppliedSavedFilter,
-        getFilterArray
-    } = useSavedFilter();
 
     const {
         refreshPartnerprograms,
@@ -305,23 +252,7 @@ export const SelectTable: FC<any> = ({
         total,
         setTotal,
         setPage
-    } = usePartnerPrograms(() => {}, filter, getGraphQlFilters,  selected, order === 'asc' ? 1 : -1, orderBy, rowsPerPage);
-
-
-    useEffect(() => {
-        const getSavedFilter = async () => {
-            const filterToApply = await getSavedFilterById(savedFilterId);
-            if (filterToApply) {
-                applyFilter(await getSavedFilterById(savedFilterId));
-                enqueueSnackbar('Successfully applied filter !');
-                return;
-            }
-            enqueueSnackbar('An Error occurred on trying to apply filter', {variant: 'error'});
-        };
-        if (savedFilterId) getSavedFilter();
-    }, [savedFilterId]);
-
-
+    } = usePartnerPrograms();
 
     const handleRequestSort = (param) => {
         setOrderBy(param);
@@ -343,64 +274,33 @@ export const SelectTable: FC<any> = ({
     }
 
     return <>
-        <PartnerProgramModal
-            isModalOpen={showPartnerProgramModal}
-            toggleModal={toggleDetailedPartnerProgramModal}
-            handleCloseModal={() => {
-                setShowPartnerProgramModal(false)
-            }}
-            toggleNoticedPartnerProgram={() => {
-            }}
-            partnerprogram={currentPartnerProgram}
-        />
-
-        <AddToModal addToObjects={{partnerPrograms: addToCampaignProducts}} isModalOpen={showAddToCampaignModal}
-                    handleCloseModal={() => {
-                        setShowAddToCampaignModal(false)
-                    }} resource={"Products"}/>
-
-        <FilterModal
-            filter={filter}
-            resetFilter={resetFilter}
-            filtersList={filtersList}
-            applyFilter={applyFilter}
-            isModalOpen={showFilterModal}
-            handleCloseModal={handleCloseFilterModal}
-        />
-
-        <NoticedPartnerProgramsModal
-            toggleDetailedModal={toggleDetailedPartnerProgramModal}
-            noticedPartnerPrograms={selectedPartnerPrograms}
-            isModalOpen={showNoticedPartnerPrograms}
-            handleCloseModal={handleCloseNoticedPartnerProgramsModal} />
             <Box sx={{ p: 2, background: (theme) => theme.palette.background.paper, display: "flex", justifyContent: "center" }}>
                 <SearchInput searchValue={searchValue} setSearchValue={setSearchValue} updateInput={setSearchValue} />
             </Box>
-                <TableComponent
-                    embedded
-                    resource={"product"}
-                    activeFilterCount={activeFilterCount}
-                    columns={TableColumns}
-                    rows={loading ? [] : partnerprograms}
-                    emptyData={emptyData}
-                    page={page}
-                    openFilter={() => setShowFilterModal(true)}
-                    loading={loading}
-                    rowsPerPage={rowsPerPage}
-                    order={order}
-                    orderBy={orderBy}
-                    // showCheckbox={false}
-                    singleSelect={true}
-                    total={total}
-                    selected={selected}
-                    setSelected={handleSelected}
-                    handleSearch={handleSearch}
-                    handleRequestSort={handleRequestSort}
-                    changePageHandler={changePageHandler}
-                    changeRowsPerPageHandler={changeRowsPerPageHandler}
-                    moreMenuOnlyItems
-                    disableToolbar={true}
-                    disableMenu={true}
-                />
+        <TableComponent
+            height={"50vh"}
+            embedded
+            resource={"product"}
+            columns={TableColumns}
+            rows={loading ? [] : partnerprograms}
+            emptyData={emptyData}
+            page={page}
+            loading={loading}
+            rowsPerPage={rowsPerPage}
+            order={order}
+            orderBy={orderBy}
+            // showCheckbox={false}
+            singleSelect={!multiple}
+            total={total}
+            selected={selected}
+            setSelected={handleSelected}
+            handleSearch={handleSearch}
+            handleRequestSort={handleRequestSort}
+            changePageHandler={changePageHandler}
+            changeRowsPerPageHandler={changeRowsPerPageHandler}
+            moreMenuOnlyItems
+            disableToolbar={true}
+            disableMenu={true}
+        />
     </>
 }

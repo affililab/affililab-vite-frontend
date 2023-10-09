@@ -23,7 +23,7 @@ import {
     useAuth,
     useTheme,
     fRenderedHTML,
-    ButtonBase, Link
+    ButtonBase, Link, Checkbox
 } from 'my-lib';
 import {merge} from "lodash";
 
@@ -112,6 +112,9 @@ const toStylelessDocument = (htmlString: string): string => {
 
 export const Item: FC<any> = ({
                          item,
+                         selectable = false,
+                         selected = false,
+                         toggleSelected = () => {},
                          toggleExternalLink,
                          isNoticed,
                          addToCampaign,
@@ -296,8 +299,13 @@ export const Item: FC<any> = ({
 
     return <Card sx={{overflow: "hidden", p: 4}}>
         <Box sx={{height: "100%", display: "flex", flexDirection: "column"}}>
-            <Box sx={{alignSelf: "flex-end", display: "flex", gap: ".6rem"}}>
-                {actionItems.map((actionItem: any, index: number) => <React.Fragment key={`${actionItem.title}-${index}`}>{actionItem(item, auth.isAuthenticated)}</React.Fragment>)}
+            <Box sx={{width: "100%", display: "flex", justifyContent: "space-between"}}>
+                <Box sx={{ alignSelf: "flex-start" }}>
+                    {selectable && <Checkbox checked={selected} onClick={() => toggleSelected()}/>}
+                </Box>
+                <Box sx={{justifySelf: "flex-end", alignSelf: "flex-end", display: "flex", gap: ".6rem"}}>
+                    {actionItems.map((actionItem: any, index: number) => <React.Fragment key={`${actionItem.title}-${index}`}>{actionItem(item, auth.isAuthenticated)}</React.Fragment>)}
+                </Box>
             </Box>
             <Box className={classes.content}>
                 <Box sx={{
@@ -509,7 +517,3 @@ export const Item: FC<any> = ({
         </Box>
     </Card>
 }
-
-export const SkeletonItem = () => {
-    return <Card sx={{height: "456px", overflow: "hidden", p: 4}}>loading</Card>
-};

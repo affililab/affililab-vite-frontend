@@ -1,5 +1,5 @@
 import {FC} from "react";
-import {Box, Icon, CircularProgress, Typography} from "my-lib"
+import {Box, Icon, CircularProgress, Typography, Scrollbar} from "my-lib"
 import {FilterNavSectionVertical} from "@components/FilterNavSectionVertical";
 import {Search} from "@resources/ELearningResources/components/Search";
 import {useGetAllWithNumbers} from "@resources/CampaignSupportCategory/hooks/useGetAllWithNumbers";
@@ -31,7 +31,7 @@ export const ElearningMenu: FC<any> = ({ searchValue, setSearchValue, updateSear
     return (
         <Box
             sx={{
-                py: 5,
+                pt: 5,
                 borderRadius: 'shape.borderRadius',
                 maxWidth: 312,
                 minWidth: 346,
@@ -40,6 +40,7 @@ export const ElearningMenu: FC<any> = ({ searchValue, setSearchValue, updateSear
                 ...sx
             }}
         >
+            <Scrollbar>
             {/*<Box sx={(theme) => ({ ...theme.typography.overline, paddingLeft: (theme) => theme.spacing(4), display: "flex", alignItems: "center", gap: (theme) => theme.spacing(2) })}>*/}
             {/*    <Icon icon={'akar-icons:settings-horizontal'} width="32" height={"32"}/>*/}
             {/*    <Typography*/}
@@ -60,6 +61,6 @@ export const ElearningMenu: FC<any> = ({ searchValue, setSearchValue, updateSear
                 >
                     <CircularProgress />
                 </Box> : <FilterNavSectionVertical navConfig={NAV_ITEMS} activeItems={activeCategories} setActiveStates={setActiveStates} />}
-        </Box>
+            </Scrollbar></Box>
     );
 }

@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => ({
     cover: {
         width: "100%",
         height: "256px",
-        position: "relative"
+        position: "relative",
     }
 }));
 
@@ -50,7 +50,8 @@ const LogoCircle = styled(Box)(({theme}) => ({
     height: "128px",
     marginBottom: "-64px",
     border: "1px solid " + theme.palette.divider,
-    padding: theme.spacing(2)
+    padding: theme.spacing(2),
+    overflow: "hidden"
 }));
 
 export const Content: FC<any> = ({

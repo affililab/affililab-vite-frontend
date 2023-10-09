@@ -158,7 +158,7 @@ export const ProductsListContent: FC<any> = ({ filterHook = {} }) => {
             marginTop: "64px",
             height: "calc( 100vh - 64px )",
             ".simplebar-content": {
-                height: "100%"
+                height: "auto"
             }
         })}>
         <WizardModal isModalOpen={isModalOpen} handleCloseModal={() => setIsModalOpen(false)} />
@@ -203,7 +203,7 @@ export const ProductsListContent: FC<any> = ({ filterHook = {} }) => {
         <Box sx={{ position: "fixed", bottom: (theme) => theme.spacing(12), right: (theme) => theme.spacing(6), zIndex: 1002 }}>
             <FabButtonAnimate sx={{ py: 4, boxShadow: (theme) => theme.customShadows.z8 }} onClick={() => setIsModalOpen(true)} variant="extended" size="large" color="secondary">
                 <Icon icon="bxs:magic-wand" width={24} height={24} />
-                find me a product
+                Find me a product
             </FabButtonAnimate>
         </Box>
     </Box>

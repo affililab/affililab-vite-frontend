@@ -49,6 +49,7 @@ export const usePartnerPrograms: any = (resetScroll, getGraphQlFilters, directio
         called,
         loading,
         partnerprograms,
+        emptyData: !(!!data?.getPartnerPrograms?.items?.length),
         data,
         setPartnerprograms,
         total,

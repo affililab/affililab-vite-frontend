@@ -23,32 +23,25 @@ import {DashboardContent} from "./Content/DashboardContent";
 import {CategoriesContent} from "./Content/CategoriesContent";
 import {TargetGroupsContent} from "./Content/TargetGroupsContent";
 import {StickySubNavProvider} from "../../../../providers/StickyNavProvider";
-import {useProductInteraction} from "@resources/User/hooks/useProductInteraction";
 import {DeleteModal} from "@components/DeleteModal";
 import {resourceSchema} from "@resources/Campaign/configs/resourceSchema";
 import {EditCreateModal} from "@components/EditCreateModal";
 import {useDataItem} from "@resources/Campaign/hooks/useDataItem";
-import { GET_CAMPAIGN, UPDATE_CAMPAIGN } from "@schemas/campaigns";
-import {useMutation} from "@apollo/client";
 
 const {useParams, useNavigate} = Router;
 
 export default () => {
     const {campaignId} = useParams();
 
-    const [editCampaignMutation, { error: updateCampaignError }] = useMutation(UPDATE_CAMPAIGN, {
-        refetchQueries: [
-            { query: GET_CAMPAIGN, variables: { id: campaignId } }
-        ]
-    });
-
 
     const {
         item,
         refetchingOptions,
         createMutation,
-        editMutation
+        editMutation,
+        edit
     } = useDataItem(campaignId);
+
     const getGraphqlUpdateObjects = (resourceKey, id) => {
         const updateRelationshipObject = {};
         updateRelationshipObject[resourceKey] = { delete: [id] };
@@ -61,12 +54,9 @@ export default () => {
     const [addELearningResourcesModalState, setAddELearningResourcesModalState] = useState(false);
 
     const [removeModalState, setRemoveModalState] = useState(false);
-    const [currentResource, setCurrentResource] = useState(false);
+    const [currentResource, setCurrentResource] = useState<{key: string, id: string}>(null);
 
     const [editModalState, setEditModalState] = useState(false);
-
-
-    const { registerInteraction } = useProductInteraction();
 
     // add Button
     const [isOpenAddMenu, setOpenAddMenu] = useState(null);
@@ -114,10 +104,7 @@ export default () => {
     };
 
     const agreeRemove = async () => {
-        await editCampaignMutation({ variables: { id: campaignId, ...getGraphqlUpdateObjects(currentResource.key, currentResource.id) } })
-        if (currentResource.key === 'partnerPrograms') {
-            registerInteraction(currentResource.id, "removed_from_campaign");
-        }
+        await edit(currentResource, campaignId, getGraphqlUpdateObjects(currentResource.key, currentResource.id))
         closeRemoveModalHandler();
     }
 
@@ -191,7 +178,7 @@ export default () => {
             editMutation={editMutation}
         />
         <DeleteModal resourceName={"Parnterprogram"} isModalOpen={removeModalState} handleCloseModal={closeRemoveModalHandler} agree={agreeRemove} />
-        <AddProductsModal isModalOpen={addProductsModalState} handleCloseModal={closeAddProductsModalHandler} item={item} />
+        <AddProductsModal refetchingOptions={refetchingOptions} isModalOpen={addProductsModalState} handleCloseModal={closeAddProductsModalHandler} item={item} />
         <AddToolsModal isModalOpen={addToolsModalState} handleCloseModal={closeAddToolsModalHandler} item={item} />
         <AddELearningResourcesModal isModalOpen={addELearningResourcesModalState} handleCloseModal={closeAddELearningResourcesModalHandler} item={item} />
         <Scrollbar sx={{
@@ -235,15 +222,15 @@ export default () => {
                         <Button onClick={() => {editCampaign()}} color="inherit" endIcon={<Icon icon="fluent:text-bullet-list-square-edit-20-regular" />}>edit</Button>
                         <Button variant="contained" size={"large"}  onClick={handleOpenAddMenu} color="primary" startIcon={<Icon icon="akar-icons:plus" />}>add Item</Button>
                         <Menu
+                            sx={{ marginTop: "-52px" }}
                             keepMounted
-                            id="demo-positioned-menu"
                             anchorEl={isOpenAddMenu}
                             open={Boolean(isOpenAddMenu)}
                             onClose={handleCloseAddMenu}
                         >
-                            <MenuItem onClick={() => { toggleAddProductsModal(); handleCloseAddMenu()}}>Partnerprograms</MenuItem>
-                            <MenuItem onClick={() => { toggleAddToolsModal(); handleCloseAddMenu()}}>Tools</MenuItem>
-                            <MenuItem onClick={() => { toggleAddELearningResourcesModal(); handleCloseAddMenu()}}>E-Learning Resources</MenuItem>
+                            <MenuItem sx={{ height: "64px", minWidth: "312px" }} onClick={() => { toggleAddProductsModal(); handleCloseAddMenu()}}>Partnerprograms</MenuItem>
+                            <MenuItem sx={{ height: "64px", minWidth: "312px" }} onClick={() => { toggleAddToolsModal(); handleCloseAddMenu()}}>Tools</MenuItem>
+                            <MenuItem sx={{ height: "64px", minWidth: "312px" }} onClick={() => { toggleAddELearningResourcesModal(); handleCloseAddMenu()}}>E-Learning Resources</MenuItem>
                         </Menu>
                     </Box>
                 </Box>

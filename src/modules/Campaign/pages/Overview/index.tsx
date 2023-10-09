@@ -24,6 +24,7 @@ import {DeleteModal} from "@components/DeleteModal";
 const Content: FC<any> = ({
                               openCreateModal,
                               emptyData,
+                              called,
                               deleteCampaign,
                               editCampaign,
                               campaigns,
@@ -78,10 +79,11 @@ const Content: FC<any> = ({
                         paddingRight: (theme) => theme.spacing(2),
                         paddingBottom: campaigns.length ? "52px" : "0px"
                     }}>
-                        {isLoading ? Array.from(Array(10)).map((i, index) => <Grid key={"campaign-skeleton-" + index}
-                                                                                   item xs={12} sm={4} md={3}
-                                                                                   md={3}><CampaignCard loading={true}
-                                                                                                        campaign={{}}/></Grid>) : campaigns.map((campaignItem: any, index: number) => (
+                        {(isLoading) ? Array.from(Array(10)).map((i, index) => <Grid
+                            key={"campaign-skeleton-" + index}
+                            item xs={12} sm={4} md={3} >
+                            <CampaignCard loading={true} campaign={{}} />
+                        </Grid>) : campaigns.map((campaignItem: any, index: number) => (
                             <Grid key={campaignItem + "-" + index} item xs={12} sm={4} md={3}>
                                 <CampaignCard deleteCampaign={deleteCampaign} editCampaign={editCampaign}
                                               campaign={campaignItem}></CampaignCard>
@@ -128,6 +130,7 @@ export default () => {
         deleteItems,
         items,
         emptyData,
+        called,
         loading
     } = useData();
 
@@ -178,7 +181,7 @@ export default () => {
 
     return <>
         <Page title="Dashboard">
-            <Content emptyContent={emptyData} isLoading={loading}
+            <Content called={called} emptyContent={emptyData} isLoading={loading}
                      campaigns={items} openCreateModal={openCreateModal} editCampaign={editCampaign}
                      deleteCampaign={deleteCampaign}/>
             {!!items.length && <TablePagination
@@ -219,6 +222,6 @@ export default () => {
             editMutation={editMutation}
         />
         <DeleteModal resourceName={"Campaign"} isModalOpen={deleteModal} handleCloseModal={closeDeleteModalHandler}
-                     agree={agreeDeleteCampaign} />
+                     agree={agreeDeleteCampaign}/>
     </>
 }

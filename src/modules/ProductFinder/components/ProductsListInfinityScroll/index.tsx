@@ -21,7 +21,17 @@ import {useExternalLink} from "@resources/Product/hooks/useExternalLink";
 import {PartnerProgramModal} from "@resources/Product/components/PartnerProgramModal";
 import {NoticedBottomBar} from "@resources/Product/components/NoticedBottomBar";
 
-export const ProductsListInfinityScroll: FC<any> = ({limit, resetAll, resetScroll, scrollableNodeRef, searchValue, setSearchValue, direction, sortBy, graphqlFilters}) => {
+export const ProductsListInfinityScroll: FC<any> = ({
+                                                        limit,
+                                                        resetAll,
+                                                        resetScroll,
+                                                        scrollableNodeRef,
+                                                        searchValue,
+                                                        setSearchValue,
+                                                        direction,
+                                                        sortBy,
+                                                        graphqlFilters
+                                                    }) => {
 
     const [currentPartnerProgram, setCurrentPartnerProgram] = useState(null);
 
@@ -55,6 +65,7 @@ export const ProductsListInfinityScroll: FC<any> = ({limit, resetAll, resetScrol
         fetchNext,
         called,
         data,
+        emptyData,
         partnerprograms,
         setPartnerprograms,
         loading,
@@ -64,8 +75,6 @@ export const ProductsListInfinityScroll: FC<any> = ({limit, resetAll, resetScrol
         setPage
     } = usePartnerPrograms(resetScroll, graphqlFilters, direction, sortBy, limit);
 
-    // const loading = true;
-
     const {
         showAddToCampaignModal,
         setShowAddToCampaignModal,
@@ -73,15 +82,20 @@ export const ProductsListInfinityScroll: FC<any> = ({limit, resetAll, resetScrol
         setAddToCampaignItems
     } = useAddToCampaign();
 
+    const toggleNoticedPartnerPrograms = () => {
+
+    };
+
     const nextPage = async () => {
         if (!fetchAllowed) return;
         setFetchAllowed(false);
         await fetchNext();
         setFetchAllowed(true);
     }
-    
+
     useEffect(() => {
-        setCenterItems([<SearchInput placeholder={"Suche aus über 8.000 Partnerprogrammen ..."} searchValue={searchValue}
+        setCenterItems([<SearchInput placeholder={"Suche aus über 8.000 Partnerprogrammen ..."}
+                                     searchValue={searchValue}
                                      updateInput={setSearchValue}/>]);
     }, []);
 
@@ -92,7 +106,8 @@ export const ProductsListInfinityScroll: FC<any> = ({limit, resetAll, resetScrol
         }
     }, [searchValue, graphqlFilters, sortBy, direction]);
 
-    return <Box sx={(theme: any) => ({height: "100%", flex: 1, display: "flex", flexDirection: "column"})} component={m.div} variants={varContainer()}>
+    return <Box sx={(theme: any) => ({height: "100%", flex: 1, display: "flex", flexDirection: "column"})}
+                component={m.div} variants={varContainer()}>
         <Container maxWidth={"xl"} sx={{height: "100%", flex: 1, display: "flex", flexDirection: "column"}}>
             {!!scrollableNodeRef.current &&
                 <Box sx={(theme: any) => ({
@@ -117,7 +132,7 @@ export const ProductsListInfinityScroll: FC<any> = ({limit, resetAll, resetScrol
                     }}>
                         <CircularProgress/>
                     </Box>}
-                    {(!data && !loading && called) &&
+                    {(!loading && emptyData) &&
                         <Box sx={{
                             height: "100%",
                             flex: 1,
@@ -141,7 +156,7 @@ export const ProductsListInfinityScroll: FC<any> = ({limit, resetAll, resetScrol
                                     Filter Zurücksetzen
                                 </Button>
                             </Box></Box>}
-                    {data && !loading && called && <InfiniteScroll
+                    {(!loading && !emptyData) && <InfiniteScroll
                         scrollableTarget={scrollableNodeRef.current.getScrollElement()}
                         scrollThreshold={1}
                         sx={(theme: any) => ({
@@ -156,7 +171,7 @@ export const ProductsListInfinityScroll: FC<any> = ({limit, resetAll, resetScrol
                         dataLength={partnerprograms.length} // This is important field to render the next data
                         next={nextPage}
                         hasMore={(total - ((page + 1) * limit)) > 0}
-                        loader={ (total - ((page + 1) * limit)) > 0 && <Box sx={{
+                        loader={(total - ((page + 1) * limit)) > 0 && <Box sx={{
                             mt: 4,
                             height: "256px",
                             width: "100%",
@@ -206,6 +221,10 @@ export const ProductsListInfinityScroll: FC<any> = ({limit, resetAll, resetScrol
                 setShowExternalLinkModal(false)
             }}/>
         <PartnerProgramModal
+            addToCampaign={(itemId: string) => {
+                setAddToCampaignItems([itemId]);
+                setShowAddToCampaignModal(true)
+            }}
             isModalOpen={showPartnerProgramModal}
             toggleModal={toggleDetailedPartnerProgramModal}
             handleCloseModal={() => {
@@ -216,12 +235,12 @@ export const ProductsListInfinityScroll: FC<any> = ({limit, resetAll, resetScrol
             partnerprogram={currentPartnerProgram}
         />
         <NoticedPartnerProgramsModal
-            addAllToCampaign={(itemId) => {
-                setAddToCampaignItems(noticedPartnerPrograms.map(item => item.id));
+            addAllToCampaign={(itemId: string) => {
+                setAddToCampaignItems(noticedPartnerPrograms.map((item: any) => item.id));
                 setShowAddToCampaignModal(true)
             }}
-            addToCampaign={(itemId) => {
-                setAddToCampaignItems([itemId]);
+            addToCampaign={(itemIds: string[]) => {
+                setAddToCampaignItems(itemIds);
                 setShowAddToCampaignModal(true)
             }}
             toggleDetailedModal={toggleDetailedPartnerProgramModal}

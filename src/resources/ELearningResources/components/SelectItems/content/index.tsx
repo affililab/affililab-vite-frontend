@@ -101,7 +101,7 @@ export const Content: FC<any> = ({
             {/*</StickySubNavProvider>*/}
             <Box sx={{flex: 1, display: "flex"}}>
                 <ElearningMenu
-                    sx={{background: "paper", zIndex: 1000, position: "sticky", height: "80vh", top: 0}}
+                    sx={{background: "paper", zIndex: 1000, position: "sticky", height: "70vh", top: 0}}
                     searchValue={searchValue} setSearchValue={setSearchValue}
                     updateSearch={setSearchValue}
                     activeCategories={activeCategories}

@@ -30,9 +30,15 @@ export const FilterNavSectionVertical: FC<any> = ({ setActiveStates, activeItems
             <List key={group.subheader} disablePadding sx={{ px: 2 }}>
                 <ListSubheaderStyle
                     sx={{
+                        position: "sticky",
+                        top: 0,
+                        p: 2,
+                        backgroundColor: "background.paper",
+                        zIndex: 999,
                         ...(isCollapse && {
                             opacity: 0,
                         }),
+
                     }}
                 >
                     {group.subheader}

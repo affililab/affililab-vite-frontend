@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import {useQuery} from "@apollo/client";
 import {GET_PARTNERPROGRAMS, GET_PARTNERPROGRAMS_BY_IDS} from "@schemas/partnerProgram";
 
-export const usePartnerPrograms = (resetScroll, filter, getGraphQlFilters, selectedIds = [], direction, sortBy, limit = 10) => {
+export const usePartnerPrograms = (resetScroll = false, filter = {}, getGraphQlFilters = () => [], selectedIds = [], direction = 1, sortBy = "createdAt", limit = 10) => {
 
     const [partnerprograms, setPartnerprograms] = useState([]);
     const [selectedPartnerPrograms, setSelectedPartnerPrograms] = useState([]);
@@ -23,6 +23,7 @@ export const usePartnerPrograms = (resetScroll, filter, getGraphQlFilters, selec
     const {refetch: refetchSelected, loading: loadingSelected, error: errorSelected, data: dataSelected, networkStatus: networkStatusSelected} = useQuery(GET_PARTNERPROGRAMS_BY_IDS, { variables: { ids: [] } });
 
     const refetchPartnerPrograms = async () => {
+        console.log("refetch");
         // reset partnerprograms
         setPartnerprograms([]);
         // refetch with new page
@@ -40,14 +41,14 @@ export const usePartnerPrograms = (resetScroll, filter, getGraphQlFilters, selec
 
     useEffect(() => {
         const refetch = async () => {
-            await refetchPartnerProgramsSelected()
+            // await refetchPartnerProgramsSelected()
         }
         refetch()
     }, [selectedIds]);
 
-    useEffect(() => {
-        if (dataSelected) setSelectedPartnerPrograms(dataSelected.getPartnerProgramsByIds);
-    }, [dataSelected]);
+    // useEffect(() => {
+    //     if (dataSelected) setSelectedPartnerPrograms(dataSelected.getPartnerProgramsByIds);
+    // }, [dataSelected]);
 
     useEffect( () => {
         const refetch = async () => {

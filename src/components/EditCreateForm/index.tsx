@@ -17,7 +17,7 @@ import {FormFieldMapper} from "@components/FormFieldMapper"
 
 export const EditCreateForm = ({
                                    refetchingOptions = {},
-                                    abort = {},
+                                   abort = {},
                                    isEdit,
                                    item,
                                    finishCallBack,
@@ -106,36 +106,46 @@ export const EditCreateForm = ({
 
     return (
         <FormProvider sx={{overflow: "hidden"}} methods={formMethods} onSubmit={handleSubmit(onSubmit)}>
-            <Box sx={{height: "724px", background: (theme) => theme.palette.background.neutral}}>
+            <Box sx={{height: "70vh", background: (theme) => theme.palette.background.neutral}}>
                 <Scrollbar>
-                    <Box sx={{p: 4}}>
-                        <Stack spacing={3} mb={2}>
-                            {resourceSchema.filter(({formConfig}) => formConfig.visibility !== "hidden").map(({
-                                                                                                                  formConfig,
-                                                                                                                  key
-                                                                                                              }) => FormFieldMapper(formConfig.type, {name: key, ...formConfig.fieldConfig}, formMethods))}
-                        </Stack>
-                    </Box></Scrollbar></Box>
-            <Box sx={{
-                width: "100%",
-                display: "flex",
-                justifyContent: "flex-end",
-                alignItems: "center",
-                p: 2,
-                boxShadow: (theme) => theme.customShadows.z12,
-            }}>
-                <Box sx={{justifySelf: "flex-end", width: "100%", display: "flex", justifyContent: "space-between", gap: (theme) => theme.spacing(2)}}>
-                    <Button size={'large'} color={'inherit'} variant="" onClick={() => { abort() }}>
-                        cancel
-                    </Button>
-                    <LoadingButton sx={{float: "right"}} type="submit" variant="contained" loading={isSubmitting}>
-                        <Icon sx={{ mr: 2 }} width={18}
-                              height={18}
-                              icon={'fa-regular:save'}/>
-                        Save
-                    </LoadingButton>
+                <Box sx={{p: 4}}>
+                    <Stack spacing={3} mb={2}>
+                        {resourceSchema.filter(({formConfig}) => formConfig.visibility !== "hidden").map(({
+                                                                                                              formConfig,
+                                                                                                              key
+                                                                                                          }) => FormFieldMapper(formConfig.type, {name: key, ...formConfig.fieldConfig}, formMethods))}
+                    </Stack>
                 </Box>
-            </Box>
-        </FormProvider>
-    )
+            </Scrollbar>
+        </Box>
+    <Box sx={{
+        width: "100%",
+        display: "flex",
+        justifyContent: "flex-end",
+        alignItems: "center",
+        p: 2,
+        boxShadow: (theme) => theme.customShadows.z12,
+    }}>
+        <Box sx={{
+            justifySelf: "flex-end",
+            width: "100%",
+            display: "flex",
+            justifyContent: "space-between",
+            gap: (theme) => theme.spacing(2)
+        }}>
+            <Button size={'large'} color={'inherit'} variant="" onClick={() => {
+                abort()
+            }}>
+                cancel
+            </Button>
+            <LoadingButton sx={{float: "right"}} type="submit" variant="contained" loading={isSubmitting}>
+                <Icon sx={{mr: 2}} width={18}
+                      height={18}
+                      icon={'fa-regular:save'}/>
+                Save
+            </LoadingButton>
+        </Box>
+    </Box>
+</FormProvider>
+)
 }

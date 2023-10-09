@@ -3,6 +3,6 @@ import {ManageTable} from "@resources/Product/components/ManageTable";
 
 export default () => {
     return <Page title="Product">
-        <ManageTable/>
+        <ManageTable />
     </Page>
 }

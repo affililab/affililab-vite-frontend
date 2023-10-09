@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export const SelectedProductsTable: FC<any> = ({items, addToCampaign, embedded, toggleDetailedModal, toggleNoticedPartnerProgram}) => {
+export const SelectedProductsTable: FC<any> = ({items, selectedItems, handleSelected}) => {
 
     const theme = useTheme();
 
@@ -234,7 +234,6 @@ export const SelectedProductsTable: FC<any> = ({items, addToCampaign, embedded, 
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('title');
     const [page, setPage] = useState(0);
-    const [selected, setSelected] = useState([]);
     const [total, setTotal] = useState(0);
     const [filterName, setFilterName] = useState('');
     const [searchValue, setSearchValue] = useState('');
@@ -260,22 +259,14 @@ export const SelectedProductsTable: FC<any> = ({items, addToCampaign, embedded, 
         setOrderBy(property);
     };
 
-    const handleSelectAllClick = (checked) => {
-        if (checked) {
-            const newSelecteds = items.map((n) => n.title);
-            setSelected(newSelecteds);
-            return;
-        }
-        setSelected([]);
-    };
-
     const handleSearch = (value) => {
         setSearchValue(value);
     }
 
     return <TableComponent
+        height={"50vh"}
+        embedded
         resource={"products"}
-        height={embedded ? "100%" : "70vh"}
         activeFilterCount={0}
         columns={TableColumns}
         rows={filteredProducts.filter((item, index) => index >= page * rowsPerPage && index < ( (page * rowsPerPage) + rowsPerPage ))}
@@ -284,44 +275,14 @@ export const SelectedProductsTable: FC<any> = ({items, addToCampaign, embedded, 
         order={order}
         orderBy={orderBy}
         total={items.length}
-        selected={selected}
-        setSelected={setSelected}
+        selected={selectedItems}
+        setSelected={handleSelected}
         handleSearch={handleSearch}
         handleRequestSort={handleRequestSort}
         changePageHandler={(event, page) => setPage(page)}
         changeRowsPerPageHandler={handleChangeRowsPerPage}
         moreMenuOnlyItems
-        toolbarItems={[]}
-        selectedToolbarItems={[]}
-        menuItems={[
-            {
-                title: "remove",
-                click: (row) => {
-                    toggleNoticedPartnerProgram(row);
-                    // setShowAddToCampaignModal(true)
-                    // setAddToCampaignProducts([row.id])
-                },
-                // style: { color: 'error.main' },
-                icon: "ep:remove"
-            },
-            {
-                title: "add to campaign",
-                click: (row) => {
-                    addToCampaign(row.id)
-                    // setShowAddToCampaignModal(true)
-                    // setAddToCampaignProducts([row.id])
-                },
-                // style: { color: 'error.main' },
-                icon: 'carbon:add-alt'
-            },
-            {
-                title: "show",
-                click: (row) => {
-                    toggleDetailedModal(row)
-                },
-                // style: { color: 'error.main' },
-                icon: 'tabler:arrows-maximize'
-            }
-        ]}
+        disableToolbar={true}
+        disableMenu={true}
     />
 }

@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const ProductsTable: FC<any> = ({
-                                  embedded = false, handleSelectedItems = (selected) => {
+                                 handleSelectedItems = (selected) => {
     }
                               }) => { // handleSelectedItems is a prop to access selected items from parent element
 

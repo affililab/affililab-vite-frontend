@@ -92,16 +92,18 @@ export const Content: FC<any> = ({
         />
         <Box sx={{
             display: "flex",
+            flex: 1,
             height: "100%",
             flexDirection: "column",
         }}>
             <Box sx={{flex: 1, display: "flex"}}>
                 <Box>
                     <ToolMenu sx={{
+                        flex: 1,
                         background: "paper",
                         zIndex: 1000,
                         position: "sticky",
-                        height: "calc( 100vh - 64px)",
+                        height: "80vh",
                         top: 0
                     }}
                               searchValue={searchValue} setSearchValue={setSearchValue}

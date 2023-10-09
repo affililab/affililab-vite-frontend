@@ -1,13 +1,6 @@
 import {useEffect, useState} from "react";
 import {useMutation, useQuery} from "@apollo/client";
-import {
-    CREATE_CAMPAIGN,
-    CREATE_TOOLTYPE,
-    DELETE_CAMPAIGN, GET_CAMPAIGN,
-    GET_CAMPAIGNS,
-    UPDATE_CAMPAIGN,
-    UPDATE_TOOLTYPE
-} from "@schemas";
+import {CREATE_CAMPAIGN, DELETE_CAMPAIGN, GET_CAMPAIGNS, UPDATE_CAMPAIGN} from "@schemas";
 import {useSnackbar} from "my-lib";
 
 export const useData = (meta = {direction: 1, sortBy: "createdAt", limit: 10, filters: []}) => {
