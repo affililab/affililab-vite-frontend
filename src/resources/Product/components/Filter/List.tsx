@@ -37,7 +37,7 @@ function valueNumber(value) {
 
 const getValue = (filter, values) => values.find(value => value.key === filter.key).value;
 
-const getShowEmptyValue = (filter, values) => values.find(value => value.key === filter.key).showEmpty;
+const getShowEmptyValue = (filter, values) => values.find(value => value.key === filter.key)?.showEmpty;
 
 function getDisplayValue(filter, values, valueIndex) {
     const displayValueMapper = {
@@ -96,7 +96,7 @@ const OptionsComponent = (filter, values, handleFilter, params) => {
                 handleFilter(event, filter.key, parseInt(val))
             }}
         >
-            {filter.settings.options.map(filterOption => <FormControlLabel value={filterOption.value} control={<Radio/>}
+            {filter.settings.options.map((filterOption, index) => <FormControlLabel key={index} value={filterOption.value} control={<Radio/>}
                                                                            label={filterOption.title}/>)}
         </RadioGroup>
     </FormControl>

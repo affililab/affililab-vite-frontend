@@ -23,7 +23,7 @@ const ItemContainer = styled(Box)(({theme}) => ({
 
 export const InformationContent: FC<any> = ({ informationItems }) => {
     return <Grid spacing={1} container>
-        {informationItems.map(informationItem => <Grid xs={6} item>
+        {informationItems.map((informationItem, index) => <Grid key={index} xs={6} item>
             <ItemContainer>
                 <TitleContainer>
                     <Typography color="white" variant="body2" align={"left"}>

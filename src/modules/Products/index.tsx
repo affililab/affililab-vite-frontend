@@ -10,8 +10,8 @@ export const ProductsModule = {
         children: [
             {
                 index: true,
-                element: <Navigate to="/" replace />,
-                // element: <OverviewPage />,
+                // element: <Navigate to="/" replace />,
+                element: <OverviewPage />,
             },
             {
                 path: ":savedFilterId",

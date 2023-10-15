@@ -155,7 +155,7 @@ export const Content: FC<any> = ({
                                 </Box>}
                                 >
                                 <Grid container spacing={4}>
-                                {items.map(toolItem => <Grid item xs={12} sm={6} md={4}>
+                                {items.map((toolItem, index) => <Grid key={index} item xs={12} sm={6} md={4}>
                                     {isSelection ? <ToolItem
                                     actionItems={[
                                         <Checkbox disabled={implemented.indexOf(toolItem.id) !== -1}
@@ -167,7 +167,7 @@ export const Content: FC<any> = ({
                                     {...(actionItems ? {
                                         actionItems: actionItems.length ? actionItems : [
                                             isAuthenticated && <Tooltip title={"add to campaign"} arrow>
-                                                <ToggleButton sx={(theme) => ({background: theme.palette.grey[500_80]})}
+                                                <ToggleButton value={"check"} sx={(theme) => ({background: theme.palette.grey[500_80]})}
                                                               onClick={() => addToCampaign(toolItem)}
                                                               aria-label="add to campaign">
                                                     <Icon color={"white"} sx={(theme) => ({
@@ -178,7 +178,7 @@ export const Content: FC<any> = ({
                                                 </ToggleButton>
                                             </Tooltip>,
                                             <Tooltip title={"show"} arrow>
-                                                <ToggleButton sx={(theme) => ({background: theme.palette.grey[500_80]})}
+                                                <ToggleButton value={"check"} sx={(theme) => ({background: theme.palette.grey[500_80]})}
                                                               onClick={() => {
                                                                   openModalHandler(toolItem)
                                                               }} aria-label="add to campaign">

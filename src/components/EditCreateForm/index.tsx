@@ -80,10 +80,6 @@ export const EditCreateForm = ({
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isEdit, item]);
 
-    useEffect(() => {
-        console.log("form errors", errors);
-    }, [errors])
-
 
     const onSubmit = async (data) => {
         let meta = {};
@@ -113,7 +109,7 @@ export const EditCreateForm = ({
                         {resourceSchema.filter(({formConfig}) => formConfig.visibility !== "hidden").map(({
                                                                                                               formConfig,
                                                                                                               key
-                                                                                                          }) => FormFieldMapper(formConfig.type, {name: key, ...formConfig.fieldConfig}, formMethods))}
+                                                                                                          }) => <Box key={key}>{FormFieldMapper(formConfig.type, {name: key, ...formConfig.fieldConfig}, formMethods)}</Box>)}
                     </Stack>
                 </Box>
             </Scrollbar>

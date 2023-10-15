@@ -66,8 +66,7 @@ export const Content: FC<any> = ({
     const {setCenterItems} = useContext(HeaderItemsContext);
 
     useEffect(() => {
-        setCenterItems([<SearchInput placeholder={"Suche aus E Learning Resources ..."} searchValue={searchValue}
-                                     updateInput={setSearchValue}/>]);
+        setCenterItems([<SearchInput placeholder={"Suche aus E Learning Resources ..."} searchValue={searchValue} updateInput={setSearchValue}/>]);
     }, []);
 
     const {themeStretch} = useSettings();
@@ -108,9 +107,9 @@ export const Content: FC<any> = ({
                     setActiveCategories={setActiveCategories}/>
                 <Container maxWidth={themeStretch ? false : 'xl'} sx={(theme) => ({py: theme.spacing(2)})}>
                     <Grid container spacing={4} px={2}>
-                        {loading ? Array.from(Array(5)).map(i => <Grid key={i} item xs={12} sm={6}
-                                                                       md={4}><CampaignCardSkeleton/></Grid>) : !!items.length ? items.map(eLearningResourcesItem => (
-                            <Grid item xs={12} sm={6} md={4}>
+                        {loading ? Array.from(Array(5)).map((i, index) => <Grid key={index} item xs={12} sm={6}
+                                                                       md={4}><CampaignCardSkeleton/></Grid>) : !!items.length ? items.map((eLearningResourcesItem, index) => (
+                            <Grid key={index} item xs={12} sm={6} md={4}>
                                 {isSelection ? <ELearningItem
                                     actionItems={[
                                         <Checkbox disabled={implemented.indexOf(eLearningResourcesItem.id) !== -1}
@@ -122,7 +121,7 @@ export const Content: FC<any> = ({
                                     {...(actionItems ? {
                                         actionItems: actionItems.length ? actionItems : [
                                             isAuthenticated && <Tooltip title={"add to campaign"} arrow>
-                                                <ToggleButton sx={(theme) => ({background: theme.palette.grey[500_80]})}
+                                                <ToggleButton value={"check"} sx={(theme) => ({background: theme.palette.grey[500_80]})}
                                                               onClick={() => addToCampaign(eLearningResourcesItem)}
                                                               aria-label="add to campaign">
                                                     <Icon color={"white"} sx={(theme) => ({
@@ -133,7 +132,7 @@ export const Content: FC<any> = ({
                                                 </ToggleButton>
                                             </Tooltip>,
                                             <Tooltip title={"show"} arrow>
-                                                <ToggleButton sx={(theme) => ({background: theme.palette.grey[500_80]})}
+                                                <ToggleButton value={"check"} sx={(theme) => ({background: theme.palette.grey[500_80]})}
                                                               onClick={() => {
                                                                   openModalHandler(eLearningResourcesItem)
                                                               }} aria-label="add to campaign">

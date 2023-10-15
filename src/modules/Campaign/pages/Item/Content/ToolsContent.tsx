@@ -36,14 +36,14 @@ export const ToolsContent = ({ campaignData, ids = [], remove = () => {} }) => {
     return <>
         <ToolItemModal item={currentItem} isModalOpen={itemModalState} handleCloseModal={closeModalHandler} />
         <Grid sx={{ flex: 1, display: "flex", flexDirection: "container"}} container spacing={4}>
-            {loading ? Array.from(Array(5)).map(i =>  <Grid item xs={12} sm={6} md={4}><CampaignCardSkeleton /></Grid>) : !!items.length ? items.map(item => (
-                <Grid item xs={12} sm={6} md={4}>
+            {loading ? Array.from(Array(5)).map((i, index) =>  <Grid key={index} item xs={12} sm={6} md={4}><CampaignCardSkeleton /></Grid>) : !!items.length ? items.map((item, index) => (
+                <Grid key={index} item xs={12} sm={6} md={4}>
                     <ToolItem
                         openModalHandler={() => openModalHandler(item)}
                         toolItem={item} actionItems={[
                         <Box>
                             <Tooltip title={ "von Kampagne entfernen" } arrow>
-                                <ToggleButton sx={(theme) => ({ background: theme.palette.grey[500_80] })} onClick={() => remove("tools", item.id)} aria-label="von Kampagne entfernen">
+                                <ToggleButton value={"check"} sx={(theme) => ({ background: theme.palette.grey[500_80] })} onClick={() => remove("tools", item.id)} aria-label="von Kampagne entfernen">
                                     <Icon color={"white"} sx={(theme) => ({height: 20, width: 20 })} icon={"codicon:remove"}/>
                                 </ToggleButton>
                             </Tooltip>

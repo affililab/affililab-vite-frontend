@@ -162,7 +162,7 @@ export const TableComponent: FC<any> = ({
             }} forceVisible="y" style={{height: "100%"}}>
 
 
-            <Table  size="small" sx={{borderCollapse: "separate"}}>
+            <Table size="small" sx={{borderCollapse: "separate"}}>
                 <TableComponentHead
                     disableMenu={disableMenu}
                     showCheckbox={showCheckbox}
@@ -176,15 +176,16 @@ export const TableComponent: FC<any> = ({
                     stickyColumnClass={classes.stickyColumn}
                 />
                 <TableBody>
-                    {!!(rows.length === 0 && loading) && Array(rowsPerPage).fill(
-                        <TableRow sx={{background: "none !important", height: 40}}>
-                            {Array(columns.length + 1).fill(
-                                <TableCell>
+
+                    {!!(rows.length === 0 && loading) && Array.from(Array(rowsPerPage)).map((i, index) => (
+                        <TableRow key={index} sx={{background: "none !important", height: 40}}>
+                            {Array.from(Array(showCheckbox ? columns.length + 1 : columns.length)).map((i, index) =>
+                                <TableCell key={index}>
                                     <Skeleton variant="text" sx={{height: 16}}/>
                                 </TableCell>
                             )}
                         </TableRow>
-                    )}
+                    ))}
 
                     {rows.map((row, index) => {
                         const isItemSelected = selected.indexOf(row.id) !== -1;

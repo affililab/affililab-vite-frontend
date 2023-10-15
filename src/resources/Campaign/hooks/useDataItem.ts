@@ -16,7 +16,7 @@ export const useDataItem = (itemId: string) => {
     const { registerInteraction } = useProductInteraction();
 
     const { enqueueSnackbar } = useSnackbar();
-    const [item, setItem] = useState([]);
+    const [item, setItem] = useState(null);
 
 
     const refetchingOptions = [
@@ -43,7 +43,6 @@ export const useDataItem = (itemId: string) => {
     useEffect( () => {
         const refetch = async () => {
             const { data } = await refetchItems();
-            console.log("campaign", data.getCampaign);
             setItem(data.getCampaign);
         }
         refetch()

@@ -1,5 +1,17 @@
 import React, {FC, useState} from "react";
-import {Box, Button, DialogAnimate, DialogTitle, Icon, IconButton, Step, StepLabel, Stepper} from "my-lib";
+import {
+    Box,
+    Button,
+    DialogAnimate,
+    DialogTitle,
+    Icon,
+    IconButton,
+    Step,
+    StepLabel,
+    Stepper,
+    varScale,
+    varTranEnter
+} from "my-lib";
 import {Selection} from "@resources/CategoryGroup/components/Selection"
 import {OverviewItems as ToolsOverviewItems} from "@resources/Tools/components/OverviewItems"
 

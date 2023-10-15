@@ -18,7 +18,6 @@ const {useNavigate} = ReactRouter;
 
 /* TODO: outsource renderer too hook */
 const RangeTypeRenderer = (row, value) => {
-    console.log("value", value);
     return value ? <Typography variant="subtitle2" noWrap>{value.value[0]} - {value.value[1]}</Typography> : "-"
 };
 

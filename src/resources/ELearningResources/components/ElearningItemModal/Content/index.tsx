@@ -117,7 +117,7 @@ export const Content = ({
             value: "What you will learn",
             icon: <Icon icon={'dashicons:welcome-learn-more'} width={20} height={20}/>,
             component: <>
-                { item?.learnAssets?.map(featureItem => <Accordion>
+                { item?.learnAssets?.map((featureItem, index) => <Accordion key={index}>
                         <AccordionSummary
                             expandIcon={<Icon icon={'ep:arrow-down'} width={20} height={20} />}
                             aria-controls="panel1a-content"
@@ -143,7 +143,7 @@ export const Content = ({
             <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", position: "absolute", height: "auto", top: 0, right: 0, left: 0, background: "rgba(0,0,0,.66)", p: 2  }}>
                 <Button color="info" href={item.link}  variant="contained" target="_blank" size="medium">Go to E-Learning Resource</Button>
                 <ActionButtonsContainer>
-                    {actionItems.map(actionItem => actionItem(item, isAuthenticated))}
+                    {actionItems.map((actionItem, key) => <Box key={"index"}>{actionItem(item, isAuthenticated)}</Box>)}
                     <IconButton aria-label="close" onClick={handleClose}>
                         <Icon width={42}
                               height={42}
@@ -161,7 +161,7 @@ export const Content = ({
         {/* TODO: categories */}
         <Box p={4}>
             <Grid sx={{ maxWidth: "284px" }} spacing={1} container>
-                {item.categories.map((valueItem, index) => <Grid item><Chip key={index}
+                {item.categories.map((valueItem, index) => <Grid key={index} item><Chip
                                                               sx={{maxWidth: "212px"}}
                                                               size="small"
                                                               title={`${valueItem.title}`}

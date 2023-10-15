@@ -1,6 +1,8 @@
-import {BaseOptionChart, Image, makeStyles, ReactApexChart, Typography, useTheme, merge} from "my-lib";
+import {Image, makeStyles, Typography, useTheme} from "my-lib";
 import React, {FC, useState} from "react";
 import {TableComponent} from "@components/Table";
+import {PercentageBarChartComponent2} from "@components/Charts/PercentageBarChartComponent2";
+import {ListView} from "@resources/Product/components/NoticedPartnerProgramsModal/ListView";
 
 const applySortFilter = (array, comparator, query) => {
     const stabilizedThis = array.map((el, index) => [el, index]);
@@ -37,200 +39,115 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
+
+const TableColumns = [
+    {
+        key: "productImg",
+        label: "Image",
+        alignRight: false,
+        renderCell: (row, value) => <Image
+            disabledEffect
+            alt={row.title}
+            src={value}
+            sx={{borderRadius: 1.5, width: 32, mr: 2}}
+        />
+    },
+    {
+        key: "title",
+        label: "Name",
+        alignRight: false,
+        renderCell: (row, value) => <Typography variant="subtitle2" noWrap>
+            {value ?? "-"}
+        </Typography>
+    },
+    {
+        key: "rank",
+        label: "Rank",
+        alignRight: false,
+        renderCell: (row, value) => <Typography variant="subtitle2" noWrap>
+            {value ?? "-"}
+        </Typography>
+    },
+    {
+        key: "performance",
+        label: "Performance",
+        alignRight: false,
+        renderCell: (row, value) => <Typography variant="subtitle2" noWrap>
+            {value ?? "-"}
+        </Typography>
+    },
+    {
+        key: "commissionInPercent",
+        label: "Commission %",
+        alignRight: false,
+        renderCell: (row, value) => (value !== null ? <PercentageBarChartComponent2 percentage={value} width={56} height={46} /> : <Typography variant="subtitle2" noWrap>
+            -
+        </Typography>)
+    },
+    {
+        key: "commissionFixed",
+        label: "Commission €",
+        alignRight: false,
+        renderCell: (row, value) => {
+            const val = value ?? row['earningsPerSale'];
+            return val ? <Typography variant="subtitle2" noWrap>
+                {val} €
+            </Typography> : <Typography variant="subtitle2" noWrap>
+                -
+            </Typography>
+        }
+    },
+    {
+        key: "averageSalesPrice",
+        label: "⌀ Verkaufspreis",
+        alignRight: false,
+        renderCell: (row, value) => <Typography variant="subtitle2" noWrap>
+            {value ?? "-"}
+        </Typography>
+    },
+    {
+        key: "salesPrestige",
+        label: "Verkaufsrang",
+        alignRight: false,
+        renderCell: (row, value) => value ? <Typography variant="subtitle2" noWrap>
+            {value}
+        </Typography> : <Typography variant="subtitle2" noWrap>
+            -
+        </Typography>
+    },
+    {
+        key: "cartConversionInPercent",
+        label: "Abschlussrate",
+        alignRight: false,
+        renderCell: (row, value) => value !== null ?  <PercentageBarChartComponent2 percentage={value} width={56} height={46} /> : <Typography variant="subtitle2" noWrap>
+            -
+        </Typography>
+    },
+    {
+        key: "cancellationRateInPercent",
+        label: "Absprungsrate",
+        alignRight: false,
+        renderCell: (row, value) => value !== null ?  <PercentageBarChartComponent2 percentage={value} width={56} height={46} /> : <Typography variant="subtitle2" noWrap>
+            -
+        </Typography>
+    },
+    {
+        key: "directActivation",
+        label: "Direktaktivierung",
+        alignRight: false,
+        renderCell: (row, value) => <Typography variant="subtitle2" noWrap>
+            {value ? "Ja" : "Nein"}
+        </Typography>
+    }
+];
+
 export const SelectedProductsTable: FC<any> = ({items, selectedItems, handleSelected}) => {
 
     const theme = useTheme();
 
     const classes = useStyles();
 
-    const TableColumns = [
-        {
-            key: "productImg",
-            label: "Image",
-            alignRight: false,
-            renderCell: (row, value) => <Image
-                disabledEffect
-                alt={row.title}
-                src={value}
-                sx={{borderRadius: 1.5, width: 32, mr: 2}}
-            />
-        },
-        {
-            key: "title",
-            label: "Name",
-            alignRight: false,
-            renderCell: (row, value) => <Typography variant="subtitle2" noWrap>
-                {value ?? "-"}
-            </Typography>
-        },
-        {
-            key: "rank",
-            label: "Rank",
-            alignRight: false,
-            renderCell: (row, value) => <Typography variant="subtitle2" noWrap>
-                {value ?? "-"}
-            </Typography>
-        },
-        {
-            key: "performance",
-            label: "Performance",
-            alignRight: false,
-            renderCell: (row, value) => <Typography variant="subtitle2" noWrap>
-                {value ?? "-"}
-            </Typography>
-        },
-        {
-            key: "commissionInPercent",
-            label: "Commission %",
-            alignRight: false,
-            renderCell: (row, value) => (value !== null ? <ReactApexChart
-                className={classes.chartColumn}
-                options={chartOptions(value)}
-                width={56}
-                height={46}
-                type="bar"
-                series={[{
-                    data: [value]
-                }]}
-            /> : <Typography variant="subtitle2" noWrap>
-                -
-            </Typography>)
-        },
-        {
-            key: "commissionFixed",
-            label: "Commission €",
-            alignRight: false,
-            renderCell: (row, value) => {
-                const val = value ?? row['earningsPerSale'];
-                return val ? <Typography variant="subtitle2" noWrap>
-                    {val} €
-                </Typography> : <Typography variant="subtitle2" noWrap>
-                    -
-                </Typography>
-            }
-        },
-        {
-            key: "averageSalesPrice",
-            label: "⌀ Verkaufspreis",
-            alignRight: false,
-            renderCell: (row, value) => <Typography variant="subtitle2" noWrap>
-                {value ?? "-"}
-            </Typography>
-        },
-        {
-            key: "salesPrestige",
-            label: "Verkaufsrang",
-            alignRight: false,
-            renderCell: (row, value) => value ? <Typography variant="subtitle2" noWrap>
-                {value}
-            </Typography> : <Typography variant="subtitle2" noWrap>
-                -
-            </Typography>
-        },
-        {
-            key: "cartConversionInPercent",
-            label: "Abschlussrate",
-            alignRight: false,
-            renderCell: (row, value) => value !== null ? <ReactApexChart
-                className={classes.chartColumn}
-                options={chartOptions(value)}
-                width={56}
-                height={46}
-                type="bar"
-                series={[{
-                    data: [value]
-                }]}
-            /> : <Typography variant="subtitle2" noWrap>
-                -
-            </Typography>
-        },
-        {
-            key: "cancellationRateInPercent",
-            label: "Absprungsrate",
-            alignRight: false,
-            renderCell: (row, value) => value !== null ? <ReactApexChart
-                className={classes.chartColumn}
-                options={chartOptions(value)}
-                width={56}
-                height={46}
-                type="bar"
-                series={[{
-                    data: [value]
-                }]}
-            /> : <Typography variant="subtitle2" noWrap>
-                -
-            </Typography>
-        },
-        {
-            key: "directActivation",
-            label: "Direktaktivierung",
-            alignRight: false,
-            renderCell: (row, value) => value ? <Typography variant="subtitle2" noWrap>
-                {value} %
-            </Typography> : <Typography variant="subtitle2" noWrap>
-                -
-            </Typography>
-        }
-    ];
-
-    // TODO: Outsource to completly own chart component
-    const chartOptions = (value) => (merge(BaseOptionChart(), {
-        chart: {
-            type: "bar",
-            stacked: true,
-            sparkline: {
-                enabled: true
-            }
-        },
-        stroke: {
-            width: 0,
-            curve: 'smooth',
-            lineCap: 'round'
-        },
-        plotOptions: {
-            bar: {
-                horizontal: true,
-                barHeight: "20%",
-                borderRadius: 0,
-                colors: {
-                    backgroundBarColors: ["#40475D"],
-                }
-            }
-        },
-        colors: [theme.palette.primary.lighter],
-        subtitle: {
-            floating: true,
-            align: "right",
-            offsetY: -2,
-            offsetX: 8,
-            text: value + "%",
-            style: {
-                color: theme.palette.text.primary,
-                fontSize: 14
-            }
-        },
-        tooltip: {
-            enabled: false
-        },
-        xaxis: {
-            categories: ["Process 1"]
-        },
-        yaxis: {
-            max: 100
-        },
-        fill: {
-            opacity: 1,
-            type: "gradient",
-            gradient: {
-                gradientToColors: [theme.palette.primary.darker],
-                shadeIntensity: 1,
-                opacityFrom: 1,
-                opacityTo: 1
-            }
-        },
-    }));
-
-    const [rowsPerPage, setRowsPerPage] = useState(5);
+    const [rowsPerPage, setRowsPerPage] = useState(25);
     const [order, setOrder] = useState('asc');
     const [orderBy, setOrderBy] = useState('title');
     const [page, setPage] = useState(0);
@@ -264,7 +181,7 @@ export const SelectedProductsTable: FC<any> = ({items, selectedItems, handleSele
     }
 
     return <TableComponent
-        height={"50vh"}
+        height={"calc(70vh - 64px)"}
         embedded
         resource={"products"}
         activeFilterCount={0}

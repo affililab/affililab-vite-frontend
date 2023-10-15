@@ -26,8 +26,8 @@ export const ListSubheaderStyle = styled((props) => <ListSubheader disableSticky
 
 export const FilterNavSectionVertical: FC<any> = ({ setActiveStates, activeItems, navConfig, isCollapse = false, ...other }) => {
     return <Box {...other}>
-        {navConfig.map((group) => (
-            <List key={group.subheader} disablePadding sx={{ px: 2 }}>
+        {navConfig.map((group, index) => (
+            <List key={group.id + ' ' + index} disablePadding sx={{ px: 2 }}>
                 <ListSubheaderStyle
                     sx={{
                         position: "sticky",
@@ -43,7 +43,7 @@ export const FilterNavSectionVertical: FC<any> = ({ setActiveStates, activeItems
                 >
                     {group.subheader}
                 </ListSubheaderStyle>
-                {group.items.map((list) => <NavListRoot activeItems={activeItems} setActiveStates={setActiveStates} key={list.title} list={list} isCollapse={isCollapse} />)}
+                {group.items.map((list, index) => <NavListRoot activeItems={activeItems} setActiveStates={setActiveStates} key={list.id + ' ' + index} list={list} isCollapse={isCollapse} />)}
             </List>
         ))}
     </Box>

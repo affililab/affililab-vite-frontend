@@ -12,7 +12,7 @@ import {
     Image,
     SVGIcon,
     fRenderedHTML,
-    Chip, alpha, IconButton, CardHeader, CardContent, Tooltip, ToggleButton
+    Chip, alpha, IconButton, CardHeader, CardContent, Tooltip, ToggleButton, ToggleButtonGroup
 } from "my-lib"
 
 const PrimaryColoredBox = styled(Box)(({theme}) => ({
@@ -37,9 +37,9 @@ import { partnerProgramsBackend } from "@config"
 export const ELearningItem: FC<any> = ({eLearningResourcesItem, addToCampaign, openModalHandler, actionItems = [
     <Box>
         <Tooltip title={ "add to campaign" } arrow>
-            <ToggleButton sx={(theme) => ({ background: theme.palette.grey[500_80] })} onClick={() =>  addToCampaign(eLearningResourcesItem)} aria-label="add to campaign">
-                <Icon color={"white"} sx={(theme) => ({height: 20, width: 20, color: theme.palette.primary.dark })} icon={"codicon:add"}/>
-            </ToggleButton>
+                <ToggleButton value={"check"} sx={(theme) => ({ background: theme.palette.grey[500_80] })} onClick={() =>  addToCampaign(eLearningResourcesItem)} aria-label="add to campaign">
+                    <Icon color={"white"} sx={(theme) => ({height: 20, width: 20, color: theme.palette.primary.dark })} icon={"codicon:add"}/>
+                </ToggleButton>
         </Tooltip>
     </Box>
 ]}) => {
@@ -58,7 +58,10 @@ export const ELearningItem: FC<any> = ({eLearningResourcesItem, addToCampaign, o
                     backdropFilter: "blur(4px)",
                     backgroundColor: theme.palette.grey[500_56]
                 })}
-                action={<Box sx={(theme) => ({ display: "flex", gap: theme.spacing(1) })}>{actionItems.map((item, index) => <Box key={index}>{item}</Box>)}</Box>} />
+                action={<Box sx={(theme) => ({ display: "flex", gap: theme.spacing(1) })}>
+                    {actionItems.map((item, index) => (<Box key={index}>{item}</Box>))}
+                </Box>}
+            ></CardHeader>
             <CardContent onClick={() => {
                 openModalHandler()
             }} sx={{p: 0}}>
@@ -100,9 +103,9 @@ export const ELearningItem: FC<any> = ({eLearningResourcesItem, addToCampaign, o
                     {title}
                 </Typography>
 
-                <Typography variant="body2" sx={{align: "center", px: 4, pb: 2, height: "84px"}}>
+                <Box sx={{align: "center", px: 4, pb: 2, height: "84px"}}>
                     {fRenderedHTML(description ?? shortDescription)}
-                </Typography>
+                </Box>
 
                 <Divider sx={{borderStyle: ''}}/>
                 <Box sx={{
@@ -116,7 +119,7 @@ export const ELearningItem: FC<any> = ({eLearningResourcesItem, addToCampaign, o
                     <Typography variant={"subtitle2"}>Kategorien</Typography>
                     <Grid container>
                         {categories?.map((category, index) => (<Grid key={index} item>
-                            <Chip size="small" label={category?.title}/>
+                            <Chip size="small" label={category?.title ?? ""}/>
                         </Grid>))}
                     </Grid>
                 </Box>

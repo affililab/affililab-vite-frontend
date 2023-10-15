@@ -42,7 +42,7 @@ const ToolIconBox = styled(Box)(({theme}) => ({
 export const ToolItem: FC<any> = ({toolItem, addToCampaign, openModalHandler, actionItems = [
         <Box>
             <Tooltip title={ "add to campaign" } arrow>
-                <ToggleButton sx={(theme) => ({ background: theme.palette.grey[500_80] })} onClick={() => addToCampaign(toolItem)} aria-label="add to campaign">
+                <ToggleButton value="check" sx={(theme) => ({ background: theme.palette.grey[500_80] })} onClick={() => addToCampaign(toolItem)} aria-label="add to campaign">
                     <Icon color={"white"} sx={(theme) => ({height: 20, width: 20, color: theme.palette.primary.dark })} icon={"codicon:add"}/>
                 </ToggleButton>
             </Tooltip>
@@ -108,11 +108,11 @@ export const ToolItem: FC<any> = ({toolItem, addToCampaign, openModalHandler, ac
                 {title}
             </Typography>
 
-            <Typography color="textSecondary" variant="body2" sx={{align: "center", px: 4, pb: 2, height: "84px"}}>
+            <Box color="textSecondary" sx={{align: "center", px: 4, pb: 2, height: "84px"}}>
                 <TextMaxLine line={3}>
                     {fRenderedHTML(shortDescription)}
                 </TextMaxLine>
-            </Typography>
+            </Box>
 
             <Divider sx={{borderStyle: ''}}/>
             <Box sx={{ display: "flex", height: "84px", justifyContent: "flex-start", alignItems: "flex-start", flexDirection: "column", p: 2 }}>

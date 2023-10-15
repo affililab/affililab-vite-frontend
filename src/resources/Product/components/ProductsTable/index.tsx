@@ -20,6 +20,7 @@ import {merge} from "lodash";
 import {PartnerProgramModal} from "../PartnerProgramModal";
 import {NoticedPartnerProgramsModal, FilterModal} from "@resources/Product/components"
 import {AddToModal} from "@resources/Campaign/components/AddToModal"
+import {PercentageBarChartComponent2} from "@components/Charts/PercentageBarChartComponent2";
 
 const {useParams} = ReactRouter;
 
@@ -214,16 +215,7 @@ export const ProductsTable: FC<any> = ({
             key: "cancellationRateInPercent",
             label: "Absprungsrate",
             alignRight: false,
-            renderCell: (row, value) => value !== null ? <ReactApexChart
-                className={classes.chartColumn}
-                options={chartOptions(value)}
-                width={56}
-                height={46}
-                type="bar"
-                series={[{
-                    data: [value]
-                }]}
-            /> : <Typography variant="subtitle2" noWrap>
+            renderCell: (row, value) => value !== null ? <PercentageBarChartComponent2 percentage={value} /> : <Typography variant="subtitle2" noWrap>
                 -
             </Typography>
         },

@@ -27,7 +27,7 @@ export const CategoryGroupItem: FC<any> = ({ item, actionItems = [] }) => {
                 backdropFilter: "blur(1px)",
                 backgroundColor: alpha("#0000", 0.8)
             })}
-            action={<>{actionItems.map(item => item)}</>}
+            action={<>{actionItems.map((item, index) => <Box key={index}>{item}</Box>) }</>}
         />
         <CardContent sx={{p: 0}}>
             <Box sx={{position: 'relative'}}>

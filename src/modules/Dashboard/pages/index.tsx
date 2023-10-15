@@ -169,7 +169,7 @@ export default function () {
                                 </Box>}
                                 <CarouselSlider {...settings}>
                                     {recommendetPartnerPrograms.map((partnerprogram, index) => (
-                                        <Box sx={{px: 2}}>
+                                        <Box key={index} sx={{px: 2}}>
                                             <SmallItem
                                                 key={index}
                                                 addToCampaign={(id) => {

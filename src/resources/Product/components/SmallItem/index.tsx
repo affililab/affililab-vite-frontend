@@ -331,7 +331,7 @@ export const SmallItem = ({
                     }}/>
                 </ToolIconBox>
                 <PrimaryColoredBox>
-                    <Image sx={{width: "164px", maxHeight: "164px", backgroundColor: "white"}} src={productImg}/>
+                    <Image sx={{width: "164px", minHeight: "164px", maxHeight: "164px", backgroundColor: "white"}} src={productImg}/>
                 </PrimaryColoredBox>
             </Box>
             <Typography variant="subtitle2" sx={{mt: 6, mb: 2, p: 2, height: "48px"}}>
@@ -344,8 +344,4 @@ export const SmallItem = ({
             {/*</Typography>}*/}
         </Box>
     </Box>
-}
-
-export const SkeletonItem = () => {
-    return <Card sx={{height: "456px", overflow: "hidden", p: 4}}>loading</Card>
 }

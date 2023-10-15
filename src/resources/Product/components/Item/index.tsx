@@ -28,6 +28,7 @@ import {
 import {merge} from "lodash";
 
 import {partnerProgramsBackend} from "@config";
+import {PercentageBarChartComponent} from "@components/Charts/PercentageBarChartComponent";
 
 const useStyles = makeStyles(theme => ({
     content: {
@@ -68,7 +69,7 @@ const InformationItem = styled(Box)(({theme, sx, active}) => ({
     justifyContent: "space-between",
     alignItems: "center",
     // background: active ? "rgb(33, 146, 255)" : null,
-    background: active ? theme.palette.info.main : null,
+    background: active === "true" ? theme.palette.info.main : null,
     borderRadius: theme.shape.borderRadius,
     minHeight: "42px",
     padding: theme.spacing(2),
@@ -234,56 +235,6 @@ export const Item: FC<any> = ({
         updatedAt
     } = item;
 
-    const chartOptions = (value: any) => ( merge(BaseOptionChart(), {
-        chart: {
-            type: "bar",
-            offsetY: -8,
-            stacked: true,
-            sparkline: {
-                enabled: true
-            }
-        },
-        stroke: {
-            width: 0,
-            curve: 'smooth',
-            lineCap: 'round'
-        },
-        plotOptions: {
-            bar: {
-                horizontal: true,
-                barHeight: "100%",
-                borderRadius: 0,
-                colors: {
-                    backgroundBarColors: [theme.palette.background.neutral],
-                }
-            }
-        },
-        colors: [theme.palette.primary.lighter],
-        tooltip: {
-            enabled: false
-        },
-        subtitle: {
-            enabled: false,
-        },
-        xaxis: {
-            categories: ["Process 1"]
-        },
-        yaxis: {
-            max: 100
-        },
-        fill: {
-            opacity: 1,
-            colors: [theme.palette.primary.main],
-            type: "solid",
-            // gradient: {
-            //     gradientToColors: [theme.palette.primary.light],
-            //     shadeIntensity: 1,
-            //     opacityFrom: 1,
-            //     opacityTo: 1
-            // }
-        },
-    }));
-
     const getRegisterForPartnerProgramURL = () => {
         return programId ? `https://digistore24.com/signup/${programId}/GermanWebDev/` : sources[0]?.signupLink
     }
@@ -384,7 +335,7 @@ export const Item: FC<any> = ({
                                 minHeight: "286px",
                             })}>
                                 <InformationContainer>
-                                    {!!commissionInPercent && <InformationItem active sx={{ minHeight: "58px" }}>
+                                    {!!commissionInPercent && <InformationItem active={"true"} sx={{ minHeight: "58px" }}>
                                         <Typography color="white" variant="subtitle2" align={"left"}>
                                             Commission
                                         </Typography>
@@ -392,20 +343,12 @@ export const Item: FC<any> = ({
                                             <Typography color="white" variant="subtitle2">
                                                 {commissionInPercent} %
                                             </Typography>
-                                            <ReactApexChart
-                                                options={chartOptions(commissionInPercent)}
-                                                width={112}
-                                                height={8}
-                                                type="bar"
-                                                series={[{
-                                                    data: [commissionInPercent]
-                                                }]}
-                                            />
+                                            <PercentageBarChartComponent percentage={commissionInPercent} />
                                         </Box>
                                     </InformationItem>}
-                                    {!!(earningsPerSale || commissionFixed) && <InformationItem active={!commissionInPercent}>
+                                    {!!(earningsPerSale || commissionFixed) && <InformationItem active={!commissionInPercent ? "true" : "false"}>
                                         <Typography color={!commissionInPercent ? "white" : theme.palette.text.primary} variant="subtitle2" align={"left"}>
-                                            Commission
+                                            Provision
                                         </Typography>
                                         <Typography color={!commissionInPercent ? "white" : theme.palette.text.primary} variant={!commissionInPercent ? "subtitle1" : "subtitle2"} align={"left"}>
                                             {earningsPerSale ? fCurrency(earningsPerSale) : fCurrency(commissionFixed)}

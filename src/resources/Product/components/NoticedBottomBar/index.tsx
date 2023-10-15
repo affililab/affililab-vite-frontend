@@ -42,7 +42,7 @@ export const NoticedBottomBar = ({noticedPartnerPrograms, openNoticedPartnerProg
 
     const {user} = useAuth();
 
-    return <AnimatePresence exitBeforeEnter={true}>
+    return <AnimatePresence mode={"wait"}>
         {!!noticedPartnerPrograms.length && <MotionContainer sx={{
             position: "fixed",
             bottom: 0,

@@ -12,6 +12,7 @@ import {
 import React, {useEffect, useState} from "react";
 import {useSavedFilter} from "@resources/SavedFilter/hooks/useSavedFilter";
 import {openModal} from '@slices/auth';
+import clsx from "clsx";
 
 const useStyles = makeStyles(theme => ({
     tableRow: {
@@ -217,7 +218,7 @@ export const ApplyList = ({
                             >
                                 {headCell.label}
                             </TableCell>))}
-                        <TableCell className={[classes.stickyColumn, classes.tableCell]} align={"center"}
+                        <TableCell className={clsx(classes.stickyColumn, classes.tableCell)} align={"center"}
                                    padding="checkbox">
                             Apply
                         </TableCell>
@@ -236,7 +237,7 @@ export const ApplyList = ({
                                     key={index}
                                     align="center">{column.renderCell(row, rowValue) ?? rowValue}</TableCell>;
                             })}
-                            <TableCell className={[classes.stickyColumn, classes.tableCell]}
+                            <TableCell className={clsx(classes.stickyColumn, classes.tableCell)}
                                        align={"center"}>
                                 <IconButton onClick={() => {
                                     applyFilter(getFilterArray(row))

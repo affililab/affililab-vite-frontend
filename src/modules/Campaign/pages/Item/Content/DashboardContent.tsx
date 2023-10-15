@@ -31,10 +31,6 @@ export const DashboardContent = ({ campaign }) => {
 
     const theme = useTheme();
 
-    const [getPartnerProgramsItems, {loading, error, data, called}] = useLazyQuery(GET_PARTNERPROGRAMS_BY_IDS);
-    const [partnerPrograms, setPartnerPrograms] = useState([]);
-    const [stats, setStats] = useState(null);
-
     const settings = {
         speed: 1000,
         autoplaySpeed: 5000,
@@ -48,6 +44,11 @@ export const DashboardContent = ({ campaign }) => {
         rtl: Boolean(theme.direction === 'rtl'),
         ...CarouselDots({position: 'absolute', right: 0, bottom: -12}),
     };
+
+
+    const [getPartnerProgramsItems, {loading, error, data, called}] = useLazyQuery(GET_PARTNERPROGRAMS_BY_IDS);
+    const [partnerPrograms, setPartnerPrograms] = useState([]);
+    const [stats, setStats] = useState(null);
 
     const {getStats, loading: statsLoading} = useStats();
 
@@ -176,7 +177,7 @@ export const DashboardContent = ({ campaign }) => {
                             <CircularProgress/>
                         </Box>}
                         <CarouselSlider {...settings}>
-                            {recommendetPartnerPrograms.map((partnerprogram, index) => (
+                            {recommendetPartnerPrograms?.map((partnerprogram, index) => (
                                 <Box key={partnerprogram.id + "-" + index} sx={{px: 2}}>
                                     <SmallItem
                                         key={index + ' ' + partnerprogram.id}
@@ -188,7 +189,7 @@ export const DashboardContent = ({ campaign }) => {
                                         item={partnerprogram}
                                         isNoticed={noticedPartnerPrograms.find(item => item.id === partnerprogram.id)}
                                         toggleExternalLink={toggleExternalLink}
-                                        toggleNoticedPartnerProgram={dipatchToggleNoticedPartnerProgram}/>
+                                        toggleNoticedPartnerProgram={dipatchToggleNoticedPartnerProgram} />
                                 </Box>
                             ))}
                         </CarouselSlider>

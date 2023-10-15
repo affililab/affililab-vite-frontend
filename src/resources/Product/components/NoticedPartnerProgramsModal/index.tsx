@@ -18,7 +18,6 @@ const ModalContent: FC<any> = ({
     const [items, setItems] = useState(noticedPartnerPrograms);
     const [compareViewTrigger, setCompareViewTrigger] = useTriggerHook();
     // tabs
-    const [currentTab, setCurrentTab] = useState('Liste');
 
     useEffect(() => {
         setItems(noticedPartnerPrograms);
@@ -31,8 +30,7 @@ const ModalContent: FC<any> = ({
             addToCampaigns={addToCampaign}
             items={items}
             toggleDetailedModal={toggleDetailedModal}
-            currentTab={currentTab}
-            setCurrentTab={setCurrentTab} noticedPartnerPrograms={noticedPartnerPrograms}
+            noticedPartnerPrograms={noticedPartnerPrograms}
             compareViewTrigger={compareViewTrigger}
             toggleNoticedPartnerProgram={toggleNoticedPartnerProgram} />
         <Box sx={{
@@ -87,7 +85,8 @@ export const NoticedPartnerProgramsModal: FC<any> = ({
                 noticedPartnerPrograms={noticedPartnerPrograms}
                 toggleNoticedPartnerProgram={toggleNoticedPartnerProgram}
                 isModalOpen={isModalOpen}
-                handleCloseModal={handleCloseModal}/>
+                handleCloseModal={handleCloseModal}
+            />
         </DialogAnimate>
     )
 };

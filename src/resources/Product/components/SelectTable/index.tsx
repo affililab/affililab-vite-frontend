@@ -18,6 +18,7 @@ import {useFilter} from "@resources/Product/hooks/useFilter";
 import {useSavedFilter} from "@resources/SavedFilter/hooks/useSavedFilter"
 import {useQuery} from "@apollo/client";
 import {merge} from "lodash";
+import {PercentageBarChartComponent2} from "@components/Charts/PercentageBarChartComponent2";
 
 const {useParams} = ReactRouter;
 
@@ -46,63 +47,6 @@ export const SelectTable: FC<any> = ({ multiple = true, handleSelectedItems = (s
         setSelected(selected);
         handleSelectedItems(selected);
     }
-
-    // TODO: Outsource to completly own chart component
-    const chartOptions = (value) => (merge(BaseOptionChart(), {
-        chart: {
-            type: "bar",
-            stacked: true,
-            sparkline: {
-                enabled: true
-            }
-        },
-        stroke: {
-            width: 0,
-            curve: 'smooth',
-            lineCap: 'round'
-        },
-        plotOptions: {
-            bar: {
-                horizontal: true,
-                barHeight: "20%",
-                borderRadius: 0,
-                colors: {
-                    backgroundBarColors: ["#40475D"],
-                }
-            }
-        },
-        colors: [theme.palette.primary.lighter],
-        subtitle: {
-            floating: true,
-            align: "right",
-            offsetY: -2,
-            offsetX: 8,
-            text: value + "%",
-            style: {
-                color: theme.palette.text.primary,
-                fontSize: 14
-            }
-        },
-        tooltip: {
-            enabled: false
-        },
-        xaxis: {
-            categories: ["Process 1"]
-        },
-        yaxis: {
-            max: 100
-        },
-        fill: {
-            opacity: 1,
-            type: "gradient",
-            gradient: {
-                gradientToColors: [theme.palette.primary.darker],
-                shadeIntensity: 1,
-                opacityFrom: 1,
-                opacityTo: 1
-            }
-        },
-    }));
 
     const TableColumns = [
         {
@@ -144,16 +88,7 @@ export const SelectTable: FC<any> = ({ multiple = true, handleSelectedItems = (s
             key: "commissionInPercent",
             label: "Commission %",
             alignRight: false,
-            renderCell: (row, value) => (value !== null ? <ReactApexChart
-                className={classes.chartColumn}
-                options={chartOptions(value)}
-                width={56}
-                height={46}
-                type="bar"
-                series={[{
-                    data: [value]
-                }]}
-            /> : <Typography variant="subtitle2" noWrap>
+            renderCell: (row, value) => (value !== null ? <PercentageBarChartComponent2 percentage={value} width={56} height={46} /> : <Typography variant="subtitle2" noWrap>
                 -
             </Typography>)
         },
@@ -192,16 +127,7 @@ export const SelectTable: FC<any> = ({ multiple = true, handleSelectedItems = (s
             key: "cartConversionInPercent",
             label: "Abschlussrate",
             alignRight: false,
-            renderCell: (row, value) => value !== null ? <ReactApexChart
-                className={classes.chartColumn}
-                options={chartOptions(value)}
-                width={56}
-                height={46}
-                type="bar"
-                series={[{
-                    data: [value]
-                }]}
-            /> : <Typography variant="subtitle2" noWrap>
+            renderCell: (row, value) => value !== null ? <PercentageBarChartComponent2 percentage={value} width={56} height={46} /> : <Typography variant="subtitle2" noWrap>
                 -
             </Typography>
         },
@@ -209,16 +135,7 @@ export const SelectTable: FC<any> = ({ multiple = true, handleSelectedItems = (s
             key: "cancellationRateInPercent",
             label: "Absprungsrate",
             alignRight: false,
-            renderCell: (row, value) => value !== null ? <ReactApexChart
-                className={classes.chartColumn}
-                options={chartOptions(value)}
-                width={56}
-                height={46}
-                type="bar"
-                series={[{
-                    data: [value]
-                }]}
-            /> : <Typography variant="subtitle2" noWrap>
+            renderCell: (row, value) => value !== null ? <PercentageBarChartComponent2 percentage={value} width={56} height={46} /> : <Typography variant="subtitle2" noWrap>
                 -
             </Typography>
         },
@@ -226,15 +143,12 @@ export const SelectTable: FC<any> = ({ multiple = true, handleSelectedItems = (s
             key: "directActivation",
             label: "Direktaktivierung",
             alignRight: false,
-            renderCell: (row, value) => value ? <Typography variant="subtitle2" noWrap>
-                {value} %
-            </Typography> : <Typography variant="subtitle2" noWrap>
-                -
+            renderCell: (row, value) => <Typography variant="subtitle2" noWrap>
+                {value ? "Ja" : "Nein"}
             </Typography>
         }
     ];
 
-    const [searchValue, setSearchValue] = useState('');
     const [order, setOrder] = useState('desc');
     const [orderBy, setOrderBy] = useState('rank');
     const [rowsPerPage, setRowsPerPage] = useState(25);
@@ -251,7 +165,9 @@ export const SelectTable: FC<any> = ({ multiple = true, handleSelectedItems = (s
         loading,
         total,
         setTotal,
-        setPage
+        setPage,
+        searchValue,
+        setSearchValue
     } = usePartnerPrograms();
 
     const handleRequestSort = (param) => {
@@ -275,7 +191,7 @@ export const SelectTable: FC<any> = ({ multiple = true, handleSelectedItems = (s
 
     return <>
             <Box sx={{ p: 2, background: (theme) => theme.palette.background.paper, display: "flex", justifyContent: "center" }}>
-                <SearchInput searchValue={searchValue} setSearchValue={setSearchValue} updateInput={setSearchValue} />
+                <SearchInput searchValue={searchValue} updateInput={setSearchValue} />
             </Box>
         <TableComponent
             height={"50vh"}
@@ -289,7 +205,6 @@ export const SelectTable: FC<any> = ({ multiple = true, handleSelectedItems = (s
             rowsPerPage={rowsPerPage}
             order={order}
             orderBy={orderBy}
-            // showCheckbox={false}
             singleSelect={!multiple}
             total={total}
             selected={selected}

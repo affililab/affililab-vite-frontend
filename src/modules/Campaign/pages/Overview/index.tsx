@@ -1,4 +1,4 @@
-import React, {FC, useContext, useEffect, useRef, useState} from "react";
+import React, {FC, memo, useContext, useEffect, useRef, useState} from "react";
 import {
     Box,
     Button,
@@ -21,10 +21,13 @@ import {resourceSchema} from "@resources/Campaign/configs/resourceSchema"
 import {useData} from "@resources/Campaign/hooks/useData";
 import {DeleteModal} from "@components/DeleteModal";
 
-const Content: FC<any> = ({
+const compare = (prevProps: any, nextProps: any) => {
+    return JSON.stringify(prevProps) === JSON.stringify(nextProps);
+}
+
+const Content: FC<any> = memo(({
                               openCreateModal,
                               emptyData,
-                              called,
                               deleteCampaign,
                               editCampaign,
                               campaigns,
@@ -79,11 +82,13 @@ const Content: FC<any> = ({
                         paddingRight: (theme) => theme.spacing(2),
                         paddingBottom: campaigns.length ? "52px" : "0px"
                     }}>
-                        {(isLoading) ? Array.from(Array(10)).map((i, index) => <Grid
+                        {(isLoading || (!campaigns.length && !emptyData)) && Array.from(Array(10)).map((i, index) => <Grid
                             key={"campaign-skeleton-" + index}
                             item xs={12} sm={4} md={3} >
                             <CampaignCard loading={true} campaign={{}} />
-                        </Grid>) : campaigns.map((campaignItem: any, index: number) => (
+                        </Grid>)}
+
+                        {campaigns.map((campaignItem: any, index: number) => (
                             <Grid key={campaignItem + "-" + index} item xs={12} sm={4} md={3}>
                                 <CampaignCard deleteCampaign={deleteCampaign} editCampaign={editCampaign}
                                               campaign={campaignItem}></CampaignCard>
@@ -105,7 +110,7 @@ const Content: FC<any> = ({
                 </Container>
             </Box>
         </Box></Scrollbar>
-};
+}, compare);
 
 export default () => {
 
@@ -181,9 +186,9 @@ export default () => {
 
     return <>
         <Page title="Dashboard">
-            <Content called={called} emptyContent={emptyData} isLoading={loading}
+            <Content emptyContent={emptyData} isLoading={loading}
                      campaigns={items} openCreateModal={openCreateModal} editCampaign={editCampaign}
-                     deleteCampaign={deleteCampaign}/>
+                     deleteCampaign={deleteCampaign} />
             {!!items.length && <TablePagination
                 sx={(theme) => ({
                     position: "sticky",

@@ -23,10 +23,6 @@ export const IndexPage = () => {
         setSearchValue,
     } = filterHook;
 
-    useEffect(() => {
-        setCenterItems([<SearchInput placeholder={"Suche aus über 8.000 Partnerprogrammen ..."} searchValue={searchValue} updateInput={setSearchValue} key={1} />]);
-    }, []);
-
     return <>
         <ProductsListContent filterHook={filterHook} />
     </>;

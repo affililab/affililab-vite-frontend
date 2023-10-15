@@ -76,7 +76,6 @@ export const ProductsListContent: FC<any> = ({ filterHook = {} }) => {
             return;
         }
         openModal();
-        setShowModal(true);
     }
 
     const TABS_CONTENT = {
@@ -131,8 +130,8 @@ export const ProductsListContent: FC<any> = ({ filterHook = {} }) => {
                         saveFilter()
                     }}
                 >
-                    <Icon icon={'fa-regular:save'} width="19" height="19" /> <Typography variant="body2">
-                    speichern</Typography>
+                    <Icon icon={'fa-regular:save'} width="19" height="19" />
+                    <Typography variant="body2">speichern</Typography>
                 </ToggleButton>
             ]
         },

@@ -63,7 +63,7 @@ const MyIndexComp = () => {
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
     const {themeMode, onChangeMode} = useSettings();
 
-    return <Page title={'something'} sx={{ height: 1 }}>
+    return <Page title={'something'}>
         <Card sx={{height: 1}}>
             <CardContent>
                 <Typography variant={'h6'} color={'text.secondary'}>Checking height</Typography>
