@@ -62,13 +62,6 @@ export const Content: FC<any> = ({
 
     const {themeStretch} = useSettings();
 
-    const {setCenterItems} = useContext(HeaderItemsContext);
-
-    useEffect(() => {
-        setCenterItems([<SearchInput placeholder={"Suche aus Tools ..."} searchValue={searchValue}
-                                     updateInput={setSearchValue}/>]);
-    }, []);
-
     const [fetchAllowed, setFetchAllowed] = useState(true);
 
     const nextPage = async () => {

@@ -74,6 +74,7 @@ export const UPDATE_USER = gql`
         $passwordConfirmation: String,
         $status: Int,
         $verifiedAt: DateTime,
+        $preferred: PreferredInput
     ) {
         updateUser(
             id: $id,
@@ -87,6 +88,7 @@ export const UPDATE_USER = gql`
                 passwordConfirmation: $passwordConfirmation,
                 status: $status,
                 verifiedAt: $verifiedAt,
+                preferred: $preferred
             }
         ) {
             id

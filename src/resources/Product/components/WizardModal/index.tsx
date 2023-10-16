@@ -13,24 +13,36 @@ import {
     varTranEnter
 } from "my-lib";
 import {Selection} from "@resources/CategoryGroup/components/Selection"
-import {OverviewItems as ToolsOverviewItems} from "@resources/Tools/components/OverviewItems"
+import {SelectItems} from "@resources/Tools/components/SelectItems";
 
-const steps = [
+const WizardContent: FC<any> = () => {
+    const [activeStep, setActiveStep] = useState(0);
+    const selectedCategoriesState = useState([]);
+    const [selectedCategories, setSelectedCategories] = selectedCategoriesState;
+
+    const steps = [
         {
             label: 'Select topics which are interesting to you',
-            component: <Selection />,
+            component: <Box sx={{display: "flex", height: "50vh", background: (theme: any) => theme.palette.background.neutral}}>
+                <Selection selectedState={selectedCategoriesState} />
+            </Box>
         },
         {
             label: 'In which fields you already have experience',
-            component: <>Step 2</>
+            component: <Box sx={{display: "flex", height: "50vh", background: (theme: any) => theme.palette.background.neutral}}>Step 2</Box>
         },
         {
             label: 'Which tools do you already use ?',
-            component: <ToolsOverviewItems isSelection/>
+            component: <Box sx={{display: "flex", height: "50vh", background: (theme: any) => theme.palette.background.neutral}}>
+                <SelectItems implemented={[]} selected={[]}
+                             setSelected={() => {}} isSelection />
+            </Box>
         },
         {
             label: 'What are you prefered Marketing Channels ?',
-            component: <>Step 3</>
+            component: <Box sx={{display: "flex", height: "50vh", background: (theme: any) => theme.palette.background.neutral}}>
+                Step 3
+            </Box>
         },
         // {
         //     label: 'We found following Partnerprograms for you',
@@ -56,10 +68,7 @@ const steps = [
         //     label: 'Continue',
         //     component: <>Redirect to Campaign or stay and Close + Toast to create successfully the campaign</>
         // }
-];
-
-const WizardContent: FC<any> = () => {
-    const [activeStep, setActiveStep] = useState(0);
+    ];
 
     const handleReset = () => {
         setActiveStep(0);
@@ -71,17 +80,19 @@ const WizardContent: FC<any> = () => {
     };
 
     const handleNext = () => {
-        if (activeStep + 1 >= steps.length - 1) return;
+        if (activeStep >= steps.length - 1) {
+            // TODO: active step
+            return;
+        }
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
     };
 
-    return <Box sx={{p: 4}}>
-        <Stepper activeStep={activeStep} alternativeLabel>
+    return <Box sx={{overflow: "hidden"}}>
+        <Stepper sx={{p: 2}} activeStep={activeStep} alternativeLabel>
             {steps.map((stepItem, index) => {
                 const {label } = stepItem;
                 const stepProps = {};
                 const labelProps = {};
-
                 return (
                     <Step key={label} {...stepProps}>
                         <StepLabel {...labelProps}>{label}</StepLabel>
@@ -89,23 +100,29 @@ const WizardContent: FC<any> = () => {
                 );
             })}
         </Stepper>
-        <>
-            <Box sx={{ p: 3, my: 3, minHeight: 120, bgcolor: 'grey.50012' }}>
-                {steps[activeStep].component}
-            </Box>
-            <Box sx={{ display: 'flex' }}>
+
+        {steps[activeStep].component}
+
+        <Box sx={{
+            width: "100%",
+            display: "flex",
+            justifyContent: "flex-end",
+            alignItems: "center",
+            p: 2,
+            boxShadow: (theme) => theme.customShadows.z12,
+        }}>
+            <Box sx={{justifySelf: "flex-end",  width: "100%", justifyContent: "space-between", display: "flex", gap: (theme) => theme.spacing(2)}}>
                 <Button size={'large'} color="inherit" disabled={activeStep === 0} onClick={handleBack} sx={{ mr: 1 }}>
                     Back
                 </Button>
-                <Box sx={{ flexGrow: 1 }} />
                 <Button size={'large'} variant="contained" onClick={handleNext}>
                     {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                    <Icon sx={{ ml: 2 }} width={24}
+                    {activeStep < steps.length - 1 && <Icon sx={{ ml: 2 }} width={24}
                           height={24}
-                          icon={'carbon:chevron-right'}/>
+                          icon={'carbon:chevron-right'} />}
                 </Button>
             </Box>
-        </>
+        </Box>
     </Box>
 }
 

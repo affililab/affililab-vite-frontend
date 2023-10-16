@@ -63,13 +63,6 @@ export const Content: FC<any> = ({
         setAddToCampaignItems([item.id]);
     }
 
-    const {setCenterItems} = useContext(HeaderItemsContext);
-
-    useEffect(() => {
-        setCenterItems([<SearchInput placeholder={"Suche aus E Learning Resources ..."} searchValue={searchValue}
-                                     updateInput={setSearchValue}/>]);
-    }, []);
-
     const {themeStretch} = useSettings();
 
     return <>

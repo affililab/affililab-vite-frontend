@@ -3,7 +3,7 @@ import {Box, Grid, Stack, Switch, Typography} from "my-lib";
 import {usePlans} from "@resources/Plan/hooks/usePlans";
 import {PricingPlanCard} from "@resources/Payments/components/PricingPlanCard";
 
-export const PricingList : FC<any> = ({ selected, choose = (plan: any) => {}, unit, chooseUnit = (unit: any) => {}}) => {
+export const PricingList : FC<any> = ({ selected, setSinglePlan, choose = (plan: any) => {}, unit, chooseUnit = (unit: any) => {}}) => {
 
     const [planData, setPlanData] = useState([]);
 
@@ -12,6 +12,7 @@ export const PricingList : FC<any> = ({ selected, choose = (plan: any) => {}, un
     useEffect((active = () => {} ) => {
         const fetchData = async () => {
             const plansData = await getPlans();
+            if (plansData.data?.getAllPlans?.length === 1) setSinglePlan(true);
             setPlanData(plansData.data?.getAllPlans ?? []);
             choose(plansData.data?.getAllPlans[0].id);
         }

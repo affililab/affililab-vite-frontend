@@ -62,7 +62,7 @@ export const ProductsContent = ({
         <InfiniteScroll
             scrollableTarget={scrollableNodeRef.current.getScrollElement()}
             scrollThreshold={1}
-            sx={(theme: any) => ({
+            sx={{
                 height: "100%",
                 width: "100%",
                 flex: 1,
@@ -70,7 +70,7 @@ export const ProductsContent = ({
                 flexDirection: "column",
                 justifyContent: "center",
                 alignItems: "center",
-            })}
+            }}
             dataLength={items.slice(0, rowsPerPage + page * rowsPerPage).length} // This is important field to render the next data
             next={() => {
                 setPage(page + 1)
@@ -139,13 +139,20 @@ export const ProductsContent = ({
                     </Grid>
                 ))}
             </Grid>
-
         </InfiniteScroll>
         {!(!!data?.getPartnerProgramsByIds?.length) &&
-            <Box sx={{width: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}><EmptyContent
+            <Box sx={{
+                height: "100%",
+                width: "100%",
+                flex: 1,
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center",
+            }}><Box sx={{width: "100%", display: "flex", justifyContent: "center", alignItems: "center"}}><EmptyContent
                 title="Noch keine Partnerprogramme"
                 description="Sie haben noch keine Partnerprogramme zu ihrer Kampagne hinzugefügt"
                 img="/static/illustrations/illustration_empty.svg"
-            /></Box>}
+            /></Box></Box>}
     </>
 }

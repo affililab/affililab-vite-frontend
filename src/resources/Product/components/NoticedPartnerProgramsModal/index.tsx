@@ -57,7 +57,8 @@ const ModalContent: FC<any> = ({
                           icon={'codicon:add'}/>
                 </Button>
             </Box>
-        </Box></Box>
+        </Box>
+    </Box>
 }
 
 export const NoticedPartnerProgramsModal: FC<any> = ({

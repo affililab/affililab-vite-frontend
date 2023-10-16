@@ -405,14 +405,14 @@ export const Item: FC<any> = ({
                                                 color="info"
                                                 sx={{textAlign: "left"}}
                                                 onClick={() => {
-                                                    toggleExternalLink(item, getSalesPageURL())
+                                                    toggleExternalLink(item, salesPageURL ?? getSalesPageURL())
                                                 }}
                                                 size="medium">Zur Sales Page</Link>
-                                            <Link sx={{textAlign: "left"}} color="info" onClick={() => {
+                                            {affiliateSupportURL && <Link sx={{textAlign: "left"}} color="info" onClick={() => {
                                                 toggleExternalLink(item, affiliateSupportURL)
                                             }} size="small">Zur
                                                 Affiliate
-                                                Support Page</Link>
+                                                Support Page</Link>}
                                         </Box>
                                         <Box sx={{
                                             height: "100%",

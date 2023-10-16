@@ -323,11 +323,11 @@ export const PartnerProgramsItem: FC<any> = ({
                                             onClick={() => { toggleExternalLink(partnerprogram, getSalesPageURL()) }}
                                             size="small">Zur Sales Page</Button>
                                     </Grid>
-                                    <Grid item>
-                                        <Button color="info" onClick={() => { toggleExternalLink(partnerprogram, affiliateSupportURL) }} size="small">Zur
+                                    {affiliateSupportURL && <Grid item>
+                                        <Button color="info" onClick={() => { console.log("affiliateSupportURL", affiliateSupportURL); toggleExternalLink(partnerprogram, affiliateSupportURL) }} size="small">Zur
                                             Affiliate
                                             Support Page</Button>
-                                    </Grid>
+                                    </Grid>}
                                 </Grid>
                             </Grid>
                             <Grid sx={{alignSelf: "flex-end", width: "100%"}} item>

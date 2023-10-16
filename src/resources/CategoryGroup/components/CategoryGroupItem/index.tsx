@@ -18,14 +18,8 @@ export const CategoryGroupItem: FC<any> = ({ item, actionItems = [] }) => {
     return <Card sx={{textAlign: 'center'}}>
         <CardHeader
             sx={(theme) => ({
-                position: "absolute",
                 height: "64px",
-                top: 0,
-                left: 0,
-                right: 0,
-                zIndex: 2,
-                backdropFilter: "blur(1px)",
-                backgroundColor: alpha("#0000", 0.8)
+                backgroundColor: theme.palette.background.paper,
             })}
             action={<>{actionItems.map((item, index) => <Box key={index}>{item}</Box>) }</>}
         />

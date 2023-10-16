@@ -186,10 +186,10 @@ export default () => {
 
     return <>
         <Page title="Dashboard">
-            <Content emptyContent={emptyData} isLoading={loading}
+            <Content emptyData={emptyData} isLoading={loading}
                      campaigns={items} openCreateModal={openCreateModal} editCampaign={editCampaign}
                      deleteCampaign={deleteCampaign} />
-            {!!items.length && <TablePagination
+            {items.length > 0 && <TablePagination
                 sx={(theme) => ({
                     position: "sticky",
                     zIndex: 999,

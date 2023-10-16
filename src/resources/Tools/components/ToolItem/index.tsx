@@ -55,15 +55,7 @@ export const ToolItem: FC<any> = ({toolItem, addToCampaign, openModalHandler, ac
         <Card sx={{cursor: 'pointer', textAlign: 'center'}}>
             <CardHeader
                 sx={(theme) => ({
-                    position: "absolute",
-                    height: "64px",
-                    width: "100%",
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    zIndex: 2,
-                    backdropFilter: "blur(4px)",
-                    backgroundColor: theme.palette.grey[500_56]
+                    height: "64px"
                 })}
                 action={<Box sx={(theme) => ({ display: "flex", gap: theme.spacing(1) })}>{actionItems.map((item, index) => <Box key={index}>{item}</Box>)}</Box>}
             />

@@ -87,7 +87,7 @@ export const useData = (meta = {direction: 1, sortBy: "createdAt", limit: 10, fi
         total,
         searchValue,
         setSearchValue,
-        emptyData: !(!!data?.getCampaigns?.items?.length),
+        emptyData: data?.getCampaigns?.pageInfo?.total <= 0,
         limit,
         setLimit,
         order,

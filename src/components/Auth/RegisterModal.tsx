@@ -21,8 +21,10 @@ import {useSelector} from "@store";
 import {useMutation} from "@apollo/client";
 import {PricingList} from "@resources/Payments/components/PricingList";
 const { useSearchParams } = RouterDom;
-import {CHOOSE_PLAN, COMPLETE_SUBSCRIPTION} from "@schemas/user"
+import {CHOOSE_PLAN, COMPLETE_SUBSCRIPTION, UPDATE_PROFILE} from "@schemas/user"
 import {RegisterForm} from "./RegisterForm";
+import {TargetGroupSelection} from "@resources/TargetGroup/components/TargetGroupSelection";
+import {Selection as CategorySelection} from "@resources/CategoryGroup/components/Selection"
 
 export const Content : FC<any> = ({
                             handleCloseModal = () => {}
@@ -32,12 +34,14 @@ export const Content : FC<any> = ({
     const selectedTargetGroupState = useState([]);
     const [step, setStep] = useState(0);
     const [plan, setPlan] = useState<any>(null);
+    const [singlePlan, setSinglePlan] = useState<boolean>(false);
     const [unit, setUnit] = useState('month');
 
     const [selectedCategories] = selectedCategoriesState;
     const [selectedTargetGroups] = selectedTargetGroupState;
 
     const [choosePlanMutation, { error: choosePlanError }] = useMutation(CHOOSE_PLAN);
+    const [saveProfileData, {error}] = useMutation(UPDATE_PROFILE);
 
     const steps: any = [
         {
@@ -49,30 +53,40 @@ export const Content : FC<any> = ({
             callbackFnc: async () => {
                 //send mutation and redirect to stripe if successfull
                 const response = await choosePlanMutation({ variables: { id: plan, unit, callbackUrl: `${window.location.origin.toString()}/partnerPrograms/` } });
-                console.log(response);
                 if (plan.monthlyPrice > 0 && response?.data?.choosePlan?.payload?.sessionUrl) {
                     window.location.replace(response.data.choosePlan.payload.sessionUrl)
                 }
             },
-            component: <PricingList unit={unit} selected={plan} choose={(plan: any) => { setPlan(plan) }} chooseUnit={(unit: any) => { setUnit(unit) }} />,
-        },
-        {
-            label: 'Select topics which are interesting to you',
-            // component: <CategorySelection selectedState={selectedCategoriesState} />, // TODO: reactivate after implementation
-            component: <></>,
-        },
-        {
-            label: 'Which Target Groups do prefer ?',
-            // component: <TargetGroupSelection selectedState={selectedTargetGroupState} /> // TODO: reactivate after implementation
-            component: <></>
+            component: <PricingList setSinglePlan={setSinglePlan} unit={unit} selected={plan} choose={(plan: any) => { setPlan(plan) }} chooseUnit={(unit: any) => { setUnit(unit) }} />,
         }
     ];
+
+    useEffect(() => {
+        (async () => {
+            if (singlePlan) {
+                if (steps[step+1]?.callbackFnc) await steps[step+1]?.callbackFnc();
+                await nextStep();
+            }
+        })();
+    }, [singlePlan]);
 
     const theme = useTheme();
 
     const isMd = useMediaQuery(theme.breakpoints.up('md'), {
         defaultMatches: true,
     });
+
+    const nextStep = async () => {
+        console.log("step", step);
+        if (step === steps.length - 1) {
+            // save user preferences
+            await saveProfileData({variables: {categories: selectedCategories }});
+            handleCloseModal(false);
+            return;
+        }
+        steps[step].callbackFnc && await steps[step].callbackFnc();
+        setStep(step+1);
+    }
 
     return <Box
         position={'relative'}
@@ -121,7 +135,7 @@ export const Content : FC<any> = ({
                     md={6}
                 >
                     <Stack direction={'column'} spacing={2}>
-                        <RegisterForm openLogin={() => openModal("login")} onFinish={() => setStep(step+1)} />
+                        <RegisterForm openLogin={() => openModal("login")} onFinish={() => nextStep()} />
                     </Stack>
                 </Grid>
             </Grid>}
@@ -142,10 +156,7 @@ export const Content : FC<any> = ({
                     {steps[step].component}
                 </Box>
                 <Box display={"flex"} justifyContent={"flex-end"}>
-                    <Button variant="contained" onClick={async () => {
-                        steps[step].callbackFnc && await steps[step].callbackFnc();
-                        setStep(step+1);
-                    }}>
+                    <Button variant="contained" onClick={() => nextStep()}>
                         {step === steps.length - 1 ? 'Finish' : 'Next'}
                     </Button>
                 </Box>
@@ -176,8 +187,6 @@ export const RegisterModal : FC<any> = () => {
             }
         })();
     }, [searchParams]);
-
-    // return <></>
 
 
     return <DialogAnimate maxWidth={"xl"} open={isModalOpen && mode === "register"} onClose={() => {

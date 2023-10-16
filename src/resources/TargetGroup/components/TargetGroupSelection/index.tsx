@@ -23,7 +23,7 @@ export const TargetGroupSelection: FC<any> = ({ selectedState }) => {
             }
         }} forceVisible="y" style={{height: "100%"}}>
                 <Grid p={4} spacing={2} container>
-                    {items.map(item => <Grid xs={12} sm={6} md={4} lg={3} item><TargetGroupItem actionItems={[
+                    {items.filter(item => item.targetGroupType.title === "Interessenbasierte Zielgruppen").map((item, index) => <Grid key={index} xs={12} sm={6} md={4} lg={3} item><TargetGroupItem actionItems={[
                         <Checkbox onClick={() => setSelected(selected.indexOf(item.id) !== -1 ? selected.filter(selectedItem => selectedItem !== item.id) : [...selected, item.id])} />
                     ]} item={item} /></Grid>)}
                 </Grid>

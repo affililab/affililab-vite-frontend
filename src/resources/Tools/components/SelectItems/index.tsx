@@ -4,7 +4,7 @@ import {Content} from "./content"
 
 export const SelectItems: FC<any> = ({
                                            isSelection,
-                                           actionItems,
+                                           actionItems = [],
                                            selected = [],
                                            implemented = [],
                                            setSelected = () => null

@@ -37,6 +37,7 @@ const useStyles = makeStyles(theme => ({
 const ActionButtonsContainer = styled(Box)(({theme}) => ({
     display: "flex",
     justifyContent: "flex-end",
+    alignItems: "center",
     gap: theme.spacing(2)
 }));
 
@@ -59,11 +60,10 @@ export const Content: FC<any> = ({
                             handleClose,
                             addToCampaign,
                             actionItems = [
-                                (item, isAuthenticated) => (isAuthenticated && addToCampaign) && <IconButton aria-label="close" onClick={() => addToCampaign(item)}>
-                                            <Icon width={32} height={32} sx={(theme) => ({
-                                                color: theme.palette.primary.dark
-                                            })} icon={"codicon:add"}/>
-                                </IconButton>
+                                (item, isAuthenticated) => (isAuthenticated && addToCampaign) &&
+                                    <IconButton aria-label="close" onClick={() => addToCampaign(item)}>
+                                        <Icon width={32} height={32} icon={"codicon:add"}/>
+                                    </IconButton>
                             ]
 }) => {
 
@@ -141,19 +141,19 @@ export const Content: FC<any> = ({
 
     return <>
         {/* TODO: Top Cover */}
+        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", p: 2  }}>
+            <Button size="large" color="info" href={item.link}  variant="contained" target="_blank"><Icon width={18} height={18} icon={"ph:link-bold"} mr={1} /> Get Tool</Button>
+            <ActionButtonsContainer>
+                {actionItems.map(actionItem => actionItem(item, isAuthenticated))}
+                <IconButton aria-label="close" onClick={handleClose}>
+                    <Icon width={42}
+                          height={42}
+                          icon={'ei:close'} />
+                </IconButton>
+            </ActionButtonsContainer>
+        </Box>
         <Box className={classes.cover}>
             { item.cover && <Image sx={{ position: "absolute", inset: 0 }} src={item.cover?.includes("http") ? item.cover : partnerProgramsBackend.filesEndpoint + item.cover} />}
-            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", position: "absolute", height: "auto", top: 0, right: 0, left: 0, background: "rgba(0,0,0,.66)", p: 2  }}>
-                <Button color="info" href={item.link}  variant="contained" target="_blank" size="medium">Get Tool</Button>
-                <ActionButtonsContainer>
-                    {actionItems.map(actionItem => actionItem(item, isAuthenticated))}
-                    <IconButton aria-label="close" onClick={handleClose}>
-                        <Icon width={42}
-                              height={42}
-                              icon={'ei:close'}/>
-                    </IconButton>
-                </ActionButtonsContainer>
-            </Box>
             {/* TODO: Logo */}
             <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", position: "absolute", bottom: 0, right: 0, left: 0 }}>
                 <LogoCircle>

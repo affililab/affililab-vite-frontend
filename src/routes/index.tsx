@@ -46,6 +46,9 @@ import {AccountModule} from "../modules/Account";
 import {AdGeneratorTool} from "../modules/AdGeneratorTool";
 /* PLOP_INJECT_TYPE_MODULE_IMPORT */
 import {ToolTypeModule} from "../modules/ToolType";
+import {ProfileSetupModal} from "@components/ProfileSetupModal";
+
+const { Outlet } = Router;
 
 const MENU_OPTIONS = [
     {
@@ -170,51 +173,62 @@ const RightElements = () => {
 
 export const routes = [
     {
-        path: "/app",
-        element: <AuthGuard>
-            <DashboardLayout rightElements={[<RightElements key={2} />]} paths={PATH_APP} navConfig={navConfig} menuOptions={MENU_OPTIONS} />
-        </AuthGuard>,
+        element: <>
+            <ProfileSetupModal />
+            <Outlet />
+        </>,
         children: [
-            <MyIndexComp />,
-            RootModule,
-            DashboardModule,
-            AccountModule,
-            AdvertisingTypeModule,
-            AdvertisementAssetModule,
-            CampaignModule,
-            CampaignSupportCategoryModule,
-            CategoryModule,
-            CategoryGroupModule,
-            CrawlingSourceModule,
-            EventsModule,
-            ELearningModule,
-            ELearningResourcesTypeModule,
-            PlanModule,
-            ProductsModule,
-            RoleModule,
-            SalaryModelModule,
-            SavedFilterModule,
-            SourceModule,
-            TargetGroupModule,
-            TargetGroupTypeModule,
-            ToolsModule,
-            TrackingTypeModule,
-            UserModule,
-            AdGeneratorTool,
-            /* PLOP_INJECT_TYPE_MODULE_REGISTER */
-            ToolTypeModule,
-        ]
-    },
-    {
-        path: "/",
-        element: <Page title={"Products"}>
-            <ListingLayout navConfig={navConfig} menuOptions={MENU_OPTIONS} centerElements={[<SearchInput key={1} />]} rightElements={[<RightElementsProductFinder key={2} />]} />
-            <LoginModal />
-            <RegisterModal />
-            <PlanModal />
-            </Page>,
-        children: [
-            ProductFinderModule
+            {
+                path: "/app",
+                element: <AuthGuard>
+                    <DashboardLayout rightElements={[<RightElements key={2}/>]} paths={PATH_APP} navConfig={navConfig}
+                                     menuOptions={MENU_OPTIONS}/>
+                </AuthGuard>,
+                children: [
+                    <MyIndexComp/>,
+                    RootModule,
+                    DashboardModule,
+                    AccountModule,
+                    AdvertisingTypeModule,
+                    AdvertisementAssetModule,
+                    CampaignModule,
+                    CampaignSupportCategoryModule,
+                    CategoryModule,
+                    CategoryGroupModule,
+                    CrawlingSourceModule,
+                    EventsModule,
+                    ELearningModule,
+                    ELearningResourcesTypeModule,
+                    PlanModule,
+                    ProductsModule,
+                    RoleModule,
+                    SalaryModelModule,
+                    SavedFilterModule,
+                    SourceModule,
+                    TargetGroupModule,
+                    TargetGroupTypeModule,
+                    ToolsModule,
+                    TrackingTypeModule,
+                    UserModule,
+                    AdGeneratorTool,
+                    /* PLOP_INJECT_TYPE_MODULE_REGISTER */
+                    ToolTypeModule,
+                ]
+            },
+            {
+                path: "",
+                element: <Page title={"Products"}>
+                    <ListingLayout navConfig={navConfig} menuOptions={MENU_OPTIONS}
+                                   centerElements={[<SearchInput key={1}/>]}
+                                   rightElements={[<RightElementsProductFinder key={2}/>]}/>
+                    <LoginModal/>
+                    <RegisterModal/>
+                    <PlanModal/>
+                </Page>,
+                children: [
+                    ProductFinderModule
+                ]
+            }
         ]
     }
 ];
