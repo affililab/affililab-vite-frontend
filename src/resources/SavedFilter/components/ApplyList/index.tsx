@@ -55,7 +55,7 @@ export const ApplyList = ({
 
     /* TODO: outsource renderer too hook */
     const RangeTypeRenderer = (row, value) => {
-        return <Typography variant="subtitle2" noWrap>{value.value[0]} - {value.value[1]}</Typography>
+        return value?.value ? <Typography variant="subtitle2" noWrap>{value.value[0]} - {value.value[1]}</Typography> : "-"
     };
 
     const CategoryTypeRenderer = (row, value) => {

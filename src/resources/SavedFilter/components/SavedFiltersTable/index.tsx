@@ -18,16 +18,17 @@ const {useNavigate} = ReactRouter;
 
 /* TODO: outsource renderer too hook */
 const RangeTypeRenderer = (row, value) => {
-    return value ? <Typography variant="subtitle2" noWrap>{value.value[0]} - {value.value[1]}</Typography> : "-"
+    return value?.value ? <Typography variant="subtitle2" noWrap>{value?.value[0]} - {value?.value[1]}</Typography> : "-"
 };
 
 const CategoryTypeRenderer = (row, value) => {
-    if (!value?.value?.length) return "-"
-    return value.value.map((categoryItem, index) => <Chip key={index} size="small" title={categoryItem.title}
-                                                          label={categoryItem.title}/>)
+    if (!value?.value?.length) return "-";
+    return value.value.map((categoryItem, index) => <Chip key={index} size="small" title={categoryItem?.title}
+                                                          label={categoryItem?.title}/>)
 }
 
 const OptionsTypeRenderer = (row, value) => {
+    return <Typography variant="subtitle2" noWrap>-</Typography>
     const optionValueMappingArray = ["all", "yes", "no"]
     return <Typography variant="subtitle2" noWrap>
         {optionValueMappingArray[parseInt(value.value)]}
