@@ -35,7 +35,7 @@ export const ToolsContent = ({ campaignData, ids = [], remove = () => {} }) => {
     // render - show items
     return <>
         <ToolItemModal item={currentItem} isModalOpen={itemModalState} handleCloseModal={closeModalHandler} />
-        <Grid sx={{ flex: 1, display: "flex", flexDirection: "column"}} container spacing={4}>
+        <Grid sx={{ width: "100%", flex: 1, display: "flex"}} container spacing={4}>
             {loading ? Array.from(Array(5)).map((i, index) =>  <Grid key={index} item xs={12} sm={6} md={4}><CampaignCardSkeleton /></Grid>) : items.length > 0 ? items.map((item, index) => (
                 <Grid key={index} item xs={12} sm={6} md={4}>
                     <ToolItem

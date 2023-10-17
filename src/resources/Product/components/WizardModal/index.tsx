@@ -14,34 +14,46 @@ import {
 } from "my-lib";
 import {Selection} from "@resources/CategoryGroup/components/Selection"
 import {SelectItems} from "@resources/Tools/components/SelectItems";
+import {
+    CampaignSupportCategorySelection
+} from "@resources/CampaignSupportCategory/components/CampaignSupportCategorySelection";
+import {MarketingChannelsSelection} from "@resources/Product/components/WizardModal/MarketingChannelsSelection";
 
 const WizardContent: FC<any> = () => {
     const [activeStep, setActiveStep] = useState(0);
     const selectedCategoriesState = useState([]);
+    const selectedCampaignSupportCategoryState = useState([]);
+    const selectedToolsState = useState([]);
+    const selectedMarketingChannelsState = useState([]);
     const [selectedCategories, setSelectedCategories] = selectedCategoriesState;
+    const [selectedCampaignSupportCategory, setSelectedCampaignSupportCategoryState] = selectedCampaignSupportCategoryState;
+    const [selectedTools, setSelectedTools] = selectedToolsState;
+    const [selectedMarketingChannels, setSelectedMarketingChannels] = selectedMarketingChannelsState;
 
     const steps = [
         {
             label: 'Select topics which are interesting to you',
-            component: <Box sx={{display: "flex", height: "50vh", background: (theme: any) => theme.palette.background.neutral}}>
+            component: <Box sx={{display: "flex", height: "60vh", background: (theme: any) => theme.palette.background.neutral}}>
                 <Selection selectedState={selectedCategoriesState} />
             </Box>
         },
         {
             label: 'In which fields you already have experience',
-            component: <Box sx={{display: "flex", height: "50vh", background: (theme: any) => theme.palette.background.neutral}}>Step 2</Box>
+            component: <Box sx={{display: "flex", height: "60vh", background: (theme: any) => theme.palette.background.neutral}}>
+                <CampaignSupportCategorySelection selectedState={selectedCampaignSupportCategoryState} />
+            </Box>
         },
         {
             label: 'Which tools do you already use ?',
-            component: <Box sx={{display: "flex", height: "50vh", background: (theme: any) => theme.palette.background.neutral}}>
-                <SelectItems implemented={[]} selected={[]}
-                             setSelected={() => {}} isSelection />
+            component: <Box sx={{display: "flex", height: "60vh", background: (theme: any) => theme.palette.background.neutral}}>
+                <SelectItems selected={selectedTools}
+                             setSelected={setSelectedTools} isSelection />
             </Box>
         },
         {
             label: 'What are you prefered Marketing Channels ?',
-            component: <Box sx={{display: "flex", height: "50vh", background: (theme: any) => theme.palette.background.neutral}}>
-                Step 3
+            component: <Box sx={{display: "flex", height: "60vh", background: (theme: any) => theme.palette.background.neutral}}>
+                <MarketingChannelsSelection selectedState={selectedMarketingChannelsState} />
             </Box>
         },
         // {

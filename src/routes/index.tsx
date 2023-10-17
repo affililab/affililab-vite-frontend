@@ -103,25 +103,25 @@ const RightElementsProductFinder = () => {
     const { user } = useAuth();
     const {themeMode, onChangeMode} = useSettings();
     return <>
-        <Box>
-            <ToggleButtonGroup
-                // color="secondary"
-                value={themeMode}
-                exclusive
-                onChange={onChangeMode}
-                sx={{ width: "80px", height: "30px", display: "flex", justifyContent: "center", alignItems: "center", py: 2 }}
-            >
-                <ToggleButton sx={{ height: "100%" }} value="dark">
-                    <Icon
-                        icon={'ph:moon-duotone'}
-                    /></ToggleButton>
-                <ToggleButton sx={{ height: "100%" }} value="light">
-                    <Icon
-                        icon={'ph:sun-duotone'}
-                    />
-                </ToggleButton>
-            </ToggleButtonGroup>
-        </Box>
+        {/*<Box>*/}
+        {/*    <ToggleButtonGroup*/}
+        {/*        // color="secondary"*/}
+        {/*        value={themeMode}*/}
+        {/*        exclusive*/}
+        {/*        onChange={onChangeMode}*/}
+        {/*        sx={{ width: "80px", height: "30px", display: "flex", justifyContent: "center", alignItems: "center", py: 2 }}*/}
+        {/*    >*/}
+        {/*        <ToggleButton sx={{ height: "100%" }} value="dark">*/}
+        {/*            <Icon*/}
+        {/*                icon={'ph:moon-duotone'}*/}
+        {/*            /></ToggleButton>*/}
+        {/*        <ToggleButton sx={{ height: "100%" }} value="light">*/}
+        {/*            <Icon*/}
+        {/*                icon={'ph:sun-duotone'}*/}
+        {/*            />*/}
+        {/*        </ToggleButton>*/}
+        {/*    </ToggleButtonGroup>*/}
+        {/*</Box>*/}
         {!(!!user) && <Box>
             {/*Register*/}
             <Button variant="text" onClick={() => {
@@ -148,25 +148,25 @@ const RightElements = () => {
     const { user } = useAuth();
     const {themeMode, onChangeMode} = useSettings();
     return <>
-        <Box>
-            <ToggleButtonGroup
-                // color="secondary"
-                value={themeMode}
-                exclusive
-                onChange={onChangeMode}
-                sx={{ width: "80px", height: "30px", display: "flex", justifyContent: "center", alignItems: "center", py: 2 }}
-            >
-                <ToggleButton sx={{ height: "100%" }} value="dark">
-                    <Icon
-                        icon={'ph:moon-duotone'}
-                    /></ToggleButton>
-                <ToggleButton sx={{ height: "100%" }} value="light">
-                    <Icon
-                        icon={'ph:sun-duotone'}
-                    />
-                </ToggleButton>
-            </ToggleButtonGroup>
-        </Box>
+        {/*<Box>*/}
+        {/*    <ToggleButtonGroup*/}
+        {/*        // color="secondary"*/}
+        {/*        value={themeMode}*/}
+        {/*        exclusive*/}
+        {/*        onChange={onChangeMode}*/}
+        {/*        sx={{ width: "80px", height: "30px", display: "flex", justifyContent: "center", alignItems: "center", py: 2 }}*/}
+        {/*    >*/}
+        {/*        <ToggleButton sx={{ height: "100%" }} value="dark">*/}
+        {/*            <Icon*/}
+        {/*                icon={'ph:moon-duotone'}*/}
+        {/*            /></ToggleButton>*/}
+        {/*        <ToggleButton sx={{ height: "100%" }} value="light">*/}
+        {/*            <Icon*/}
+        {/*                icon={'ph:sun-duotone'}*/}
+        {/*            />*/}
+        {/*        </ToggleButton>*/}
+        {/*    </ToggleButtonGroup>*/}
+        {/*</Box>*/}
         <AccountPopover menuOptions={MENU_OPTIONS}/>
     </>
 };
