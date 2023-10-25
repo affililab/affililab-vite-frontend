@@ -1,21 +1,23 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 import {
-    makeStyles,
-    Box,
-    Image,
-    Icon,
-    Scrollbar,
-    Typography,
-    Tabs,
-    Tab,
-    Button,
-    ToggleButton,
-    Tooltip,
-    styled,
-    useAuth,
     Accordion,
+    AccordionDetails,
     AccordionSummary,
-    AccordionDetails, Grid, Chip, fRenderedHTML, IconButton
+    Box,
+    Button,
+    Chip,
+    fRenderedHTML,
+    Grid,
+    Icon,
+    IconButton,
+    Image,
+    makeStyles,
+    Scrollbar,
+    styled,
+    Tab,
+    Tabs,
+    Typography,
+    useAuth
 } from "my-lib";
 import {partnerProgramsBackend} from "@config";
 import {capitalCase} from "change-case";
@@ -55,17 +57,18 @@ export const Content = ({
                             handleClose,
                             addToCampaign,
                             actionItems = [
-                                (item, isAuthenticated) => (isAuthenticated && addToCampaign) && <IconButton aria-label="close" onClick={() => addToCampaign(item)}>
-    <Icon width={32} height={32} sx={(theme) => ({
-        color: theme.palette.primary.dark
-    })} icon={"codicon:add"}/>
-</IconButton>
+                                (item, isAuthenticated) => (isAuthenticated && addToCampaign) &&
+                                    <IconButton aria-label="close" onClick={() => addToCampaign(item)}>
+                                        <Icon width={32} height={32} sx={(theme) => ({
+                                            color: theme.palette.primary.dark
+                                        })} icon={"codicon:add"}/>
+                                    </IconButton>
                             ]
-}) => {
+                        }) => {
 
     const classes = useStyles();
 
-    const { isAuthenticated } = useAuth();
+    const {isAuthenticated} = useAuth();
 
     const {
         title,
@@ -117,9 +120,9 @@ export const Content = ({
             value: "What you will learn",
             icon: <Icon icon={'dashicons:welcome-learn-more'} width={20} height={20}/>,
             component: <>
-                { item?.learnAssets?.map((featureItem, index) => <Accordion key={index}>
+                {item?.learnAssets?.map((featureItem, index) => <Accordion key={index}>
                         <AccordionSummary
-                            expandIcon={<Icon icon={'ep:arrow-down'} width={20} height={20} />}
+                            expandIcon={<Icon icon={'ep:arrow-down'} width={20} height={20}/>}
                             aria-controls="panel1a-content"
                             id="panel1a-header"
                         >
@@ -137,35 +140,46 @@ export const Content = ({
     ];
 
     return <>
-        {/* TODO: Top Cover */}
+        <Box sx={{display: "flex", alignItems: "center", justifyContent: "space-between", p: 2}}>
+            <Button size="large" color="info" href={item.link} variant="contained" target="_blank">
+                <Icon width={18} height={18} icon={"ph:link-bold"} mr={1} /> Go to E-Learning Resource
+            </Button>
+            <ActionButtonsContainer>
+                {actionItems.map((actionItem, key) => <Box key={"index"}>{actionItem(item, isAuthenticated)}</Box>)}
+                <IconButton aria-label="close" onClick={handleClose}>
+                    <Icon width={42}
+                          height={42}
+                          icon={'ei:close'}/>
+                </IconButton>
+            </ActionButtonsContainer>
+        </Box>
+        {/* TODO: Logo */}
         <Box className={classes.cover}>
-            { item.cover && <Image sx={{ position: "absolute", inset: 0 }} src={item.cover?.includes("http") ? item.cover : partnerProgramsBackend.filesEndpoint + item.cover} />}
-            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", position: "absolute", height: "auto", top: 0, right: 0, left: 0, background: "rgba(0,0,0,.66)", p: 2  }}>
-                <Button color="info" href={item.link}  variant="contained" target="_blank" size="medium">Go to E-Learning Resource</Button>
-                <ActionButtonsContainer>
-                    {actionItems.map((actionItem, key) => <Box key={"index"}>{actionItem(item, isAuthenticated)}</Box>)}
-                    <IconButton aria-label="close" onClick={handleClose}>
-                        <Icon width={42}
-                              height={42}
-                              icon={'ei:close'}/>
-                    </IconButton>
-                </ActionButtonsContainer>
-            </Box>
-            {/* TODO: Logo */}
-            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", position: "absolute", bottom: 0, right: 0, left: 0 }}>
+            {item.cover && <Image sx={{position: "absolute", inset: 0}}
+                                  src={item.cover?.includes("http") ? item.cover : partnerProgramsBackend.filesEndpoint + item.cover}/>}
+            <Box sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                position: "absolute",
+                bottom: 0,
+                right: 0,
+                left: 0
+            }}>
                 <LogoCircle>
-                    <Typography sx={(theme) => ({ color: theme.palette.grey[800] })} variant="subtitle1">{title}</Typography>
+                    <Typography sx={(theme) => ({color: theme.palette.grey[800]})}
+                                variant="subtitle1">{title}</Typography>
                 </LogoCircle>
             </Box>
         </Box>
         {/* TODO: categories */}
         <Box p={4}>
-            <Grid sx={{ maxWidth: "284px" }} spacing={1} container>
+            <Grid sx={{maxWidth: "284px"}} spacing={1} container>
                 {item.categories.map((valueItem, index) => <Grid key={index} item><Chip
-                                                              sx={{maxWidth: "212px"}}
-                                                              size="small"
-                                                              title={`${valueItem.title}`}
-                                                              label={`${valueItem.title}`}/></Grid>)}
+                    sx={{maxWidth: "212px"}}
+                    size="small"
+                    title={`${valueItem.title}`}
+                    label={`${valueItem.title}`}/></Grid>)}
             </Grid>
         </Box>
 

@@ -110,7 +110,7 @@ export const Content: FC<any> = ({
                               updateSearch={(e) => setSearchValue(e.target.value)}
                               activeCategories={activeCategories} setActiveCategories={setActiveCategories} />
                 </Box>
-                <Container maxWidth={themeStretch ? false : 'xl'} sx={(theme: any) => ({py: theme.spacing(3)})}>
+                <Container maxWidth={themeStretch ? false : 'xl'} sx={(theme: any) => ({py: theme.spacing(3), display: "flex", flex: 1})}>
                         {!!scrollableNodeRef?.current && <Box
                             sx={(theme: any) => ({height: "100%", flex: 1, display: "flex", flexDirection: "column"})}>
 
@@ -123,7 +123,8 @@ export const Content: FC<any> = ({
                             }}>
                                 <CircularProgress/>
                             </Box>}
-                            <InfiniteScroll
+
+                            {!loading && <InfiniteScroll
                                 scrollableTarget={scrollableNodeRef.current.getScrollElement()}
                                 dataLength={total}
                                 scrollThreshold={1}
@@ -167,24 +168,24 @@ export const Content: FC<any> = ({
                                     {...(actionItems ? {
                                         actionItems: actionItems.length ? actionItems : [
                                             isAuthenticated && <Tooltip title={"add to campaign"} arrow>
-                                                <ToggleButton value={"check"} sx={(theme) => ({background: theme.palette.grey[500_80]})}
+                                                <ToggleButton value={"check"}
                                                               onClick={() => addToCampaign(toolItem)}
                                                               aria-label="add to campaign">
-                                                    <Icon color={"white"} sx={(theme) => ({
-                                                        height: 20,
-                                                        width: 20,
+                                                    <Icon sx={(theme) => ({
+                                                        height: 24,
+                                                        width: 24,
                                                         color: theme.palette.primary.dark
                                                     })} icon={"codicon:add"}/>
                                                 </ToggleButton>
                                             </Tooltip>,
                                             <Tooltip title={"show"} arrow>
-                                                <ToggleButton value={"check"} sx={(theme) => ({background: theme.palette.grey[500_80]})}
+                                                <ToggleButton value={"check"}
                                                               onClick={() => {
                                                                   openModalHandler(toolItem)
                                                               }} aria-label="add to campaign">
-                                                    <Icon color={"white"} sx={(theme) => ({
-                                                        height: 20,
-                                                        width: 20,
+                                                    <Icon sx={(theme) => ({
+                                                        height: 28,
+                                                        width: 28,
                                                         color: theme.palette.primary.dark
                                                     })} icon={"akar-icons:eye-open"}/>
                                                 </ToggleButton>
@@ -196,7 +197,7 @@ export const Content: FC<any> = ({
                                     toolItem={toolItem} />}
                                 </Grid>)}
                                 </Grid>
-                            </InfiniteScroll>
+                            </InfiniteScroll>}
                         </Box>}
                     </Container></Box></Box>
     </>

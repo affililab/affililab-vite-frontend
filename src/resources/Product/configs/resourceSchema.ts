@@ -63,7 +63,7 @@ export const resourceSchema = () => {
             }
         },
         {
-            key: "salesPageURL",
+            key: "salesPageUrl",
             formConfig: {
                 fieldConfig: {
                     label: "SalesPageUrl"

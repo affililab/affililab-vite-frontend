@@ -43,8 +43,8 @@ export const ToolsContent = ({ campaignData, ids = [], remove = () => {} }) => {
                         toolItem={item} actionItems={[
                         <Box>
                             <Tooltip title={ "von Kampagne entfernen" } arrow>
-                                <ToggleButton value={"check"} sx={(theme) => ({ background: theme.palette.grey[500_80] })} onClick={() => remove("tools", item.id)} aria-label="von Kampagne entfernen">
-                                    <Icon color={"white"} sx={(theme) => ({height: 20, width: 20 })} icon={"codicon:remove"}/>
+                                <ToggleButton value={"check"} onClick={() => remove("tools", item.id)} aria-label="von Kampagne entfernen">
+                                    <Icon sx={(theme) => ({height: 20, width: 20 })} icon={"codicon:remove"}/>
                                 </ToggleButton>
                             </Tooltip>
                         </Box>

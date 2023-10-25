@@ -223,7 +223,7 @@ export const SmallItem = ({
         semHints,
         summary,
         salespage,
-        salesPageURL,
+        salesPageUrl,
         targetGroups,
         directActivation,
         affiliateSupportURL,

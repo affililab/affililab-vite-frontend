@@ -4,6 +4,8 @@ import {useLazyQuery} from "@apollo/client";
 import {GET_PARTNERPROGRAMS_BY_IDS} from "@schemas";
 import {PartnerProgramModal} from "@resources/Product/components/PartnerProgramModal";
 import {Item} from "@resources/Product/components/Item";
+import {useExternalLink} from "@resources/Product/hooks/useExternalLink";
+import {ExternalProductsPageModal} from "@resources/Product/components";
 
 export const ProductsContent = ({
                                     active, scrollableNodeRef, campaignData, remove = () => {
@@ -28,6 +30,13 @@ export const ProductsContent = ({
         setCurrentPartnerProgram(partnerProgram);
         setShowPartnerProgramModal(!showPartnerProgramModal);
     };
+
+    const {
+        showExternalLinkModal,
+        setShowExternalLinkModal,
+        currentPartnerProgramLink,
+        toggleExternalLink
+    } = useExternalLink(setCurrentPartnerProgram);
 
     const getPartnerPrograms = async () => {
         return (await getItems({
@@ -59,6 +68,13 @@ export const ProductsContent = ({
             }}
             partnerprogram={currentPartnerProgram}
         />
+        <ExternalProductsPageModal
+            open={showExternalLinkModal}
+            item={currentPartnerProgram}
+            link={currentPartnerProgramLink}
+            handleClose={() => {
+                setShowExternalLinkModal(false)
+        }} />
         <InfiniteScroll
             scrollableTarget={scrollableNodeRef.current.getScrollElement()}
             scrollThreshold={1}
@@ -95,6 +111,7 @@ export const ProductsContent = ({
                     <Grid item key={index + "" + item.title} sx={{width: "100%"}} xs={12}>
                         <Item
                             openModalHandler={() => toggleDetailedPartnerProgramModal(item)}
+                            toggleExternalLink={toggleExternalLink}
                             actionItems={[
                                 (item, isAuthenticated) => <Box>
                                     <Tooltip title={"von Kampagne entfernen"} arrow>

@@ -42,8 +42,8 @@ const ToolIconBox = styled(Box)(({theme}) => ({
 export const ToolItem: FC<any> = ({toolItem, addToCampaign, openModalHandler, actionItems = [
         <Box>
             <Tooltip title={ "add to campaign" } arrow>
-                <ToggleButton value="check" sx={(theme) => ({ background: theme.palette.grey[500_80] })} onClick={() => addToCampaign(toolItem)} aria-label="add to campaign">
-                    <Icon color={"white"} sx={(theme) => ({height: 20, width: 20, color: theme.palette.primary.dark })} icon={"codicon:add"}/>
+                <ToggleButton value="check" onClick={() => addToCampaign(toolItem)} aria-label="add to campaign">
+                    <Icon sx={(theme) => ({height: 20, width: 20, color: theme.palette.primary.dark })} icon={"codicon:add"}/>
                 </ToggleButton>
             </Tooltip>
         </Box>

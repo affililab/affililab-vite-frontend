@@ -1,14 +1,14 @@
 import React, {FC, useState} from "react";
 import {
     Box,
-    Button,
+    Button, CircularProgress,
     DialogAnimate,
-    DialogTitle,
+    DialogTitle, Grid,
     Icon,
-    IconButton,
+    IconButton, Scrollbar,
     Step,
     StepLabel,
-    Stepper,
+    Stepper, Tooltip, Typography,
     varScale,
     varTranEnter
 } from "my-lib";
@@ -18,8 +18,16 @@ import {
     CampaignSupportCategorySelection
 } from "@resources/CampaignSupportCategory/components/CampaignSupportCategorySelection";
 import {MarketingChannelsSelection} from "@resources/Product/components/WizardModal/MarketingChannelsSelection";
+import {useRecommendet} from "@resources/Product/hooks/useRecommendet";
+import {Item} from "@resources/Product/components/Item";
 
-const WizardContent: FC<any> = () => {
+const WizardContent: FC<any> = ({ toggleNoticedPartnerProgram = () => {}, toggleDetailedModal = () => {}, noticedPartnerPrograms = [] }) => {
+
+    const { getRecommendedByPreferences } = useRecommendet();
+
+    const [recommendations, setRecommendations] = useState(null);
+    const [loadingRecommendations, setLoadingRecommendations] = useState(false);
+
     const [activeStep, setActiveStep] = useState(0);
     const selectedCategoriesState = useState([]);
     const selectedCampaignSupportCategoryState = useState([]);
@@ -56,6 +64,88 @@ const WizardContent: FC<any> = () => {
                 <MarketingChannelsSelection selectedState={selectedMarketingChannelsState} />
             </Box>
         },
+        {
+            label: 'Recommendations',
+            component: <Box sx={{display: "flex", flex: 1, height: "60vh", background: (theme: any) => theme.palette.background.neutral}}>
+                {loadingRecommendations && <Box sx={{ flex: 1, display: "flex", justifyContent: "center", alignItems: "center" }}>
+                    <CircularProgress />
+                    <Typography variant="body1" component="p" ml={2}>Loading Recommendations</Typography>
+                </Box>}
+                {(!loadingRecommendations && recommendations) && <Scrollbar sx={{ display: "flex",
+                    flex: 1,
+                    flexDirection: "column",
+                    ".simplebar-content-wrapper": {
+                        // height: "100%",
+                        flex: 1,
+                        display: "flex",
+                        flexDirection: "column",
+                    },
+                    ".simplebar-content": {
+                        // height: "100%",
+                        flex: 1
+                    }
+                }} forceVisible="y" autoHide={false} style={{height: "100%"}}>
+                    <Grid p={2} rowSpacing={3} container alignItems="center" justifyContent="center" spacing={4}>
+                        {recommendations.map((partnerprogram: any, index: number) => (
+                            <Grid key={index} item xs={12}><Item
+                                actionItems={[
+                                    (item: any) => <Box>
+                                        <Tooltip
+                                            title={"merken"}
+                                            arrow>
+                                            <IconButton
+                                                sx={(theme: any) => ({
+                                                    color: theme.palette.text.secondary,
+                                                    height: "42px",
+                                                    width: "42px"
+                                                })}
+                                                value={noticedPartnerPrograms.find(item => item.id === partnerprogram.id) ? 'checked' : 'unchecked'}
+                                                onClick={() => toggleNoticedPartnerProgram(item)}
+                                                color="info"
+                                                aria-label="toggle noticed partnerprogram"
+                                            >
+                                                <Icon
+                                                    width={24}
+                                                    height={24}
+                                                    sx={(theme) => ({
+                                                        color: theme.palette.primary.dark
+                                                    })}
+                                                    icon={noticedPartnerPrograms.find(item => item.id === partnerprogram.id) ? "bi:bookmark-star-fill" : "bi:bookmark-star"}/>
+                                            </IconButton>
+                                        </Tooltip>
+                                    </Box>,
+                                    (item: any) => <Box>
+                                        <Tooltip
+                                            title={"öffnen"}
+                                            arrow>
+                                            <IconButton
+                                                sx={(theme: any) => ({
+                                                    color: theme.palette.text.secondary,
+                                                    height: "42px",
+                                                    width: "42px"
+                                                })}
+                                                onClick={() => toggleDetailedModal(item)}
+                                                aria-label="open partnerprogram"
+                                                component="label">
+                                                <Icon
+                                                    width={24}
+                                                    height={24}
+                                                    sx={(theme) => ({
+                                                        color: theme.palette.primary.dark
+                                                    })}
+                                                    icon={"akar-icons:eye-open"}/>
+                                            </IconButton>
+                                        </Tooltip>
+                                    </Box>
+                                ]}
+                                toggleModal={toggleDetailedModal}
+                                item={partnerprogram}
+                                isNoticed={noticedPartnerPrograms.find(item => item.id === partnerprogram.id)}
+                                toggleNoticedPartnerProgram={toggleNoticedPartnerProgram}
+                            /></Grid>))}
+                    </Grid></Scrollbar>}
+            </Box>
+        },
         // {
         //     label: 'We found following Partnerprograms for you',
         //     component: <>Step 4</>
@@ -88,15 +178,23 @@ const WizardContent: FC<any> = () => {
 
 
     const handleBack = () => {
+        if (activeStep >= steps.length - 1) {
+            setRecommendations(null);
+        }
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
     };
 
-    const handleNext = () => {
+    const handleNext = async () => {
         if (activeStep >= steps.length - 1) {
-            // TODO: active step
             return;
         }
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        if (activeStep >= steps.length - 2) {
+            setLoadingRecommendations(true)
+            const recommendations = await getRecommendedByPreferences(selectedCategories, selectedCampaignSupportCategory, selectedTools, selectedMarketingChannels);
+            setLoadingRecommendations(false)
+            setRecommendations(recommendations)
+        }
     };
 
     return <Box sx={{overflow: "hidden"}}>
@@ -127,18 +225,18 @@ const WizardContent: FC<any> = () => {
                 <Button size={'large'} color="inherit" disabled={activeStep === 0} onClick={handleBack} sx={{ mr: 1 }}>
                     Back
                 </Button>
-                <Button size={'large'} variant="contained" onClick={handleNext}>
-                    {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
-                    {activeStep < steps.length - 1 && <Icon sx={{ ml: 2 }} width={24}
+                {activeStep <= steps.length - 2 && <Button size={'large'} variant="contained" onClick={handleNext}>
+                    {activeStep === steps.length - 2 ? 'load recommendations' : 'Next'}
+                    {activeStep < steps.length - 2 && <Icon sx={{ ml: 2 }} width={24}
                           height={24}
                           icon={'carbon:chevron-right'} />}
-                </Button>
+                </Button>}
             </Box>
         </Box>
     </Box>
 }
 
-export const WizardModal = ({ isModalOpen, handleCloseModal }) => {
+export const WizardModal = ({ isModalOpen, handleCloseModal, toggleNoticedPartnerPrograms, toggleDetailedModal, noticedPartnerProgram }) => {
     return (
         <DialogAnimate maxWidth={"xl"} open={isModalOpen} onClose={handleCloseModal}>
             <Box sx={{ display: "flex", justifyContent: "space-between", p: 2 }}>
@@ -149,7 +247,7 @@ export const WizardModal = ({ isModalOpen, handleCloseModal }) => {
                           icon={'ei:close'}/>
                 </IconButton>
             </Box>
-            <WizardContent />
+            <WizardContent toggleNoticedPartnerPrograms={toggleNoticedPartnerPrograms} toggleDetailedModal={toggleDetailedModal} noticedPartnerProgram={noticedPartnerProgram} />
         </DialogAnimate>
     )
 }

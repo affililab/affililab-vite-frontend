@@ -13,7 +13,6 @@ export const GET_PARTNERPROGRAMS = gql`
                 id
                 programId
                 description
-
                 title
                 productImg
                 categories {
@@ -49,7 +48,7 @@ export const GET_PARTNERPROGRAMS = gql`
                 lastUpdated
                 semHints
                 summary
-                salesPageURL
+                salesPageUrl
                 targetGroups {
                     title
                 }
@@ -116,7 +115,7 @@ export const GET_PARTNERPROGRAMS_BY_IDS = gql`
             lastUpdated
             semHints
             summary           
-            salesPageURL
+            salesPageUrl
             targetGroups {
                 title
             }
@@ -177,7 +176,7 @@ export const GET_PARTNERPROGRAM = gql`
             lastUpdated
             semHints
             summary
-            salesPageURL
+            salesPageUrl
             targetGroups {
                 title
             }
@@ -225,7 +224,7 @@ export const CREATE_PARTNERPROGRAM = gql`
         $processingTime: String,
         $semHints: [String],
         $summary: [String],
-        $salesPageURL: String,
+        $salesPageUrl: String,
         $targetGroups: [ID],
         $directActivation: Boolean,
         $affiliateSupportURL: String,
@@ -260,7 +259,7 @@ export const CREATE_PARTNERPROGRAM = gql`
             processingTime: $processingTime,
             semHints: $semHints,
             summary: $summary,
-            salesPageURL: $salesPageURL,
+            salesPageUrl: $salesPageUrl,
             targetGroups: $targetGroups,
             directActivation: $directActivation,
             affiliateSupportURL: $affiliateSupportURL,
@@ -306,7 +305,7 @@ export const CREATE_PARTNERPROGRAM = gql`
             lastUpdated
             semHints
             summary
-            salesPageURL
+            salesPageUrl
             targetGroups {
                 title
             }
@@ -356,7 +355,7 @@ export const UPDATE_PARTNERPROGRAM = gql`
         $processingTime: String,
         $semHints: [String],
         $summary: [String],
-        $salesPageURL: String,
+        $salesPageUrl: String,
         $targetGroups: [ID],
         $directActivation: Boolean,
         $affiliateSupportURL: String,
@@ -393,7 +392,7 @@ export const UPDATE_PARTNERPROGRAM = gql`
                 processingTime: $processingTime,
                 semHints: $semHints,
                 summary: $summary,
-                salesPageURL: $salesPageURL,
+                salesPageUrl: $salesPageUrl,
                 targetGroups: $targetGroups,
                 directActivation: $directActivation,
                 affiliateSupportURL: $affiliateSupportURL,
@@ -439,7 +438,7 @@ export const UPDATE_PARTNERPROGRAM = gql`
             lastUpdated
             semHints
             summary           
-            salesPageURL
+            salesPageUrl
             targetGroups {
                 title
             }
@@ -505,7 +504,7 @@ export const GET_RECOMMENDET_PARTNER_PROGRAMS = gql`
                 lastUpdated
                 semHints
                 summary
-                salesPageURL
+                salesPageUrl
                 targetGroups {
                     title
                 }
@@ -569,7 +568,7 @@ export const GET_RECOMMENDET_PARTNER_PROGRAMS_BY_CAMPAIGN = gql`
                 lastUpdated
                 semHints
                 summary
-                salesPageURL
+                salesPageUrl
                 targetGroups {
                     title
                 }

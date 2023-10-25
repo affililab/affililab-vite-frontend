@@ -33,6 +33,7 @@ export const OverviewItems: FC<any> = ({
             display: "flex",
             flex: 1,
             flexDirection: "column",
+            height: "100%",
             ".simplebar-content-wrapper": {
                 // height: "100%",
                 flex: 1,
@@ -41,9 +42,11 @@ export const OverviewItems: FC<any> = ({
             },
             ".simplebar-content": {
                 // height: "100%",
+                display: "flex",
+                flexDirection: "column",
                 flex: 1
             }
-        }} forceVisible="y" autoHide={false} ref={scrollableNodeRef} style={{height: "100%"}}>
+        }} forceVisible="y" autoHide={false} ref={scrollableNodeRef}>
             <Content
             scrollableNodeRef={scrollableNodeRef}
             isSelection={isSelection}

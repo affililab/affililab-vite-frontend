@@ -140,7 +140,6 @@ export const Content: FC<any> = ({
     ];
 
     return <>
-        {/* TODO: Top Cover */}
         <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", p: 2  }}>
             <Button size="large" color="info" href={item.link}  variant="contained" target="_blank"><Icon width={18} height={18} icon={"ph:link-bold"} mr={1} /> Get Tool</Button>
             <ActionButtonsContainer>

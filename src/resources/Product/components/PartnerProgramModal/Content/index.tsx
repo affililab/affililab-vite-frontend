@@ -130,7 +130,7 @@ export const Content: FC<any> = ({
         semHints,
         summary,
         salespage,
-        salesPageURL,
+        salesPageUrl,
         targetGroups,
         directActivation,
         affiliateSupportURL,

@@ -169,7 +169,7 @@ export const PartnerProgramsItem: FC<any> = ({
         semHints,
         summary,
         salespage,
-        salesPageURL,
+        salesPageUrl,
         targetGroups,
         directActivation,
         affiliateSupportURL,
@@ -187,7 +187,8 @@ export const PartnerProgramsItem: FC<any> = ({
     };
 
     const getSalesPageURL = () => {
-        return programId ? `https://www.digistore24.com/redir/${programId}/GermanWebDev/` : "https://www." + title;
+        console.log(salesPageUrl);
+        return programId ? `https://www.digistore24.com/redir/${programId}/GermanWebDev/` : salesPageUrl ?? "https://www." + title;
     };
 
     const getRegisterForPartnerProgramURL = () => {

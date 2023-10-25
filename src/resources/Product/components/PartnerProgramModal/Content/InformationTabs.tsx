@@ -49,7 +49,7 @@ export const InformationTabs = ({item}) => {
         summary,
         rank,
         salespage,
-        salesPageURL,
+        salesPageUrl,
         targetGroups,
         trackingTypes,
         directActivation,

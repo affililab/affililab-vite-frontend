@@ -225,7 +225,7 @@ export const Item: FC<any> = ({
         semHints,
         summary,
         salespage,
-        salesPageURL,
+        salesPageUrl,
         targetGroups,
         directActivation,
         affiliateSupportURL,
@@ -405,7 +405,7 @@ export const Item: FC<any> = ({
                                                 color="info"
                                                 sx={{textAlign: "left"}}
                                                 onClick={() => {
-                                                    toggleExternalLink(item, salesPageURL ?? getSalesPageURL())
+                                                    toggleExternalLink(item, salesPageUrl ?? getSalesPageURL())
                                                 }}
                                                 size="medium">Zur Sales Page</Link>
                                             {affiliateSupportURL && <Link sx={{textAlign: "left"}} color="info" onClick={() => {
