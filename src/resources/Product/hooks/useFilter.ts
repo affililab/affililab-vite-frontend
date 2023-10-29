@@ -73,6 +73,17 @@ export const useFilter = (categorySalaryModelsData) => {
                 max: 120
             }
         },
+        {
+            title: "Rating",
+            key: "rating",
+            type: "range",
+            showEmpty: true,
+            settings: {
+                type: "number",
+                min: 0,
+                max: 5
+            }
+        },
         // {
         //     title: "Cart Conversion",
         //     key: "cartConversionInPercent",

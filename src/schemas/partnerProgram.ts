@@ -25,6 +25,8 @@ export const GET_PARTNERPROGRAMS = gql`
                 earningsPerCartVisitor
                 performance
                 averageSalesPrice
+                rating
+                reviews
                 rank
                 salesPrestige
                 products

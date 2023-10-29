@@ -87,11 +87,14 @@ export const ProductsListContent: FC<any> = ({ filterHook = {} }) => {
                     direction={direction}
                     directionSwitching={handleDirectionSwitching}
                     sortByOptions={[{
+                        value: "rating",
+                        label: "Rating",
+                    },{
                         value: "created",
                         label: "Erscheinungsdatum",
                     }, {
                         value: "title",
-                        label: "title"
+                        label: "Name"
                     }, ...filtersList.map(filterItem => ({
                         value: filterItem.key,
                         label: filterItem.title

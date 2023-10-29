@@ -18,6 +18,8 @@ export const GET_RECOMMENDATION_BY_PREFERENCES = gql`
                 earningsPerCartVisitor
                 performance
                 averageSalesPrice
+                rating
+                reviews
                 rank
                 salesPrestige
                 products

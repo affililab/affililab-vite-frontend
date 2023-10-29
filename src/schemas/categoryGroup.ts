@@ -7,6 +7,11 @@ export const GET_ALL_CATEGORY_GROUPS = gql`
         getAllCategoryGroups {
                 id
                 title
+                cover              
+                categories {
+                    id
+                    title
+                }
                 description
                 totalPartnerPrograms
         }

@@ -51,13 +51,13 @@ const WizardContent: FC<any> = ({ toggleNoticedPartnerProgram = () => {}, toggle
                 <CampaignSupportCategorySelection selectedState={selectedCampaignSupportCategoryState} />
             </Box>
         },
-        {
-            label: 'Which tools do you already use ?',
-            component: <Box sx={{display: "flex", height: "60vh", background: (theme: any) => theme.palette.background.neutral}}>
-                <SelectItems selected={selectedTools}
-                             setSelected={setSelectedTools} isSelection />
-            </Box>
-        },
+        // {
+        //     label: 'Which tools do you already use ?',
+        //     component: <Box sx={{display: "flex", height: "60vh", background: (theme: any) => theme.palette.background.neutral}}>
+        //         <SelectItems selected={selectedTools}
+        //                      setSelected={setSelectedTools} isSelection />
+        //     </Box>
+        // },
         {
             label: 'What are you prefered Marketing Channels ?',
             component: <Box sx={{display: "flex", height: "60vh", background: (theme: any) => theme.palette.background.neutral}}>

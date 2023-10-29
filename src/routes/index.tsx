@@ -124,9 +124,9 @@ const RightElementsProductFinder = () => {
         {/*</Box>*/}
         {!(!!user) && <Box>
             {/*Register*/}
-            <Button variant="text" onClick={() => {
-                openModalPayment()
-            }}>Pricing</Button>
+            {/*<Button variant="text" onClick={() => {*/}
+            {/*    openModalPayment()*/}
+            {/*}}>Pricing</Button>*/}
         </Box>}
         {!(!!user) && <Box>
             {/*Login*/}

@@ -8,7 +8,7 @@ export const Selection = ({selectedState}) => {
     return <>
         <Scrollbar sx={{width: "100%", p: 2, height: "100%"}} forceVisible="y" autoHide={false}>
                 <Grid spacing={2} container>
-                    {items.map((item, index) => <Grid key={index} xs={4} item><CategoryGroupItem actionItems={[
+                    {items.map((item, index) => <Grid key={index} xs={3} item><CategoryGroupItem actionItems={[
                         <Checkbox onClick={() => setSelected(selected.indexOf(item.id) !== -1 ? selected.filter(selectedItem => selectedItem !== item.id) : [...selected, item.id])} />
                     ]} item={item} /></Grid>)}
                 </Grid>

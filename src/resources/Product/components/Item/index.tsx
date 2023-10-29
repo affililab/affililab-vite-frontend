@@ -219,12 +219,15 @@ export const Item: FC<any> = ({
         cartConversionInPercent,
         cancellationRateInPercent,
         salaryModel,
+        revenueType,
         vendor,
         created,
         processingTime,
         semHints,
         summary,
         salespage,
+        rating,
+        reviews,
         salesPageUrl,
         targetGroups,
         directActivation,
@@ -354,12 +357,28 @@ export const Item: FC<any> = ({
                                             {earningsPerSale ? fCurrency(earningsPerSale) : fCurrency(commissionFixed)}
                                         </Typography>
                                     </InformationItem>}
+                                    {!(commissionFixed || commissionInPercent) && <InformationItem active={!commissionInPercent ? "true" : "false"}>
+                                        <Typography color={!commissionInPercent ? "white" : theme.palette.text.primary} variant="subtitle2" align={"left"}>
+                                            Provision
+                                        </Typography>
+                                        <Typography color={!commissionInPercent ? "white" : theme.palette.text.primary} variant={!commissionInPercent ? "subtitle1" : "subtitle2"} align={"left"}>
+                                            Keine Angabe
+                                        </Typography>
+                                    </InformationItem>}
                                     {!!averageSalesPrice && <InformationItem>
                                         <Typography color="textPrimary" variant="subtitle2" align={"left"}>
                                             Ø Verkaufspreis
                                         </Typography>
                                         <Typography color="textPrimary" variant="subtitle2" align={"left"}>
                                             {fCurrency(averageSalesPrice)}
+                                        </Typography>
+                                    </InformationItem>}
+                                    {!!revenueType && <InformationItem>
+                                        <Typography color="textPrimary" variant="subtitle2" align={"left"}>
+                                            Bezahlungsart
+                                        </Typography>
+                                        <Typography color="textPrimary" variant="subtitle2" align={"left"}>
+                                            {revenueType.title === "" ?  '--' : revenueType.title}
                                         </Typography>
                                     </InformationItem>}
                                     {!!performance && <InformationItem>
@@ -373,6 +392,20 @@ export const Item: FC<any> = ({
                                                 size="small"
                                                 readOnly
                                             />
+                                        </Typography>
+                                    </InformationItem>}
+                                    {!!rating && <InformationItem sx={(theme: any) => ({ height: '124px', padding: theme.spacing(sources?.length > 4 ? 4 : 2) })}>
+                                        <Typography color="textPrimary" variant="subtitle2" align={"left"}>
+                                            Trustpilot
+                                        </Typography>
+                                        <Typography color="textPrimary" variant="subtitle2" align={"left"}>
+                                            <StyledRating
+                                                name="performance"
+                                                value={rating}
+                                                size="small"
+                                                readOnly
+                                            /><br/>
+                                            {reviews} Reviews
                                         </Typography>
                                     </InformationItem>}
                                     <InformationItem sx={(theme: any) => ({ padding: theme.spacing(sources?.length > 4 ? 4 : 2) })}>

@@ -331,7 +331,7 @@ export const SmallItem = ({
                     }}/>
                 </ToolIconBox>
                 <PrimaryColoredBox>
-                    <Image sx={{width: "164px", minHeight: "164px", maxHeight: "164px", backgroundColor: "white"}} src={productImg}/>
+                    <Image sx={{width: "164px", minHeight: "164px", display: "flex", justifyContent: 'center', alignItems: 'center', maxHeight: "164px", backgroundColor: "white"}} src={productImg}/>
                 </PrimaryColoredBox>
             </Box>
             <Typography variant="subtitle2" sx={{mt: 6, mb: 2, p: 2, height: "48px"}}>

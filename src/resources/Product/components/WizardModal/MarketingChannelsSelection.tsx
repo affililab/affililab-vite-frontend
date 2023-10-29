@@ -50,7 +50,7 @@ export const MarketingChannelsSelection = ({selectedState}) => {
     return <>
         <Scrollbar sx={{width: "100%", p: 2, height: "100%"}} forceVisible="y" autoHide={false}>
             <Grid spacing={2} container>
-                {items.map((item, index) => <Grid key={item.id + " " + index} xs={4} item><MarketingChannelItem actionItems={[
+                {items.map((item, index) => <Grid key={item.id + " " + index} xs={3} item><MarketingChannelItem actionItems={[
                     <Checkbox onClick={() => setSelected(selected.indexOf(item.title) !== -1 ? selected.filter(selectedItem => selectedItem !== item.title) : [...selected, item.title])} />
                 ]} item={item} /></Grid>)}
             </Grid>
