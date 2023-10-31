@@ -2,22 +2,24 @@ import React, {FC, useEffect, useState} from "react";
 import {Box, Button, DialogAnimate, DialogTitle, Icon, IconButton, useTheme} from "my-lib";
 import {Comparison} from "./Comparison"
 import {useTriggerHook} from "./hook"
+import {useNoticedPartnerProgram} from "@resources/Product/hooks/useNoticedPartnerProgram";
 
 const ModalContent: FC<any> = ({
                                    isModalOpen,
                                    addToCampaign,
                                    handleCloseModal,
-                                   noticedPartnerPrograms,
                                    toggleDetailedModal,
-                                   toggleNoticedPartnerProgram
                                }) => {
 
     const [selected, setSelected] = useState<string[]>([]);
 
     const theme = useTheme();
-    const [items, setItems] = useState(noticedPartnerPrograms);
     const [compareViewTrigger, setCompareViewTrigger] = useTriggerHook();
-    // tabs
+    const {
+        noticedPartnerPrograms,
+        dipatchToggleNoticedPartnerProgram
+    } = useNoticedPartnerProgram()
+    const [items, setItems] = useState(noticedPartnerPrograms);
 
     useEffect(() => {
         setItems(noticedPartnerPrograms);
@@ -32,7 +34,7 @@ const ModalContent: FC<any> = ({
             toggleDetailedModal={toggleDetailedModal}
             noticedPartnerPrograms={noticedPartnerPrograms}
             compareViewTrigger={compareViewTrigger}
-            toggleNoticedPartnerProgram={toggleNoticedPartnerProgram} />
+            toggleNoticedPartnerProgram={dipatchToggleNoticedPartnerProgram} />
         <Box sx={{
             width: "100%",
             display: "flex",
@@ -66,8 +68,6 @@ export const NoticedPartnerProgramsModal: FC<any> = ({
                                                          addToCampaign,
                                                          handleCloseModal,
                                                          toggleDetailedModal,
-                                                         noticedPartnerPrograms,
-                                                         toggleNoticedPartnerProgram
                                                      }) => {
 
     return (
@@ -83,8 +83,6 @@ export const NoticedPartnerProgramsModal: FC<any> = ({
             <ModalContent
                 addToCampaign={addToCampaign}
                 toggleDetailedModal={toggleDetailedModal}
-                noticedPartnerPrograms={noticedPartnerPrograms}
-                toggleNoticedPartnerProgram={toggleNoticedPartnerProgram}
                 isModalOpen={isModalOpen}
                 handleCloseModal={handleCloseModal}
             />

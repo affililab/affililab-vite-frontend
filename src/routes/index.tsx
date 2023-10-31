@@ -47,6 +47,7 @@ import {AdGeneratorTool} from "../modules/AdGeneratorTool";
 /* PLOP_INJECT_TYPE_MODULE_IMPORT */
 import {ToolTypeModule} from "../modules/ToolType";
 import {ProfileSetupModal} from "@components/ProfileSetupModal";
+import {IntroModal} from "@resources/Intro/components/IntroModal";
 
 const { Outlet } = Router;
 
@@ -175,6 +176,7 @@ export const routes = [
     {
         element: <>
             <ProfileSetupModal />
+            <IntroModal />
             <Outlet />
         </>,
         children: [

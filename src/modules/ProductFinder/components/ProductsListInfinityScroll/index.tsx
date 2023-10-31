@@ -244,8 +244,6 @@ export const ProductsListInfinityScroll: FC<any> = ({
                 setShowAddToCampaignModal(true)
             }}
             toggleDetailedModal={toggleDetailedPartnerProgramModal}
-            noticedPartnerPrograms={noticedPartnerPrograms}
-            toggleNoticedPartnerProgram={dipatchToggleNoticedPartnerProgram}
             isModalOpen={showNoticedPartnerPrograms}
             handleCloseModal={handleCloseNoticedPartnerProgramsModal}
         />

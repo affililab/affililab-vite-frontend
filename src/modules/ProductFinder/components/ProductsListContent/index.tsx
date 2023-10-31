@@ -13,6 +13,7 @@ import {Networks} from "./Content/Networks";
 import {SortBy} from "../SortBy";
 import {WizardModal} from "@resources/Product/components/WizardModal";
 import {StickySubNavProvider} from "../../../../providers/StickyNavProvider";
+import {useWelcomeModal} from "@resources/Intro/hooks/useWelcomeModal";
 
 const { useParams } = Router;
 
@@ -25,6 +26,11 @@ export const ProductsListContent: FC<any> = ({ filterHook = {} }) => {
     const [showFilterModal, setShowFilterModal] = useState(false);
     const [showSaveFilterModal, setShowSaveFilterModal] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const {
+        firstWizardDone,
+        welcomeDone,
+        handleCloseWelcomeModal,
+        handleFinishFirstWizard} = useWelcomeModal();
 
     const handleCloseSaveFilterModal = () => {
         setShowSaveFilterModal(false);
@@ -163,7 +169,10 @@ export const ProductsListContent: FC<any> = ({ filterHook = {} }) => {
                 height: "auto"
             }
         })}>
-        <WizardModal isModalOpen={isModalOpen} handleCloseModal={() => setIsModalOpen(false)} />
+        <WizardModal isModalOpen={isModalOpen || (welcomeDone && !firstWizardDone)} handleCloseModal={() => {
+            if (!firstWizardDone) handleFinishFirstWizard()
+            setIsModalOpen(false)
+        }} />
         <Scrollbar sx={{ display: "flex",
             flex: 1,
             flexDirection: "column",

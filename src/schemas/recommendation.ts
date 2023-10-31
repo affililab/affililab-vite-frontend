@@ -5,6 +5,7 @@ import {
 export const GET_RECOMMENDATION_BY_PREFERENCES = gql`
      query GET_RECOMMENDATION_BY_PREFERENCES ($categoryGroups: [ID]!, $campaignSupportCategories: [ID]!, $tools: [ID]!, $marketingChannels: [String]!) {
         getRecommendationsByPreferences(categoryGroups: $categoryGroups, campaignSupportCategories: $campaignSupportCategories, tools: $tools, marketingChannels: $marketingChannels) {
+            id
             title
             description
             productImg

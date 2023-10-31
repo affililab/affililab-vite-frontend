@@ -83,7 +83,7 @@ export const SourceItem: FC<any> = ({ item }) => {
                     <Image sx={{ height: "186px" }} src={cover ? partnerProgramsBackend.filesEndpoint + cover : "/static/images/campaignbg.svg"} alt={cover ? partnerProgramsBackend.apiURL + cover : "/static/images/campaignbg.svg"}/>
                 </PrimaryColoredBox>
             </Box>
-        <Typography variant="body1" sx={{mt: 2}}>
+        <Typography variant="body1" sx={{mt: 6}}>
             {title}
         </Typography>
         </CardContent>

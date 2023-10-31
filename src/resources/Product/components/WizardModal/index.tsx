@@ -20,8 +20,18 @@ import {
 import {MarketingChannelsSelection} from "@resources/Product/components/WizardModal/MarketingChannelsSelection";
 import {useRecommendet} from "@resources/Product/hooks/useRecommendet";
 import {Item} from "@resources/Product/components/Item";
+import {useNoticedPartnerProgram} from "@resources/Product/hooks/useNoticedPartnerProgram";
+import {toggleNoticedPartnerProgram} from "@slices/noticedPartnerPrograms";
 
-const WizardContent: FC<any> = ({ toggleNoticedPartnerProgram = () => {}, toggleDetailedModal = () => {}, noticedPartnerPrograms = [] }) => {
+const WizardContent: FC<any> = ({ toggleDetailedModal = () => {} }) => {
+
+    const {
+        showNoticedPartnerPrograms,
+        setShowNoticedPartnerPrograms,
+        noticedPartnerPrograms,
+        dipatchToggleNoticedPartnerProgram,
+        handleCloseNoticedPartnerProgramsModal
+    } = useNoticedPartnerProgram();
 
     const { getRecommendedByPreferences } = useRecommendet();
 
@@ -41,12 +51,18 @@ const WizardContent: FC<any> = ({ toggleNoticedPartnerProgram = () => {}, toggle
     const steps = [
         {
             label: 'Select topics which are interesting to you',
+            state: selectedCategoriesState,
+            min: 1,
+            max: 2,
             component: <Box sx={{display: "flex", height: "60vh", background: (theme: any) => theme.palette.background.neutral}}>
                 <Selection selectedState={selectedCategoriesState} />
             </Box>
         },
         {
             label: 'In which fields you already have experience',
+            state: selectedCampaignSupportCategoryState,
+            min: 0,
+            max: 2,
             component: <Box sx={{display: "flex", height: "60vh", background: (theme: any) => theme.palette.background.neutral}}>
                 <CampaignSupportCategorySelection selectedState={selectedCampaignSupportCategoryState} />
             </Box>
@@ -60,6 +76,9 @@ const WizardContent: FC<any> = ({ toggleNoticedPartnerProgram = () => {}, toggle
         // },
         {
             label: 'What are you prefered Marketing Channels ?',
+            state: selectedMarketingChannelsState,
+            min: 0,
+            max: 2,
             component: <Box sx={{display: "flex", height: "60vh", background: (theme: any) => theme.palette.background.neutral}}>
                 <MarketingChannelsSelection selectedState={selectedMarketingChannelsState} />
             </Box>
@@ -100,7 +119,7 @@ const WizardContent: FC<any> = ({ toggleNoticedPartnerProgram = () => {}, toggle
                                                     width: "42px"
                                                 })}
                                                 value={noticedPartnerPrograms.find(item => item.id === partnerprogram.id) ? 'checked' : 'unchecked'}
-                                                onClick={() => toggleNoticedPartnerProgram(item)}
+                                                onClick={() => dipatchToggleNoticedPartnerProgram(item)}
                                                 color="info"
                                                 aria-label="toggle noticed partnerprogram"
                                             >
@@ -113,35 +132,11 @@ const WizardContent: FC<any> = ({ toggleNoticedPartnerProgram = () => {}, toggle
                                                     icon={noticedPartnerPrograms.find(item => item.id === partnerprogram.id) ? "bi:bookmark-star-fill" : "bi:bookmark-star"}/>
                                             </IconButton>
                                         </Tooltip>
-                                    </Box>,
-                                    (item: any) => <Box>
-                                        <Tooltip
-                                            title={"öffnen"}
-                                            arrow>
-                                            <IconButton
-                                                sx={(theme: any) => ({
-                                                    color: theme.palette.text.secondary,
-                                                    height: "42px",
-                                                    width: "42px"
-                                                })}
-                                                onClick={() => toggleDetailedModal(item)}
-                                                aria-label="open partnerprogram"
-                                                component="label">
-                                                <Icon
-                                                    width={24}
-                                                    height={24}
-                                                    sx={(theme) => ({
-                                                        color: theme.palette.primary.dark
-                                                    })}
-                                                    icon={"akar-icons:eye-open"}/>
-                                            </IconButton>
-                                        </Tooltip>
                                     </Box>
                                 ]}
-                                toggleModal={toggleDetailedModal}
                                 item={partnerprogram}
                                 isNoticed={noticedPartnerPrograms.find(item => item.id === partnerprogram.id)}
-                                toggleNoticedPartnerProgram={toggleNoticedPartnerProgram}
+                                toggleNoticedPartnerProgram={dipatchToggleNoticedPartnerProgram}
                             /></Grid>))}
                     </Grid></Scrollbar>}
             </Box>
@@ -225,18 +220,24 @@ const WizardContent: FC<any> = ({ toggleNoticedPartnerProgram = () => {}, toggle
                 <Button size={'large'} color="inherit" disabled={activeStep === 0} onClick={handleBack} sx={{ mr: 1 }}>
                     Back
                 </Button>
-                {activeStep <= steps.length - 2 && <Button size={'large'} variant="contained" onClick={handleNext}>
-                    {activeStep === steps.length - 2 ? 'load recommendations' : 'Next'}
-                    {activeStep < steps.length - 2 && <Icon sx={{ ml: 2 }} width={24}
-                          height={24}
-                          icon={'carbon:chevron-right'} />}
-                </Button>}
+                <Box display={'flex'} alignItems={'center'} gap={2}>
+                    {steps[activeStep]?.state && 'Gewählt: ' + steps[activeStep]?.state[0]?.length + ' Wähle zwischen ' + steps[activeStep].min + ' und ' + steps[activeStep].max}
+                    {activeStep <= steps.length - 2 && <Button disabled={!(steps[activeStep]?.state[0]?.length >= steps[activeStep]?.min && steps[activeStep]?.state[0]?.length <= steps[activeStep]?.max)} size={'large'} variant="contained" onClick={handleNext}>
+                        {activeStep === steps.length - 2 ? 'load recommendations' : 'Next'}
+                        {activeStep < steps.length - 2 && <Icon sx={{ ml: 2 }} width={24}
+                                                                height={24}
+                                                                icon={'carbon:chevron-right'} />}
+                    </Button>}
+                    {activeStep === steps.length - 1 && <Button disabled={loadingRecommendations} target={"_blank"} href={"https://forms.gle/neQ4iaDqyc1UZtU58"} size={'large'} variant="contained" onClick={handleNext}>
+                        Zur Umfrage
+                    </Button>}
+                </Box>
             </Box>
         </Box>
     </Box>
 }
 
-export const WizardModal = ({ isModalOpen, handleCloseModal, toggleNoticedPartnerPrograms, toggleDetailedModal, noticedPartnerProgram }) => {
+export const WizardModal = ({ isModalOpen, handleCloseModal }) => {
     return (
         <DialogAnimate maxWidth={"xl"} open={isModalOpen} onClose={handleCloseModal}>
             <Box sx={{ display: "flex", justifyContent: "space-between", p: 2 }}>
@@ -247,7 +248,7 @@ export const WizardModal = ({ isModalOpen, handleCloseModal, toggleNoticedPartne
                           icon={'ei:close'}/>
                 </IconButton>
             </Box>
-            <WizardContent toggleNoticedPartnerPrograms={toggleNoticedPartnerPrograms} toggleDetailedModal={toggleDetailedModal} noticedPartnerProgram={noticedPartnerProgram} />
+            <WizardContent  />
         </DialogAnimate>
     )
 }

@@ -366,7 +366,6 @@ export const ProductsTable: FC<any> = ({
 
         <NoticedPartnerProgramsModal
             toggleDetailedModal={toggleDetailedPartnerProgramModal}
-            noticedPartnerPrograms={selectedPartnerPrograms}
             isModalOpen={showNoticedPartnerPrograms}
             handleCloseModal={handleCloseNoticedPartnerProgramsModal} />
 
