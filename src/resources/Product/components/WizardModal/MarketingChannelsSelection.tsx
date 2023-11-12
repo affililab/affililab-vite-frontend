@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import {Checkbox, Grid, Scrollbar} from "my-lib"
 import { MarketingChannelItem } from "./MarketingChannelItem"
 
-export const MarketingChannelsSelection = ({selectedState}) => {
+export const MarketingChannelsSelection = ({selectedState, min = 0, max = 2}) => {
+
     const items = [
         {
             id: 1,
@@ -53,13 +54,19 @@ export const MarketingChannelsSelection = ({selectedState}) => {
             description: "Category 2 description",
         }
     ];
-
     const [selected, setSelected] = selectedState ?? useState([]);
+
+    const maxAchieved = selected.length >= max;
+    const toggleItemSelect = (item: any) => {
+        if (maxAchieved && selected.indexOf(item.title) === -1) return;
+        setSelected(selected.indexOf(item.title) !== -1 ? selected.filter(selectedItem => selectedItem !== item.title) : [...selected, item.title])
+    }
+
     return <>
         <Scrollbar sx={{width: "100%", p: 2, height: "100%"}} forceVisible="y" autoHide={false}>
             <Grid spacing={2} container>
-                {items.map((item, index) => <Grid key={item.id + " " + index} xs={3} item><MarketingChannelItem actionItems={[
-                    <Checkbox checked={selected.indexOf(item.title) !== -1 ? 'checked' : ''} onClick={() => setSelected(selected.indexOf(item.title) !== -1 ? selected.filter(selectedItem => selectedItem !== item.title) : [...selected, item.title])} />
+                {items.map((item, index) => <Grid key={item.id + " " + index} sx={{ cursor: "pointer" }} onClick={() => toggleItemSelect(item)} xs={3} item><MarketingChannelItem actionItems={[
+                    <Checkbox disabled={maxAchieved && selected.indexOf(item.title) === -1} checked={selected.indexOf(item.title) !== -1 ? 'checked' : ''} onClick={() => toggleItemSelect(item)} />
                 ]} item={item} /></Grid>)}
             </Grid>
         </Scrollbar>

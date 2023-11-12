@@ -1,19 +1,24 @@
 import React, {FC, useState} from "react";
 import {
     Box,
-    Button, CircularProgress, CopyToClipboard,
+    Button,
+    CircularProgress,
+    CopyToClipboard,
     DialogAnimate,
-    DialogTitle, ExternalLinkModal, Grid,
+    DialogTitle,
+    ExternalLinkModal,
+    Grid,
     Icon,
-    IconButton, Scrollbar,
+    IconButton,
+    Scrollbar,
     Step,
     StepLabel,
-    Stepper, Tooltip, Typography, useSnackbar,
-    varScale,
-    varTranEnter
+    Stepper,
+    Tooltip,
+    Typography,
+    useSnackbar
 } from "my-lib";
 import {Selection} from "@resources/CategoryGroup/components/Selection"
-import {SelectItems} from "@resources/Tools/components/SelectItems";
 import {
     CampaignSupportCategorySelection
 } from "@resources/CampaignSupportCategory/components/CampaignSupportCategorySelection";
@@ -21,7 +26,6 @@ import {MarketingChannelsSelection} from "@resources/Product/components/WizardMo
 import {useRecommendet} from "@resources/Product/hooks/useRecommendet";
 import {Item} from "@resources/Product/components/Item";
 import {useNoticedPartnerProgram} from "@resources/Product/hooks/useNoticedPartnerProgram";
-import {toggleNoticedPartnerProgram} from "@slices/noticedPartnerPrograms";
 
 const WizardContent: FC<any> = ({ toggleDetailedModal = () => {} }) => {
 
@@ -67,8 +71,7 @@ const WizardContent: FC<any> = ({ toggleDetailedModal = () => {} }) => {
     const externalLinkItems = [
         (link) => <CopyToClipboard text={link} onCopy={onCopy}>
             <Tooltip title="Copy">
-                <Button color="inherit" startIcon={<Icon icon={'eva:copy-fill'} width={24} height={24}/>}>Link
-                    kopieren</Button>
+                <Button color="inherit" startIcon={<Icon icon={'eva:copy-fill'} width={24} height={24}/>}>Link kopieren</Button>
             </Tooltip>
         </CopyToClipboard>
     ];
@@ -80,7 +83,7 @@ const WizardContent: FC<any> = ({ toggleDetailedModal = () => {} }) => {
             min: 1,
             max: 2,
             component: <Box sx={{display: "flex", height: "60vh", background: (theme: any) => theme.palette.background.neutral}}>
-                <Selection selectedState={selectedCategoriesState} />
+                <Selection min={1} max={2} selectedState={selectedCategoriesState} />
             </Box>
         },
         {
@@ -89,7 +92,7 @@ const WizardContent: FC<any> = ({ toggleDetailedModal = () => {} }) => {
             min: 0,
             max: 2,
             component: <Box sx={{display: "flex", height: "60vh", background: (theme: any) => theme.palette.background.neutral}}>
-                <CampaignSupportCategorySelection selectedState={selectedCampaignSupportCategoryState} />
+                <CampaignSupportCategorySelection min={0} max={2} selectedState={selectedCampaignSupportCategoryState} />
             </Box>
         },
         // {
@@ -105,7 +108,7 @@ const WizardContent: FC<any> = ({ toggleDetailedModal = () => {} }) => {
             min: 0,
             max: 2,
             component: <Box sx={{display: "flex", height: "60vh", background: (theme: any) => theme.palette.background.neutral}}>
-                <MarketingChannelsSelection selectedState={selectedMarketingChannelsState} />
+                <MarketingChannelsSelection min={0} max={2} selectedState={selectedMarketingChannelsState} />
             </Box>
         },
         {
