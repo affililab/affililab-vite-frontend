@@ -1,11 +1,13 @@
 import {FC, useState} from "react";
 import {TableCellMapper} from "@components/TableCellMapper"
-import {Button, CopyToClipboard, ExternalLinkModal, Icon, Tooltip} from "my-lib";
+import {Button, CopyToClipboard, ExternalLinkModal, Icon, Tooltip, useSnackbar} from "my-lib";
 import {TableComponent} from "@components/Table";
 import {EditCreateModal} from "@components/EditCreateModal";
 import {DeleteModal} from "@components/DeleteModal";
 
 export const ManageTable: FC<any> = ({resourceName = "item", resourceSchema = [], resourceData}) => {
+
+    const { enqueueSnackbar } = useSnackbar();
 
     const {
         items,

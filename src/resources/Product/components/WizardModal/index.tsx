@@ -1,14 +1,14 @@
 import React, {FC, useState} from "react";
 import {
     Box,
-    Button, CircularProgress,
+    Button, CircularProgress, CopyToClipboard,
     DialogAnimate,
-    DialogTitle, Grid,
+    DialogTitle, ExternalLinkModal, Grid,
     Icon,
     IconButton, Scrollbar,
     Step,
     StepLabel,
-    Stepper, Tooltip, Typography,
+    Stepper, Tooltip, Typography, useSnackbar,
     varScale,
     varTranEnter
 } from "my-lib";
@@ -24,6 +24,8 @@ import {useNoticedPartnerProgram} from "@resources/Product/hooks/useNoticedPartn
 import {toggleNoticedPartnerProgram} from "@slices/noticedPartnerPrograms";
 
 const WizardContent: FC<any> = ({ toggleDetailedModal = () => {} }) => {
+
+    const { enqueueSnackbar } = useSnackbar();
 
     const {
         showNoticedPartnerPrograms,
@@ -47,6 +49,29 @@ const WizardContent: FC<any> = ({ toggleDetailedModal = () => {} }) => {
     const [selectedCampaignSupportCategory, setSelectedCampaignSupportCategoryState] = selectedCampaignSupportCategoryState;
     const [selectedTools, setSelectedTools] = selectedToolsState;
     const [selectedMarketingChannels, setSelectedMarketingChannels] = selectedMarketingChannelsState;
+
+    const [showExternalLinkModal, setShowExternalLinkModal] = useState(null);
+    const [currentLink, setCurrentLink] = useState(null);
+    const [currentItem, setCurrentItem] = useState(null);
+
+    const toggleExternalLink = (item, link) => {
+        setCurrentItem(item);
+        setCurrentLink(link);
+        setShowExternalLinkModal(!showExternalLinkModal);
+    }
+
+    const onCopy = () => {
+        enqueueSnackbar('Copied!');
+    };
+
+    const externalLinkItems = [
+        (link) => <CopyToClipboard text={link} onCopy={onCopy}>
+            <Tooltip title="Copy">
+                <Button color="inherit" startIcon={<Icon icon={'eva:copy-fill'} width={24} height={24}/>}>Link
+                    kopieren</Button>
+            </Tooltip>
+        </CopyToClipboard>
+    ];
 
     const steps = [
         {
@@ -107,6 +132,7 @@ const WizardContent: FC<any> = ({ toggleDetailedModal = () => {} }) => {
                     <Grid p={2} rowSpacing={3} container alignItems="center" justifyContent="center" spacing={4}>
                         {recommendations.map((partnerprogram: any, index: number) => (
                             <Grid key={index} item xs={12}><Item
+                                toggleExternalLink={toggleExternalLink}
                                 actionItems={[
                                     (item: any) => <Box>
                                         <Tooltip
@@ -192,7 +218,13 @@ const WizardContent: FC<any> = ({ toggleDetailedModal = () => {} }) => {
         }
     };
 
-    return <Box sx={{overflow: "hidden"}}>
+    const handleCloseExternalLinkModal = () => {
+        setCurrentItem(null);
+        setShowExternalLinkModal(false);
+    }
+
+    return <>
+        <Box sx={{overflow: "hidden"}}>
         <Stepper sx={{p: 2}} activeStep={activeStep} alternativeLabel>
             {steps.map((stepItem, index) => {
                 const {label } = stepItem;
@@ -235,6 +267,9 @@ const WizardContent: FC<any> = ({ toggleDetailedModal = () => {} }) => {
             </Box>
         </Box>
     </Box>
+    <ExternalLinkModal title={currentItem?.title} link={currentLink} isOpen={showExternalLinkModal} handleClose={handleCloseExternalLinkModal}
+                       actionItems={externalLinkItems}/>
+    </>
 }
 
 export const WizardModal = ({ isModalOpen, handleCloseModal }) => {

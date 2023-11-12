@@ -1,5 +1,16 @@
 import React, {FC, useRef, useState} from "react";
-import {Badge, Box, FabButtonAnimate, Icon, Router, Scrollbar, ToggleButton, Typography, useAuth} from "my-lib";
+import {
+    Badge,
+    Box,
+    ExternalLinkModal,
+    FabButtonAnimate,
+    Icon,
+    Router,
+    Scrollbar,
+    ToggleButton,
+    Typography,
+    useAuth
+} from "my-lib";
 import {SubNav} from "../SubNav"
 import {useQuery} from "@apollo/client";
 import {CATEGORIES_SALARYMODELS} from "@schemas/categoriesSalaryModels";
